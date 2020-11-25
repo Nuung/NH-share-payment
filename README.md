@@ -8,7 +8,8 @@
 # Share Payment SNS - SPS Project
 > 새로쓰는 가계부, 공유 기반 가계부 프로젝트
 ```
-  " Share household account (financial ledger) with each other like SNS. And you can develop a habit of spending more wisely! "  
+  " Share household account (financial ledger) with each other like SNS. 
+  And you can develop a habit of spending more wisely! "  
 ```
 
 ## Infra / Stack
@@ -32,7 +33,7 @@
 - back-end
 	- nodejs 
 		- express
-		- DTO(모델보다는 단순 entity 개념으로) - Service (DAO에 가까우며 실제 쿼리 날리는 부분) - Controller (컨트롤러, 제일 앞단) => router (API)
+		- **DTO**(모델보다는 단순 entity 개념으로) - **Service** (DAO에 가까우며 실제 쿼리 날리는 부분) - **Controller** (컨트롤러, 제일 앞단) => *router (API)*
 		- ORM을 사용하지 않고 mysql 모듈만 사용함 / 그래서 위와 같은 뼈대로 형태를 잡음 
 	- mysql
 
@@ -57,5 +58,8 @@
 	chmod +x /Desktop/project/front.......
 	....
 	```
+
+
+- - -
 
 <p align="center">©copyright ALL Copyrights reserved by Hyeonwoo, Jeong</p>
