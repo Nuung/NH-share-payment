@@ -1,6 +1,6 @@
 <div align = "center">
 
-[![GitHub issues](https://img.shields.io/github/issues/Nuung/DDmap)](https://github.com/Nuung/DDmap/issues)[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FNuung%2FDDmap&count_bg=%23B3A6FF&title_bg=%23000000&icon=highly.svg&icon_color=%23E7E7E7&title=HITS&edge_flat=false)](https://hits.seeyoufarm.com)
+[![GitHub issues](https://img.shields.io/github/issues/Nuung/NH-share-payment)](https://github.com/Nuung/NH-share-payment/issues)[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FNuung%2FDDmap&count_bg=%23B3A6FF&title_bg=%23000000&icon=highly.svg&icon_color=%23E7E7E7&title=HITS&edge_flat=false)](https://hits.seeyoufarm.com)
 
 </div>
 
@@ -10,6 +10,8 @@
 
 
 ## Infra / Stack
+- [check out this notion page](https://www.notion.so/486bc73e507945d893aed40e05313893)
+
 
 ### AWS EC2 ubuntu 18.0.*
 - free tier
