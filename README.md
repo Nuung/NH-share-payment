@@ -8,8 +8,8 @@
 # Share Payment SNS - SPS Project
 > 새로쓰는 가계부, 공유 기반 가계부 프로젝트
 ```
-  			" Share household account (financial ledger) with each other like SNS. 
-  				And you can develop a habit of spending more wisely! "  
+  		" Share household account (financial ledger) with each other like SNS. 
+  			And you can develop a habit of spending more wisely! "  
 ```
 
 ## Infra / Stack
