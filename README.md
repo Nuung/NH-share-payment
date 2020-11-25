@@ -1,6 +1,6 @@
 <div align = "center">
 
-[![GitHub issues](https://img.shields.io/github/issues/Nuung/NH-share-payment)](https://github.com/Nuung/NH-share-payment/issues)[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FNuung%2FDDmap&count_bg=%23B3A6FF&title_bg=%23000000&icon=highly.svg&icon_color=%23E7E7E7&title=HITS&edge_flat=false)](https://hits.seeyoufarm.com)
+[![GitHub issues](https://img.shields.io/github/issues/Nuung/NH-share-payment)](https://github.com/Nuung/NH-share-payment/issues) [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FNuung%2FNH-share-payment&count_bg=%2370C147&title_bg=%23555555&icon=apachespark.svg&icon_color=%23E7E7E7&title=Hits&edge_flat=false)](https://hits.seeyoufarm.com)
 
 </div>
 
