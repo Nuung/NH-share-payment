@@ -7,10 +7,12 @@
 
 # Share Payment SNS - SPS Project
 > 새로쓰는 가계부, 공유 기반 가계부 프로젝트
-
+```
+  " Share household account (financial ledger) with each other like SNS. And you can develop a habit of spending more wisely! "  
+```
 
 ## Infra / Stack
-- [check out this notion page](https://www.notion.so/486bc73e507945d893aed40e05313893)
+- [Check out this notion page](https://www.notion.so/486bc73e507945d893aed40e05313893)
 
 
 ### AWS EC2 ubuntu 18.0.*
@@ -44,5 +46,16 @@
 ### DevOps
 - github
 - Docker (not yet)
+
+
+#### PS
+- local에서 react (npm run build -> static build files) 배포 파일 nginx로 돌리려고 nginx 사용하다가 암걸릴뻔 했다,, 퍼미션 디나이로,, 
+	- 결론만 말하자면 러닝하는 유저에게 배포 파일로 가는 디렉토리 경로마다 -x 권한을 추가해줘서 해결했따.. 아래와 같이..
+	```bash
+	chmod +x /Desktop/
+	chmod +x /Desktop/project
+	chmod +x /Desktop/project/front.......
+	....
+	```
 
 <p align="center">©copyright ALL Copyrights reserved by Hyeonwoo, Jeong</p>
