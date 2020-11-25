@@ -5,55 +5,8 @@
 </div>
 
 
-
-# DDMap
-> 모든 화장실에 대한 모든 것, 대똥여지도 - DDMap
-
-- Quick Project To do : [Click](https://github.com/Nuung/DDmap/projects/1)
-
-
-## Getting Started
-- 시작전 Infra / Stack을 체크하고 환경을 먼저 조성해야 합니다. 
-	- 기본적으로 nodejs, nginx, env, database 모두 환경 설정이 되어야 합니다.
-
-```bash
-
-git clone https://github.com/Nuung/DDmap.git
-cd ddmap-backend
-sudo npm install
-npm start # before this line, u have to check out the env! like db pass,,, etc
-
-```
-
-</br>
-
-------------
-
-</br>
-
-
-## Design and Architecture about Project
-
-### Mysql ERD
-
-<div align = "center">
-	<img src="https://github.com/Nuung/DDmap/blob/master/dev-note-md/images/ddmap_ERD_v0.1.png" width="70%" />
-</div>
-
-- 초기 모델 v0.1 ERD (2020.06 ~), 이미지와 현재 개발 DB 관계는 다를 수 있음
-	- 가장 핵심적인 관계는 Toilet table과 review임. 1 : 1 or N의 관계
-
-
-### Architecture
-
-- MVC patten으로 최대한 지향했으며, 최대한 restful하게 하려고 노력함. mysql db가 메인 db로 적절한 사용을 위해 ***ORM으로 sequelize***를 사용함 
-
-
-</br>
-
-------------
-
-</br>
+# Share Payment SNS - SPS Project
+> 새로쓰는 가계부, 공유 기반 가계부 프로젝트
 
 
 ## Infra / Stack
@@ -61,45 +14,33 @@ npm start # before this line, u have to check out the env! like db pass,,, etc
 ### AWS EC2 ubuntu 18.0.*
 - free tier
 
-### WebServer(EC2)
-- nginx
-	- test-frontend forwarding
-	- /home/ubuntu/projects/ableProject/test-frontend
-	- reverse proxy server setting (not yet)
+### WebServer
 
 - front-end
 	- HTML5, CSS3 with bootstarp
 	- vanilla javascript (at first)
-	- to react.js (to scale up)
+	- reactJS
+	- nginX
+		- sps-frontend forwarding
+		- reverse proxy server setting (not yet)
 
-### WebApplicationServer(EC2)
+### restfulAPI 
 - back-end
-	- Nodejs 
-		- express, resetAPI
+	- nodejs 
+		- express
+		- DTO(모델보다는 단순 entity 개념으로) - Service (DAO에 가까우며 실제 쿼리 날리는 부분) - Controller (컨트롤러, 제일 앞단) => router (API)
+		- ORM을 사용하지 않고 mysql 모듈만 사용함 / 그래서 위와 같은 뼈대로 형태를 잡음 
+	- mysql
 
 ### restfulApi Docs(maybe localhost)
-- [swagger](https://github.com/swagger-api/swagger-node)
-	- ```npm install -g swagger```
-	- https://swagger.io/specification/
-- But, local 환경 조성은 나중에 할듯,, 우선 swagger hub를 사용!
+- 아직
 
 ### DataBase
 - mysql
-- mongoDB
+- mongoDB 
 
-### IDE
-- Visual Studio Code
-	- sftp
-
-### SSH
-- putty(just in window)
-	- private key: local download folder
-
-### ETC
+### DevOps
 - github
-
-### Open-source
 - Docker (not yet)
-- Elasticsearch (not yet)
 
 <p align="center">©copyright ALL Copyrights reserved by Hyeonwoo, Jeong</p>
