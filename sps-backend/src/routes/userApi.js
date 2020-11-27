@@ -3,10 +3,12 @@
 module.exports = (app) => {
   const user_api = require('../controllers/userController.js');
 
-  // todoList Routes
+  // user restful CRUD API 
   app.route('/users')
     .get(user_api.getAllUser)
-    .post(user_api.creatUser);
+    .post(user_api.creatUser)
+    .put(user_api.updateById)
+    .delete(user_api.removeById);
 
   app.route('/users/:id')
     .get(user_api.getAUser);

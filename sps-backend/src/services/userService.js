@@ -10,7 +10,9 @@ const User = require('../models/UsersDTO');
 
 //////////////////////////////////////////////////// make Task's methods
 
-User.getAUser = async function(id, result) {
+// result는 callback함수의 결과임 
+
+User.getAUser = async function (id, result) {
     connection.query("Select * from users WHERE id = ?", [id], function (err, res) {
         if (err) {
             console.log("getAUser service error: ", err);
@@ -23,7 +25,7 @@ User.getAUser = async function(id, result) {
     });
 };
 
-User.getAllUser = async function(result) {
+User.getAllUser = async function (result) {
     connection.query("Select * from users", function (err, res) {
         if (err) {
             console.log("getAllUser service error: ", err);
@@ -37,7 +39,7 @@ User.getAllUser = async function(result) {
 };
 
 
-User.creatUser = async function(newUser, result) {
+User.creatUser = async function (newUser, result) {
     connection.query("INSERT INTO users set ?", newUser, function (err, res) {
         if (err) {
             console.log("creatUser service error: ", err);
@@ -50,44 +52,46 @@ User.creatUser = async function(newUser, result) {
     });
 };
 
-/*
-Customer.getACustomerbyName = function (name, result) {
-    connection.query("Select * from customer WHERE name LIKE ?", ['%' + name + '%'], function (err, res) {
+User.updateById = function (updateUser, result) {
+    // parsing (ES6 문법)
+    const {
+        id,
+        password,
+        name,
+        birthday,
+        gender,
+        login_type,
+        fin_account,
+        updated_at
+    } = updateUser;
+
+    const sql = "UPDATE users SET `password` = ?, `name` = ?, `birthday` = ?, `gender` = ?, `login_type` = ?, `fin_account` = ?, `updated_at` = ? WHERE id = ?"
+    connection.query(sql, [password, name, birthday, gender, login_type, fin_account, updated_at, id],
+        function (err, res) {
+            if (err) {
+                console.log("updateByid service error: ", err);
+                result(null, err);
+                // console.log(res);
+            }
+            else {
+                // console.log(res);
+                result(null, res);
+            }
+        }
+    );
+};
+
+User.removeById = function (id, result) {
+    connection.query("DELETE FROM users WHERE id = ?", [id], function (err, res) {
         if (err) {
             console.log("error: ", err);
             result(null, err);
         }
         else {
-            console.log('A Customer : ', res);
             result(null, res);
         }
     });
 };
 
-// Customer.updateByid = function(id, customer, result){
-//   // isEnd 는 tinyint(1) => 0, 1 값 뿐
-//   connection.query("UPDATE customer SET isEnd = ? WHERE id = ?", [customer.isEnd, id], function (err, res) {
-//     if(err) {
-//       console.log("error: ", err);
-//       result(null, err);
-//     }
-//     else {
-//       result(null, res);
-//     }
-//   }); 
-// };
-
-Customer.remove = function (id, result) {
-    connection.query("DELETE FROM customer WHERE id = ?", [id], function (err, res) {
-        if (err) {
-            console.log("error: ", err);
-            result(null, err);
-        }
-        else {
-            result(null, res);
-        }
-    });
-};
-*/
 
 module.exports = User;
