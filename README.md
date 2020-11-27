@@ -26,7 +26,7 @@
 	- vanilla javascript (at first)
 	- reactJS
 	- nginX
-		- sps-frontend forwarding
+		- sps-frontend forwarding -> react building static files
 		- reverse proxy server setting (not yet)
 
 ### restfulAPI 
