@@ -5,7 +5,10 @@ const logger = require('morgan');
 const cors = require('cors');
 const escapeJSON = require('escape-json-node');
 
+// API mapping
 const customerApi = require('./src/routes/customerApi');
+const userApi = require('./src/routes/userApi');
+
 const app = express();
 
 app.use(logger('dev'));
@@ -16,6 +19,7 @@ app.use(cors()); // CORS 설정
 
 // API 라우팅 ~ 선언부 
 customerApi(app);
+userApi(app);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

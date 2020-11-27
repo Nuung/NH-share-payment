@@ -17,15 +17,17 @@ CREATE TABLE IF NOT EXISTS `customers` (
   created_at  DATE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- CREATE TABLE  users (
---   id      	   VARCHAR(40) PRIMARY KEY, # email
---   password 	   VARCHAR(300),
---   #token        VARCHAR(300),
---   profil_icon  VARCHAR(300), # image
---   nic_name     VARCHAR(20),
---   gender	   tinyint, # 0 1
---   created_date DATE
--- );
+CREATE TABLE  users (
+  id      	    VARCHAR(40) NOT NULL PRIMARY KEY,
+  password 	    VARCHAR(100),
+  name          VARCHAR(40),
+  birthday      VARCHAR(20), -- /([0-9]{2}(0[1-9]|1[0-2])(0[1-9]|[1,2][0-9]|3[0,1]))/
+  gender        TINYINT,
+  login_type    VARCHAR(40),
+  fin_account   VARCHAR(255),
+  created_at    DATE,
+  updated_at    DATE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- CREATE TABLE  report (
 --   id      	   		  INTEGER auto_increment PRIMARY KEY,  
