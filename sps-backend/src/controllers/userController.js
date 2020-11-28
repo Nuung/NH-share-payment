@@ -1,6 +1,7 @@
 'use strict';
 
 const User = require('../services/userService');
+const expressVaildator = require('express-validator'); // 유효성 검사 
 
 // Get A User
 const getAUser = async (req, res) => {
@@ -11,7 +12,7 @@ const getAUser = async (req, res) => {
                 res.send(err);
                 console.log('res a user', user);
             }
-            res.status(201).send(user)
+            res.status(200).send(user)
             // res.send(user);
         });
     }
@@ -19,7 +20,7 @@ const getAUser = async (req, res) => {
         console.log(error);
         throw new Error(error);
     }
-}
+};
 
 // Get All User
 const getAllUser = async (req, res) => {
@@ -30,7 +31,7 @@ const getAllUser = async (req, res) => {
                 res.send(err);
                 console.log('res', user);
             }
-            res.status(201).json({ user })
+            res.status(200).json({ user })
             // res.send(user);
         });
     }
@@ -38,11 +39,12 @@ const getAllUser = async (req, res) => {
         console.log(error);
         throw new Error(error);
     }
-}
+};
 
 // Creat A User
 const creatUser = async (req, res) => {
     try {
+        // newUser 값에 대한 값 보증 필요 
         let newUser = new User(req.body);
         if (!newUser.name) res.status(400).send({ error: true, message: 'Please provide name' });
 
@@ -56,12 +58,49 @@ const creatUser = async (req, res) => {
         console.log(error);
         throw new Error(error);
     }
+};
+
+const updateById = async (req, res) => {
+
+    const updateUser = new User(req.body, true);
+    try {
+        await User.updateByid(updateUser, function (err, result) {
+            console.log('userController - updateByid')
+            if (err) res.send(err);
+            res.status(201).send(result);
+        });
+    }
+    catch (error) {
+        console.log('userController - updateByid' + error);
+        throw new Error(error);
+    }
+};
+
+const removeById = async (req, res) => {
+
+    try {
+        await User.removeById(req.body.id, function (err, result) {
+            console.log('userController - removeById')
+            if (err) {
+                res.send(err);
+                console.log('res a user', result);
+            }
+            res.status(201).send(result)
+            // res.send(user);
+        });
+    }
+    catch (error) {
+        console.log(error);
+        throw new Error(error);
+    }
 }
 
 module.exports = {
     getAUser,
     getAllUser,
-    creatUser
+    creatUser,
+    updateById,
+    removeById
 }
 
 /*
