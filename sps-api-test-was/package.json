@@ -1,0 +1,23 @@
+{
+  "name": "sps-api-test-was",
+  "version": "1.0.0",
+  "description": "NH API test web aplication server for NH hackerton ",
+  "main": "app.js",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Nuung (Hyeon woo, Jeong)",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.21.0",
+    "debug": "^4.3.1",
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
+    "http": "0.0.1-security",
+    "http-errors": "^1.8.0",
+    "morgan": "^1.10.0",
+    "path": "^0.12.7"
+  }
+}

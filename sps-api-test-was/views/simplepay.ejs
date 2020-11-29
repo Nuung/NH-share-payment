@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="stylesheets/main.css">
+    <link rel="stylesheet" href="./lib/bootstrap/css/bootstrap.min.css">
+    <script src="./lib/jquery/jquery.min.js"></script>
+    <title>SPS - NH API TEST </title>
+</head>
+
+<body>
+    <div class="container">
+        <a class="btn btn-link" href="https://developers.nonghyup.com/guide/GU_1010">NH API 핀-어카운트 직접발급</a>
+        <br />
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="18" disabled style="resize: none;">
+            {
+                "Header": 
+                {
+                    "ApiNm": "InquireTransactionHistory",
+                    "Tsymd": "20201130",  // API 호출일자 (YYYYMMDD) , 테스트일로 변경
+                    "Trtm": "112428", // API 전송시각 (HHMMSS), 테스트시각으로 변경
+                    "Iscd": "기관코드를입력하세요", // 기관코드 ~ api 등록하면 발급 받음 
+                    "FintechApsno": "001",
+                    "ApiSvcCd": "ReceivedTransferA",
+                    "IsTuno": "0000", // 리퀘스트 마다 바꿔야 하는 부분 
+                    "AccessToken": "인증키를입력하세요"
+                },
+                "Bncd": "은행코드", // 농협은행:011, 상호금융:012
+                "Acno": "계좌번호",
+                "Insymd": "조회시작일자", // 최고 1년
+                "Ineymd": "조회종료일자", // 조회기간: 최대 3개월
+                "TrnsDsnc": "A", // A:전체 M:입금 D:출금, default : A
+                "Lnsq": "DESC", // ASC:오름차순, DESC:내림차순, default:ASC
+                "PageNo": "1", // default : 1, 조회건수 100건 초과하는 경우, (페이지번호 + 1)하여 연속거래 수행
+                "Dmcnt": "100"
+            }
+        </textarea>
+        <br />
+        <form class="OpenFinAccountDirect__form">
+            <input type="text" class="form-control" name="Tsymd" placeholder="Tsymd">
+            <input type="text" class="form-control" name="Trtm" placeholder="Trtm">
+            <input type="text" class="form-control" name="Iscd" placeholder="Iscd">
+            <input type="text" class="form-control" name="IsTuno" placeholder="IsTuno">
+            <small class="form-text text-muted">IsTuno 이거 무조건 바꿔야함 요청마다 ㅎㅎ;</small>
+            <input type="text" class="form-control" name="AccessToken" placeholder="AccessToken">
+            <input type="text" class="form-control" name="BrdtBrno" placeholder="BrdtBrno">
+            <input type="text" class="form-control" name="Bncd" placeholder="Bncd">
+            <input type="text" class="form-control" name="Acno" placeholder="Acno">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+    <div class="main">
+
+    </div>
+    <!--main-->
+
+    <footer>
+
+    </footer>
+</body>
+
+</html>
