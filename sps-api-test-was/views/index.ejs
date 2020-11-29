@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="stylesheets/main.css">
+    <link rel="stylesheet" href="./lib/bootstrap/css/bootstrap.min.css">
+    <script src="./lib/jquery/jquery.min.js"></script>
+    <title>SPS - NH API TEST </title>
+</head>
+
+<body>
+    <div class="container">
+        <a class="btn btn-link" href="https://developers.nonghyup.com/guide/GU_1010">NH API 핀-어카운트 직접발급</a>
+        <br />
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="18" disabled style="resize: none;">
+            { 
+                "Header": // 공통 부분 
+                { 
+                    "ApiNm": "OpenFinAccountDirect", 
+                    "Tsymd": "20201130",  // API 호출일자 (YYYYMMDD) , 테스트일로 변경
+                    "Trtm": "112428", // API 전송시각 (HHMMSS), 테스트시각으로 변경
+                    "Iscd": "000510", // 기관코드 ~ api 등록하면 발급 받음 
+                    "FintechApsno": "001", // 핀테크 앱 일련번호 
+                    "ApiSvcCd": "DrawingTransferA", 
+                    "IsTuno": "00001", // 리퀘스트 마다 바꿔야 하는 부분 
+                    "AccessToken": "26e498249f7820ef3f1e15e8e1fdb14d0fb068f5ef52e888513d00eb6c0b0e84"  // 엑세스 토큰 ~ api 등록하면 발급 받음 
+                }, 
+                "DrtrRgyn": "Y", 
+                "BrdtBrno": "19950704", // 생년월일 (생년이 4자리)
+                "Bncd": "011", // 은행 코드 ~ 011이 농협, 012 상호금융
+                "Acno": "3020000002115" // 계좌 번호 
+            }
+        </textarea>
+        <br />
+        <form class="OpenFinAccountDirect__form">
+            <input type="text" class="form-control" name="Tsymd" placeholder="Tsymd">
+            <input type="text" class="form-control" name="Trtm" placeholder="Trtm">
+            <input type="text" class="form-control" name="Iscd" placeholder="Iscd">
+            <input type="text" class="form-control" name="IsTuno" placeholder="IsTuno">
+            <small class="form-text text-muted">IsTuno 이거 무조건 바꿔야함 요청마다 ㅎㅎ;</small>
+            <input type="text" class="form-control" name="AccessToken" placeholder="AccessToken">
+            <input type="text" class="form-control" name="BrdtBrno" placeholder="BrdtBrno">
+            <input type="text" class="form-control" name="Bncd" placeholder="Bncd">
+            <input type="text" class="form-control" name="Acno" placeholder="Acno">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+    <div class="main">
+        20201130000000509 // 핀-어카운트
+        20201130000000510 // 핀-카드 
+    </div>
+    <!--main-->
+
+    <footer>
+
+    </footer>
+</body>
+
+</html>

@@ -1,0 +1,48 @@
+
+<div class="modal" id="main-modal" tabindex="-1" role="dialog" aria-labelledby="main-modalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="main-modalLabel">ADD DATA</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- ADD 할 사이트 -->
+        <div class="dropdown" style="display: inline-block;">
+          <button class="btn btn-secondary dropdown-toggle"
+                  type="button" id="modal-site-value" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false">
+            SITE
+          </button>
+          <div class="dropdown-menu" aria-labelledby="modal-site-value">
+            <a class="dropdown-item" href="#!">Nike</a>
+            <a class="dropdown-item" href="#!">Atmos</a>
+            <a class="dropdown-item" href="#!">Kasina</a>
+            <a class="dropdown-item" href="#!">Converse</a>
+            <a class="dropdown-item" href="#!">Onthespot</a>
+            <a class="dropdown-item" href="#!">Hoopcity</a>
+            <a class="dropdown-item" href="#!">Adidas</a>
+            <a class="dropdown-item" href="#!">Wconcept</a>
+            <a class="dropdown-item" href="#!">PMO</a>
+          </div>
+        </div>
+
+        <div class="modal-active-btn" style="display: inline-block;">
+          <button type="button" class="btn btn-secondary">Keywords</button>
+          <button type="button" class="btn btn-secondary">Restock</button>
+          <input type="text" id="modal-type-value" style="display: none;" value="">
+        </div>
+        
+        <div class="mb-4">
+          <input id="modal-url-value" class="form-control" type="text" placeholder="input total url" aria-label="input-url">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="modal-close" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" id="modal-submit" class="btn btn-primary">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>

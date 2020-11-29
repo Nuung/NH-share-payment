@@ -1,0 +1,53 @@
+/*
+    DEMO STYLE
+*/
+
+@import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #EDEFF3;
+}
+
+.container {
+    text-align: center;
+}
+
+.OpenFinAccountDirect__form {
+    text-align: center;
+}
+
+.OpenFinAccountDirect__form > input {
+    margin: 5px;
+}
+
+/* ---------------------------------------------------
+    Modal
+----------------------------------------------------- */
+
+.modal-body {
+    text-align: center;
+}
+
+.modal-body button {
+    width: 150px;
+    background-color: #638cb5;
+    margin-bottom: 10px;
+}
+
+.modal-footer button {
+    background-color: #638cb5;
+}
+
+/* ---------------------------------------------------
+    Footer
+----------------------------------------------------- */
+
+.footer-text {
+    text-align: center;
+}
+
+/* ---------------------------------------------------
+    MEDIAQUERIES
+----------------------------------------------------- */
+
+@media (max-width: 768px) {}
