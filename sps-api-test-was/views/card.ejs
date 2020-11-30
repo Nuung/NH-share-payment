@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="../stylesheets/main.css">
+    <link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css">
+    <script src="../lib/jquery/jquery.min.js"></script>
+    <link defer href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css"
+        rel="stylesheet">
+    <script defer
+        src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
+    <title>SPS - NH API TEST </title>
+</head>
+
+<body>
+    <div class="container">
+        <a class="btn btn-link" href="https://developers.nonghyup.com/guide/GU_2040">NH API 개인카드 승인내역조회</a>
+        <br />
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="18" disabled style="resize: none;">
+            {
+                "Header": {
+                  "ApiNm": "InquireCreditCardAuthorizationHistory",
+                  "Tsymd": "20201201", // 리퀘스트 날짜 
+                  "Trtm": "112428", // 리퀘스트 시간 ~ 이건 안바꿔도 됨 ㅎ 
+                  "Iscd": "000510", // 기관코드를입력하세요
+                  "FintechApsno": "001",
+                  "ApiSvcCd": "CardInfo",
+                  "IsTuno": "0000202012011", // random value / 현재 날짜와 + 카운터 값 변수로 하자 
+                  "AccessToken": "26e498249f7820ef3f1e15e8e1fdb14d0fb068f5ef52e888513d00eb6c0b0e84" // 인증키
+                },
+                "FinCard": "00829101234560000112345678919", // 핀 카드 발급 API로 발급 받은 핀 카드 번호 
+                "IousDsnc": "1", // 1:국내 2:해외, 테스트에서는 '1' 고정값으로 입력
+                "Insymd": "20191105", // 조회 시작일, 최고1년 전 
+                "Ineymd": "20191109", // 조회 종료일, 조회기간:최대3개월
+                "PageNo": "1", // default : 1, 조회건수 15건 초과하는 경우 (페이지번호 + 1)하여 연속거래 수행
+                "Dmcnt": "15" // 최대 요청건수 15건 - 페이지당 건수
+              }
+        </textarea>
+        <br />
+        <form class="OpenFinAccountDirect__form">
+            <input type="text" class="form-control" id="Tsymd" name="Tsymd" placeholder="Tsymd">
+            <input type="text" class="form-control" id="Trtm" name="Trtm" placeholder="Trtm">
+            <input type="text" class="form-control" id="Iscd" name="Iscd" placeholder="Iscd">
+            <div class="input-group IsTuno__warpper">
+                <input type="text" class="form-control" id="IsTuno" name="IsTuno" placeholder="IsTuno">
+                <button class="btn btn-outline-secondary" id="IsTuno__btn" type="button">update</button>
+            </div>
+            <small class="form-text text-muted">IsTuno 이거 무조건 바꿔야함 요청마다 ㅎㅎ;</small>
+            <input type="text" class="form-control" id="AccessToken" name="AccessToken" placeholder="AccessToken">
+            <input type="text" class="form-control" id="FinCard" name="FinCard" placeholder="FinCard">
+            <input type="text" class="form-control" id="IousDsnc" name="IousDsnc" placeholder="IousDsnc">
+            <input type="text" class="form-control" id="Insymd" name="Insymd" placeholder="Insymd">
+            <input type="text" class="form-control" id="Ineymd" name="Ineymd" placeholder="Ineymd">
+            <input type="text" class="form-control" id="PageNo" name="PageNo" placeholder="PageNo">
+            <input type="text" class="form-control" id="Dmcnt" name="Dmcnt" placeholder="Dmcnt">
+            <div class="submit__btn">
+                <input type="checkbox" class="form-control" id="isReal" checked data-toggle="toggle" data-on="To real"
+                    data-off="To local" data-onstyle="primary" data-offstyle="danger">
+                <input type="submit" class="btn btn-primary" id="submitReq" />
+            </div>
+
+        </form>
+    </div>
+    <div class="main">
+
+    </div>
+    <!--main-->
+
+    <footer>
+
+    </footer>
+</body>
+<script>
+    'use strict';
+    const getToday = (date) => {
+        let sYear = "" + date.getFullYear();
+        let sMonth = date.getMonth() + 1;
+        let sDate = date.getDate();
+
+        sMonth = sMonth > 9 ? sMonth : "0" + sMonth;
+        sDate = sDate > 9 ? sDate : "0" + sDate;
+        return sYear + sMonth + sDate;
+    }
+
+    // Make real request JSON
+    const parsingToJson = () => {
+        jQuery.fn.serializeObject = function () {
+            let obj = null;
+            try {
+                if (this[0].tagName && this[0].tagName.toUpperCase() == "FORM") {
+                    let arr = this.serializeArray();
+                    if (arr) {
+                        obj = {};
+                        jQuery.each(arr, function () { obj[this.name] = this.value; });
+                    }
+                }
+                // static header value 
+                obj["FintechApsno"] = "001";
+                obj["ApiSvcCd"] = "CardInfo";
+                obj["ApiNm"] = "InquireCreditCardAuthorizationHistory";
+            } catch (e) {
+                alert(e.message);
+            } finally { }
+            return obj;
+        };
+        return $('.OpenFinAccountDirect__form').serializeObject();
+    }
+
+    // ajax To real server 
+    const ajaxToReal = () => {
+        const headerKey = ["ApiNm", "Tsymd", "Trtm", "Iscd", "FintechApsno", "ApiSvcCd", "IsTuno", "AccessToken"];
+        const logs = parsingToJson();
+
+        let tempA = {};
+        let reqJson = {};
+        for (const key in logs) {
+            if (logs.hasOwnProperty(key)) {
+                if (headerKey.includes(key)) tempA[key] = logs[key];
+                else reqJson[key] = logs[key];
+            }
+        }
+        reqJson['Header'] = tempA;
+
+        fetch('https://developers.nonghyup.com/InquireCreditCardAuthorizationHistory.nh', {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json;charset=UTF-8',
+                'Accept-Encoding': 'gzip, deflate, br',
+                'Accept-Language': 'en,ko-KR;q=0.9,ko;q=0.8,en-US;q=0.7',
+                'Connection': 'keep-alive',
+                'Content-Length': '465',
+                'Content-Type': 'application/json',
+                'Host': 'developers.nonghyup.com',
+                'Origin': 'https://developers.nonghyup.com',
+                'Referer': 'https://developers.nonghyup.com/restapi/TO_1010',
+                'Sec-Fetch-Dest': 'empty',
+                'Sec-Fetch-Mode': 'cors',
+                'Sec-Fetch-Site': 'same-origin',
+                'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36'
+            },
+            body: (reqJson)
+        }).then(res => res.json())
+            .then(response => console.log('Success:', JSON.stringify(response)))
+            .catch(error => console.error('Error:', error));
+    }
+
+    // ajax To fake server to getting test values
+    const ajaxToLocal = () => {
+        const headerKey = ["ApiNm", "Tsymd", "Trtm", "Iscd", "FintechApsno", "ApiSvcCd", "IsTuno", "AccessToken"];
+        const logs = parsingToJson();
+
+        let tempA = {};
+        let reqJson = {};
+        for (const key in logs) {
+            if (logs.hasOwnProperty(key)) {
+                if (headerKey.includes(key)) tempA[key] = logs[key];
+                else reqJson[key] = logs[key];
+            }
+        }
+        reqJson['Header'] = tempA;
+
+        fetch('/pays/card', {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json;charset=UTF-8',
+            },
+            body: JSON.stringify(reqJson)
+        }).then(res => res.json())
+            .then((response) => {
+                // console.log('Success:', JSON.stringify(response));
+                const myjson = JSON.stringify(response, null, 2);
+                const x = window.open();
+                x.document.open();
+                x.document.write('<html><body><pre>' + myjson + '</pre></body></html>');
+                x.document.close();
+                x.focus();
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+    // −−−−−−−−−−−−−−−−−−−−−−−−−−− Static Function Area −−−−−−−−−−−−−−−−−−−−−−−−−−− // 
+
+    function init() {
+
+        // Dom Select −−−−−−−−−−−−−−−−−−−−−−−−−−−
+
+        const Tsymd = document.getElementById('Tsymd'); // to day setting 
+        const Trtm = document.getElementById('Trtm');
+        const Iscd = document.getElementById('Iscd');
+        const AccessToken = document.getElementById('AccessToken');
+        const FinCard = document.getElementById('FinCard');
+        const IousDsnc = document.getElementById('IousDsnc');
+        const Insymd = document.getElementById('Insymd');
+        const Ineymd = document.getElementById('Ineymd');
+        const PageNo = document.getElementById('PageNo');
+        const Dmcnt = document.getElementById('Dmcnt');
+
+        // button
+        const IsTuno = document.getElementById('IsTuno');
+        const IsTuno__btn = document.getElementById('IsTuno__btn');
+
+        Tsymd.value = getToday(new Date());
+        Trtm.value = "112428";
+        Iscd.value = "000510";
+        AccessToken.value = "26e498249f7820ef3f1e15e8e1fdb14d0fb068f5ef52e888513d00eb6c0b0e84";
+        FinCard.value = "00829101234560000112345678919";
+        IousDsnc.value = "1";
+        Insymd.value = "20191105";
+        Ineymd.value = "20191109";
+        PageNo.value = "1";
+        Dmcnt.value = "15";
+
+        // Event −−−−−−−−−−−−−−−−−−−−−−−−−−−
+
+        IsTuno__btn.addEventListener('click', (event) => {
+            const randNum = Math.floor(Math.random() * 100); // 0 ~ (max - 1) 까지의 정수 값을 생성
+            const time = (new Date).getTime();
+            IsTuno.value = Tsymd.value + String(time) + String(randNum);
+        });
+
+        document.getElementById('submitReq').addEventListener('click', (event) => {
+            event.preventDefault(); // 기본 액션 X 
+            const isReal = document.getElementById('isReal').checked;
+            if (isReal) ajaxToReal();
+            else ajaxToLocal();
+        });
+    }
+
+    // −−−−−−−−−−−−−−−−−−−−−−−−−−− Main Function Area −−−−−−−−−−−−−−−−−−−−−−−−−−− // 
+
+    init();
+</script>
+
+</html>

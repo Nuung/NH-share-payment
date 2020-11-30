@@ -16,8 +16,13 @@ body {
     text-align: center;
 }
 
-.OpenFinAccountDirect__form > input {
+.OpenFinAccountDirect__form>input, .IsTuno__warpper {
     margin: 5px;
+}
+
+.submit__btn {
+    margin-top: 10px;
+    margin-bottom: 30px;
 }
 
 /* ---------------------------------------------------
