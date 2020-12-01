@@ -74,7 +74,7 @@
     </footer>
 </body>
 <script>
-    'use strict';
+    // parsing Date Obj
     const getToday = (date) => {
         let sYear = "" + date.getFullYear();
         let sMonth = date.getMonth() + 1;
@@ -123,7 +123,6 @@
             }
         }
         reqJson['Header'] = tempA;
-
         fetch('https://developers.nonghyup.com/InquireCreditCardAuthorizationHistory.nh', {
             method: 'POST',
             mode: 'no-cors',
@@ -143,7 +142,7 @@
                 'Sec-Fetch-Site': 'same-origin',
                 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36'
             },
-            body: (reqJson)
+            body: JSON.stringify(reqJson),
         }).then(res => res.json())
             .then(response => console.log('Success:', JSON.stringify(response)))
             .catch(error => console.error('Error:', error));
@@ -157,24 +156,25 @@
         let tempA = {};
         let reqJson = {};
         for (const key in logs) {
-            if (logs.hasOwnProperty(key)) {
-                if (headerKey.includes(key)) tempA[key] = logs[key];
-                else reqJson[key] = logs[key];
-            }
+            // if (logs.hasOwnProperty(key)) {
+            if (headerKey.includes(key)) tempA[key] = logs[key];
+            else reqJson[key] = logs[key];
+            // }
         }
         reqJson['Header'] = tempA;
+        // console.log(JSON.stringify(reqJson));
 
         fetch('/pays/card', {
             method: 'POST',
-            mode: 'no-cors',
+            mode: 'cors',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json;charset=UTF-8',
             },
-            body: JSON.stringify(reqJson)
+            body: JSON.stringify(reqJson),
         }).then(res => res.json())
             .then((response) => {
-                // console.log('Success:', JSON.stringify(response));
+                console.log('Success:', JSON.stringify(response));
                 const myjson = JSON.stringify(response, null, 2);
                 const x = window.open();
                 x.document.open();
