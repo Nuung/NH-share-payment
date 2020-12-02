@@ -2,7 +2,7 @@
 
 const User = require('../services/userService');
 const expressVaildator = require('express-validator'); // 유효성 검사 
-
+const jwt = require('jsonwebtoken'); // 
 
 // Creat A User
 const creatUser = async (req, res) => {
@@ -12,7 +12,7 @@ const creatUser = async (req, res) => {
 
         // Check Id value
         const isNew = await User.findById(req.body.id);
-        console.log(`userController isNew vaule: ${isNew}`); // for check 
+        // console.log(`userController isNew vaule: ${isNew}`); // for check 
 
         if (isNew) {
             return res.status(400).json({
@@ -39,6 +39,66 @@ const creatUser = async (req, res) => {
         // throw new Error(error);
     }
 };
+
+
+// Login A User and Get a JWT(Token)
+const logInUser = async (req, res) => {
+    try {
+        const { id, password } = req.body;
+        const secret = req.app.get('jwt-secret');
+
+        // Check 
+        const check = (user) => {
+            if (!user) {
+                // user does not exist
+                throw new Error('User Login failed: user does not exist')
+            } else {
+                if (User.verify(user, password)) { // user exists, check the password
+                    // create a promise that generates jwt asynchronously
+                    const p = new Promise((resolve, reject) => {
+                        jwt.sign(
+                            {
+                                username: user.id
+                            },
+                            secret,
+                            {
+                                expiresIn: '7d',
+                                issuer: 'velopert.com',
+                                subject: 'userInfo'
+                            }, (err, token) => {
+                                if (err) reject(err)
+                                resolve(token)
+                            })
+                    });
+                    return p
+                } else {
+                    throw new Error('User Login failed: Wrong password cant be verified')
+                }
+            }
+        };
+
+        // respond the token 
+        const respond = (token) => {
+            res.json({
+                message: 'logged in successfully',
+                token
+            })
+        };
+
+        User.findById(id)
+            .then(check)
+            .then(respond)
+            .catch((err) => { throw new Error(err) });
+
+    } catch (error) {
+        console.log(`userController logInUser: ${error}`);
+        return res.status(404).json({
+            position: "userController creatUser",
+            message: error.message
+        });
+    }
+};
+
 
 // Get A User
 const getAUser = async (req, res) => {
@@ -121,7 +181,8 @@ module.exports = {
     getAllUser,
     creatUser,
     updateById,
-    removeById
+    removeById,
+    logInUser
 }
 
 /*
