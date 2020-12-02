@@ -2,7 +2,7 @@
 
 const User = require('../services/userService');
 const expressVaildator = require('express-validator'); // 유효성 검사 
-const jwt = require('jsonwebtoken'); // 
+const jwt = require('jsonwebtoken'); // User Login JWT Create
 
 // Creat A User
 const creatUser = async (req, res) => {
@@ -55,22 +55,23 @@ const logInUser = async (req, res) => {
             } else {
                 if (User.verify(user, password)) { // user exists, check the password
                     // create a promise that generates jwt asynchronously
-                    const p = new Promise((resolve, reject) => {
+                    return new Promise((resolve, reject) => {
                         jwt.sign(
                             {
-                                username: user.id
+                                userId: user.id,
+                                userName: user.name,
+                                userBirth: user.birthday
                             },
                             secret,
                             {
                                 expiresIn: '7d',
-                                issuer: 'velopert.com',
+                                issuer: 'spsProject',
                                 subject: 'userInfo'
                             }, (err, token) => {
                                 if (err) reject(err)
                                 resolve(token)
                             })
                     });
-                    return p
                 } else {
                     throw new Error('User Login failed: Wrong password cant be verified')
                 }
@@ -85,6 +86,7 @@ const logInUser = async (req, res) => {
             })
         };
 
+        // Main and Chainning (async await)
         User.findById(id)
             .then(check)
             .then(respond)
@@ -98,6 +100,15 @@ const logInUser = async (req, res) => {
         });
     }
 };
+
+
+// Check Login A User - JWT
+const userCheck = (req, res) => {
+    res.json({
+        success: true,
+        info: req.decoded
+    });
+}
 
 
 // Get A User
@@ -182,29 +193,6 @@ module.exports = {
     creatUser,
     updateById,
     removeById,
-    logInUser
+    logInUser,
+    userCheck
 }
-
-/*
-exports.create_a_customer = function (req, res) {
-  // newTask에 대한 검증이 필요함! -> 예외 상황엔 no insert  / newTask 노출 X -> 정규표현식 or / 모든 곳에 해당
-  // -> 내부기능이 있을 수 있다 -> 시큐어 코딩 정보 확인하기!
-  let new_customer = new Customer(req.body);
-
-  //handles null error
-  if (!new_customer.name) {
-    res.status(400).send({ error: true, message: 'Please provide name' });
-  }
-  else if (!new_customer.phonenum) {
-    res.status(400).send({ error: true, message: 'Please provide phonenum' });
-  }
-  else {
-    Customer.createCustomer(new_customer, function (err, customer) {
-      if (err)
-        res.send(err);
-
-      res.json(customer);
-    });
-  }
-};
-*/

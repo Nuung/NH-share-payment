@@ -1,4 +1,5 @@
 'use strict';
+const authMiddleware = require('../middlewares/auth'); // JTW 유효성 검사 
 
 module.exports = (app) => {
   const user_api = require('../controllers/userController.js');
@@ -10,14 +11,10 @@ module.exports = (app) => {
     .put(user_api.updateById)
     .delete(user_api.removeById);
 
-  app.route('/user/id')
-    .post(user_api.getAUser);
-
-  app.route('/user/login')
-    .post(user_api.logInUser);
-  /*
-  app.route('/customers/list/:id') // id is primary key
-    .get(customer_api.read_a_customer)
-    .delete(customer_api.delete_a_customer);
-  */
+  // get a user info and Login
+  app.route('/user/id').post(user_api.getAUser);
+  app.route('/user/login').post(user_api.logInUser);
+  // Auth
+  app.use('/user/check', authMiddleware);
+  app.route('/user/check').get(user_api.userCheck);
 };

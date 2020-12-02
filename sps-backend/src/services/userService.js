@@ -55,21 +55,17 @@ User.logIn = async function (user, result) {
     } catch (error) {
 
     }
-}
+};
 
 // User check the Password by bcrypt
 User.verify = function (user, password) {
-    try {
-        // 지금 들어온 input password를 hashing하고 DB 값과 비교해봐야함 
-        const hash = bcrypt.hashSync(password, saltRounds);
-        console.log(bcrypt.compareSync(user.password, hash));
-        return (bcrypt.compareSync(user.password, hash));
+    try { // 지금 들어온 input password를 hashing된 DB 값과 비교해봐야함 
+        return (bcrypt.compareSync(password, user.password));
     } catch (error) {
         console.log(`userServeice verify Error: ${error}`);
         throw new Error(`userServeice verify Error: ${error}`);
     }
-
-}
+};
 
 // User find By id for ID 중복 Check
 User.findById = async function (id) {
@@ -82,7 +78,7 @@ User.findById = async function (id) {
         console.log(`userServeice findById Error: ${error}`);
         throw new Error(`userServeice findById Error: ${error}`);
     }
-}
+};
 
 // Get A user Information
 User.getAUser = async function (id, result) {
