@@ -10,8 +10,8 @@ module.exports = (app) => {
     .put(user_api.updateById)
     .delete(user_api.removeById);
 
-  app.route('/users/:id')
-    .get(user_api.getAUser);
+  app.route('/users/id')
+    .post(user_api.getAUser);
 
   /*
   app.route('/customers/list/:id') // id is primary key

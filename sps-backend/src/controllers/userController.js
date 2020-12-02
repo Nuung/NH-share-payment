@@ -3,16 +3,56 @@
 const User = require('../services/userService');
 const expressVaildator = require('express-validator'); // 유효성 검사 
 
+
+// Creat A User
+const creatUser = async (req, res) => {
+    try {
+        // req.body 값에 대한 값 보증 필요 and Vaildatation
+        if (!req.body.name) return res.status(400).send({ error: true, message: 'Please provide name' });
+
+        // Check Id value
+        const isNew = await User.findById(req.body.id);
+        console.log(`userController isNew vaule: ${isNew}`); // for check 
+
+        if (isNew) {
+            return res.status(400).json({
+                position: "userController creatUser",
+                message: '이미 가입 된 사용자 아이디 입니다.'
+            });
+        }
+        else {
+            // Main 
+            let newUser = new User(req.body);
+            await User.creatUser(newUser, function (err, user) {
+                console.log('userController - creatUser')
+                if (err) return res.send(err);
+                return res.status(201).json({ user });
+            });
+        }
+    }
+    catch (error) {
+        console.log(error);
+        return res.status(404).json({
+            position: "userController creatUser",
+            message: error.message
+        });
+        // throw new Error(error);
+    }
+};
+
 // Get A User
 const getAUser = async (req, res) => {
     try {
-        await User.getAUser(req.params.id, function (err, user) {
+        // req.body (id value) 값에 대한 값 보증 필요 and Vaildatation
+        if (!req.body.id) res.status(400).send({ error: true, message: 'Please provide id' });
+
+        await User.getAUser(req.body.id, function (err, user) {
             console.log('userController - getAUser')
             if (err) {
                 res.send(err);
                 console.log('res a user', user);
             }
-            res.status(200).send(user)
+            return res.status(200).json(user)
             // res.send(user);
         });
     }
@@ -33,25 +73,6 @@ const getAllUser = async (req, res) => {
             }
             res.status(200).json({ user })
             // res.send(user);
-        });
-    }
-    catch (error) {
-        console.log(error);
-        throw new Error(error);
-    }
-};
-
-// Creat A User
-const creatUser = async (req, res) => {
-    try {
-        // newUser 값에 대한 값 보증 필요 
-        let newUser = new User(req.body);
-        if (!newUser.name) res.status(400).send({ error: true, message: 'Please provide name' });
-
-        await User.creatUser(newUser, function (err, user) {
-            console.log('userController - creatUser')
-            if (err) res.send(err);
-            res.status(201).json({ user })
         });
     }
     catch (error) {
