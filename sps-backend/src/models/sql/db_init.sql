@@ -29,6 +29,18 @@ CREATE TABLE  users (
   updated_at    DATE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE  user_cards (
+  id      	    VARCHAR(40) NOT NULL PRIMARY KEY,
+  user_id 	    VARCHAR(100),
+  name          VARCHAR(40),
+  fin_card      VARCHAR(255),
+  created_at    DATE,
+  updated_at    DATE,
+  FOREIGN KEY ( user_id ) REFERENCES users(id) 
+  ON DELETE CASCADE
+  ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 -- CREATE TABLE  report (
 --   id      	   		  INTEGER auto_increment PRIMARY KEY,  
 --   report_comment      VARCHAR(300),
