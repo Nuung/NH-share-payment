@@ -1,30 +1,31 @@
 'use strict';
 
-const User = require('../services/userService');
-const expressVaildator = require('express-validator'); // 유효성 검사 
+const UserCard = require('../services/userCardService');
+const { body } = require('express-validator'); // 유효성 검사 
 const jwt = require('jsonwebtoken'); // User Login JWT Create
 
-// Creat A User
-const creatUser = async (req, res) => {
+// Creat a user card
+// 카드 번호를 입력 받고 -> NH API를 통해 핀카드 발급 받고
+// -> NH API를 통해 발급 확인을 받고 -> 핀카드 번호를 입력해야함 
+
+const creatUserCard = async (req, res) => {
     try {
         // req.body 값에 대한 값 보증 필요 and Vaildatation
         if (!req.body.name) return res.status(400).send({ error: true, message: 'Please provide name' });
 
         // Check Id value
         const isNew = await User.findById(req.body.id);
-        // console.log(`userController isNew vaule: ${isNew}`); // for check 
-
         if (isNew) {
             return res.status(400).json({
-                position: "userController creatUser",
-                message: '이미 가입 된 사용자 아이디 입니다.'
+                position: "userCardController creatUserCard",
+                message: '이미 등록된 카드 번호 입니다!'
             });
         }
         else {
             // Main 
             let newUser = new User(req.body);
             await User.creatUser(newUser, function (err, user) {
-                console.log('userController - creatUser')
+                console.log('userCardController creatUserCard')
                 if (err) return res.send(err);
                 return res.status(201).json({ user });
             });
@@ -33,84 +34,14 @@ const creatUser = async (req, res) => {
     catch (error) {
         console.log(error);
         return res.status(404).json({
-            position: "userController creatUser",
+            position: "userCardController creatUserCard",
             message: error.message
         });
         // throw new Error(error);
     }
 };
 
-
-// Login A User and Get a JWT(Token)
-const logInUser = async (req, res) => {
-    try {
-        const { id, password } = req.body;
-        const secret = req.app.get('jwt-secret');
-
-        // Check 
-        const check = (user) => {
-            if (!user) {
-                // user does not exist
-                throw new Error('User Login failed: user does not exist')
-            } else {
-                if (User.verify(user, password)) { // user exists, check the password
-                    // create a promise that generates jwt asynchronously
-                    return new Promise((resolve, reject) => {
-                        jwt.sign(
-                            {
-                                userId: user.id,
-                                userName: user.name,
-                                userBirth: user.birthday
-                            },
-                            secret,
-                            {
-                                expiresIn: '7d',
-                                issuer: 'spsProject',
-                                subject: 'userInfo'
-                            }, (err, token) => {
-                                if (err) reject(err)
-                                resolve(token)
-                            })
-                    });
-                } else {
-                    throw new Error('User Login failed: Wrong password cant be verified')
-                }
-            }
-        };
-
-        // respond the token 
-        const respond = (token) => {
-            res.json({
-                message: 'logged in successfully',
-                token
-            })
-        };
-
-        // Main and Chainning (async await)
-        User.findById(id)
-            .then(check)
-            .then(respond)
-            .catch((err) => { throw new Error(err) });
-
-    } catch (error) {
-        console.log(`userController logInUser: ${error}`);
-        return res.status(404).json({
-            position: "userController creatUser",
-            message: error.message
-        });
-    }
-};
-
-
-// Check Login A User - JWT
-const userCheck = (req, res) => {
-    res.json({
-        success: true,
-        info: req.decoded
-    });
-}
-
-
+/*
 // Get A User
 const getAUser = async (req, res) => {
     try {
@@ -186,13 +117,15 @@ const removeById = async (req, res) => {
         throw new Error(error);
     }
 }
+*/
 
 module.exports = {
-    getAUser,
-    getAllUser,
-    creatUser,
-    updateById,
-    removeById,
-    logInUser,
-    userCheck
-}
+    test
+    // getAUser,
+    // getAllUser,
+    // creatUser,
+    // updateById,
+    // removeById,
+    // logInUser,
+    // userCheck
+};

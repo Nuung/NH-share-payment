@@ -1,5 +1,6 @@
 'use strict';
 const authMiddleware = require('../middlewares/auth'); // JTW 유효성 검사 
+const { validateUser } = require('../middlewares/validators/userValidator');
 
 module.exports = (app) => {
   const user_api = require('../controllers/userController.js');
@@ -7,7 +8,7 @@ module.exports = (app) => {
   // user restful CRUD API 
   app.route('/users')
     .get(user_api.getAllUser)
-    .post(user_api.creatUser)
+    .post(validateUser, user_api.creatUser)
     .put(user_api.updateById)
     .delete(user_api.removeById);
 

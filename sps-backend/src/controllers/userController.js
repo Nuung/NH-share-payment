@@ -1,10 +1,13 @@
 'use strict';
 
 const User = require('../services/userService');
-const expressVaildator = require('express-validator'); // 유효성 검사 
 const jwt = require('jsonwebtoken'); // User Login JWT Create
 
-// Creat A User
+/**
+ * @desc    - create new User
+ * @method  - POST
+ * @apiDocs - Notion 
+ */
 const creatUser = async (req, res) => {
     try {
         // req.body 값에 대한 값 보증 필요 and Vaildatation
@@ -102,7 +105,7 @@ const logInUser = async (req, res) => {
 };
 
 
-// Check Login A User - JWT
+// 웹 토큰 단순 테스트를 위한 함수 하나 Check Login A User - JWT
 const userCheck = (req, res) => {
     res.json({
         success: true,

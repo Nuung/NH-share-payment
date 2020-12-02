@@ -7,7 +7,7 @@ const connection = require('../models/database');
 const pool = require('../models/database2');
 
 // Object constructor ~ DTO
-const UserCard = require('../models/UserCardDTO');
+const UserCard = require('../models/UserCardsDTO');
 const bcrypt = require('bcrypt'); // hashing the password
 const saltRounds = 10;
 

@@ -29,4 +29,4 @@ const UserCard = function (user_card, isUpdate = false) { // 대상자 (수혜�
     }
 };
 
-module.exports = User;
+module.exports = UserCard;
