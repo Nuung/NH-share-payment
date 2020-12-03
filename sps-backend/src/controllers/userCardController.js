@@ -26,47 +26,86 @@ const creatUserCard = async (req, res) => {
                 UserCard.CheckOpenFinCardDirect(userBirth, Rgno, function (err, response) {
                     if (err) throw new Error(`userCardController CheckOpenFinCardDirect Error: ${err}`);
                     const { Fincard, Rsms } = response; // 드디어 발급된 핀 카드 번호 
-                    if (!Rgno) throw new Error(`Body값 또는 내부 데이터 에러: ${Rsms}`);
-                    else {
-                        // Create A UserCard 
-                        // Check FinCard Number 중복
-                        // const isNew = await UserCard.findByFinCard(Fincard);
-                        // if (isNew) {
-                        //     return res.status(400).json({
-                        //         position: "userCardController creatUserCard",
-                        //         message: '이미 등록된 카드 번호 입니다!'
-                        //     });
-                        // }
-                        // Create Main Function
-                        const temp_ = { // make a new UserCard Obj
-                            id: req.body.id,
-                            user_id: userId,
-                            name: req.body.name,
-                            fin_card: Fincard
-                        };
-                        const newUserCard = new UserCard(temp_);
-                        UserCard.creatUserCard(newUserCard, function (err, user) {
-                            console.log('userCardController creatUserCard');
-                            if (err) throw new Error(`userCardController creatUserCard Error: ${err}`);
-                            return res.status(201).json({ user });
-                        });
-                    }
+
+                    // Create A UserCard 
+                    // Check FinCard Number 중복
+                    // const isNew = await UserCard.findByFinCard(Fincard);
+                    // if (isNew) {
+                    //     return res.status(400).json({
+                    //         position: "userCardController creatUserCard",
+                    //         message: '이미 등록된 카드 번호 입니다!'
+                    //     });
+                    // }
+                    // Create Main Function
+                    const temp_ = { // make a new UserCard Obj
+                        id: req.body.id,
+                        user_id: userId,
+                        name: req.body.name,
+                        fin_card: Fincard
+                    };
+                    const newUserCard = new UserCard(temp_);
+                    UserCard.creatUserCard(newUserCard, function (err, user) {
+                        console.log('userCardController creatUserCard');
+                        if (err) throw new Error(`userCardController creatUserCard Error: ${Rsms} And ${err}`);
+                        return res.status(201).json({ user });
+                    });
                 }); // FinCard발급하기
             }
         }); // FinCard발급을 위한 발급 번호받기 ~ and of await
-        
-        // 핀카드 번호까지 모두 성공해야 end of await, 아래 영역 진입! 
+
+        // end of await, 아래 영역 진입! 
         console.log('\u001b[1m', "End of userCardController creatUserCard API");
     }
     catch (error) {
-        console.log(error);
+        console.log(`userCardController creatUserCard: ${error}`);
         return res.status(404).json({
             position: "userCardController creatUserCard",
             message: error.message
         });
-        // throw new Error(error);
     }
 };
+
+
+// 개인 카드 승인 내역 조회 API
+// 얘는 일단 api자체가 비완성형임, 그래서 test-server api 끌어다가 돌리든지 해야할 듯 
+// 승인내역 조회 -> card pay history (Temp db for 분류화된 payments db) create
+const creatUserCardPayHistory = async (req, res) => {
+    try {
+
+        const { headers } = req;
+        const { userId, userName, userBirth } = jwt.decode(headers['x-access-token']);
+
+        const isNew = await UserCard.findByUserId(userId);
+        if (!isNew) {
+            return res.status(400).json({
+                position: "userCardController creatUserCardPayHistory",
+                message: '유저 ID에 맞는 카드가 등록되어 있지 않습니다. 또는 유저아이디와 다른 판키드 넘버입니다.'
+            });
+        }
+        else {
+            const reqInfo = {
+                startDate: req.body.startDate,
+                endDate: req.body.endDate,
+                pageNo: req.body.pageNo,
+                cnt: req.body.cnt
+            }
+            await UserCard.InquireCreditCardAuthorizationHistory(FinCard, reqInfo, function (err, response) {
+                if (err) throw new Error(`userCardController InquireCreditCardAuthorizationHistory Error: ${err}`);
+                else {
+                    const { REC } = response; // cnt 만큼 per page Number 리스트업 
+                }
+            });
+        }
+    }
+    catch (error) {
+        console.log(`userCardController creatUserCardPayHistory: ${error}`);
+        return res.status(404).json({
+            position: "userCardController creatUserCardPayHistory",
+            message: error.message
+        });
+    }
+};
+
 
 /*
 // Get A User

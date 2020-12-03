@@ -41,13 +41,17 @@ const randomIsTuno = (date) => {
 //////////////////////////////////////////////////// make NH's API methods
 // NH API 공통부(Header) 생성
 const setHeader = (apiName) => {
+    let svcd = "";
+    if (apiName === "InquireCreditCardAuthorizationHistory") svcd = "CardInfo";
+    else svcd = "DrawingTransferA";
+
     return {
         "ApiNm": apiName,
         "Tsymd": String(new Date().yyyymmdd()),
         "Trtm": "112428",
         "Iscd": String(appConfig.parsed.ISCD),
         "FintechApsno": "001",
-        "ApiSvcCd": "DrawingTransferA",
+        "ApiSvcCd": svcd,
         "IsTuno": String(randomIsTuno(new Date().yyyymmdd())).slice(0, 20),
         "AccessToken": String(appConfig.parsed.ACCESS_TOKEN)
     };
@@ -86,7 +90,7 @@ UserCard.OpenFinCardDirect = async function (userBirth, cardno, result) {
         console.error(`UserCardServeice OpenFinCardDirect: ${e}`);
         result(e, null);
     });
-}
+};
 
 
 /**
@@ -121,8 +125,46 @@ UserCard.CheckOpenFinCardDirect = async function (userBirth, pinCard, result) {
         result(e, null);
         // throw new Error(`UserCardServeice CheckOpenFinCardDirect: ${e}`);
     });
-}
+};
 
+
+/**
+ * @desc    - 개인카드 승인내역조회 / InquireCreditCardAuthorizationHistory.nh
+ * @method  - POST
+ * @apiDocs - https://developers.nonghyup.com/guide/GU_2040
+ */
+UserCard.InquireCreditCardAuthorizationHistory = async function (FinCard, reqInfo, result) {
+    // console.log(`UserCardServeice CheckOpenFinCardDirect, ${userBirth}, ${pinCard}`);
+    // console.log(setHeader("CheckOpenFinCardDirect"));
+    await axios.request({
+        method: 'POST',
+        url: `${nhAPIUrl}/InquireCreditCardAuthorizationHistory.nh`,
+        headers: {
+            'accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        data: { // 얘는 API가 기본적으로 비 완성형이라;; static값으로 박아둠 
+            "Header": setHeader("InquireCreditCardAuthorizationHistory"),
+            "FinCard": "00829101234560000112345678919", // FinCard
+            "IousDsnc": "1",
+            "Insymd": "20191105", // startDate / reqInfo.startDate
+            "Ineymd": "20191109", // endDate / reqInfo.endDate
+            "PageNo": "1", // Number of Pages / reqInfo.pageNo
+            "Dmcnt": "15" // How many data be listed in one page / reqInfo.cnt
+        }
+    }).then(response => {
+        const { data: responseBody, status: responseCode } = response;
+        if (responseCode == 200) result(null, responseBody);
+        else {
+            console.log(responseBody + ", Status code: " + responseCode);
+            result(null, responseBody);
+        }
+    }).catch(e => {
+        console.error(`UserCardServeice CheckOpenFinCardDirect: ${e}`);
+        result(e, null);
+        // throw new Error(`UserCardServeice CheckOpenFinCardDirect: ${e}`);
+    });
+};
 
 //////////////////////////////////////////////////// make Task's methods
 // result는 callback함수의 결과임 
@@ -154,6 +196,20 @@ UserCard.findByFinCard = async function (FinCard) {
     const connection = await pool.getConnection(async conn => conn);
     try {
         const [rows] = await connection.query("Select * from user_cards WHERE fin_card = ?", [FinCard]);
+        if (isAllEmpty(rows)) return false;
+        else return rows[0];
+    } catch (error) {
+        console.log(`userServeice findByFinCard Error: ${error}`);
+        throw new Error(`userServeice findByFinCard Error: ${error}`);
+    }
+};
+
+// UserCard find By id for FinCard for Requet to 카드 승인 내역 조회 
+UserCard.findByUserId = async function (userId) {
+    const connection = await pool.getConnection(async conn => conn);
+    try {
+        // 여러개인 상황은 아직 처리 안함 ㅎ 어짜피 API에 카드 번호 하나 밖에 없어 ㅅㅂ ㅠㅠ
+        const [rows] = await connection.query("Select * from user_cards WHERE user_id = ?", [userId]);
         if (isAllEmpty(rows)) return false;
         else return rows[0];
     } catch (error) {
