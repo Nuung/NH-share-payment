@@ -71,12 +71,11 @@ const creatUserCard = async (req, res) => {
 // 승인내역 조회 -> card pay history (Temp db for 분류화된 payments db) create
 const creatUserCardPayHistory = async (req, res) => {
     try {
-
         const { headers } = req;
         const { userId, userName, userBirth } = jwt.decode(headers['x-access-token']);
 
-        const isNew = await UserCard.findByUserId(userId);
-        if (!isNew) {
+        const targetCard = await UserCard.findByUserId(userId);
+        if (!targetCard) {
             return res.status(400).json({
                 position: "userCardController creatUserCardPayHistory",
                 message: '유저 ID에 맞는 카드가 등록되어 있지 않습니다. 또는 유저아이디와 다른 판키드 넘버입니다.'
@@ -89,10 +88,11 @@ const creatUserCardPayHistory = async (req, res) => {
                 pageNo: req.body.pageNo,
                 cnt: req.body.cnt
             }
-            await UserCard.InquireCreditCardAuthorizationHistory(FinCard, reqInfo, function (err, response) {
+            await UserCard.InquireCreditCardAuthorizationHistory(targetCard.fin_card, reqInfo, function (err, response) {
                 if (err) throw new Error(`userCardController InquireCreditCardAuthorizationHistory Error: ${err}`);
                 else {
                     const { REC } = response; // cnt 만큼 per page Number 리스트업 
+                    return res.status(201).json( REC );
                 }
             });
         }
@@ -186,7 +186,8 @@ const removeById = async (req, res) => {
 */
 
 module.exports = {
-    creatUserCard
+    creatUserCard,
+    creatUserCardPayHistory
     // getAUser,
     // getAllUser,
     // creatUser,

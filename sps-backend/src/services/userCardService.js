@@ -3,7 +3,6 @@
 // db setting / connect to DB -> and connection Test
 const connection = require('../models/database');
 const axios = require('axios');
-const request = require('request');
 const appConfig = require('dotenv').config(); // env config ------
 
 // call back 지옥 탈출을 위한 추가 db모듈 
@@ -188,7 +187,6 @@ UserCard.creatUserCard = async function (newUserCard, result) {
         console.log(`userServeice creatUser Error: ${error}`);
         throw new Error(`userServeice creatUser Error: ${error}`);
     }
-
 };
 
 // UserCard find By id for FinCard 중복 Check
