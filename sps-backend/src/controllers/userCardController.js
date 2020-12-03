@@ -1,6 +1,7 @@
 'use strict';
 
 const UserCard = require('../services/userCardService');
+const UserCardPayment = require('../services/userPaymentService');
 const jwt = require('jsonwebtoken'); // User Login JWT Create
 const { response } = require('express');
 
@@ -74,6 +75,7 @@ const creatUserCardPayHistory = async (req, res) => {
         const { headers } = req;
         const { userId, userName, userBirth } = jwt.decode(headers['x-access-token']);
 
+        // get target UserCard by token's userId
         const targetCard = await UserCard.findByUserId(userId);
         if (!targetCard) {
             return res.status(400).json({
@@ -92,9 +94,21 @@ const creatUserCardPayHistory = async (req, res) => {
                 if (err) throw new Error(`userCardController InquireCreditCardAuthorizationHistory Error: ${err}`);
                 else {
                     const { REC } = response; // cnt 만큼 per page Number 리스트업 
-                    return res.status(201).json( REC );
+                    // 중요한건 여기서 userCard payment (history) table update -> 유저가 카테고리 고를 수 있게 
+                    UserCardPayment.creatUserCardPayHistory(userId, targetCard.id, REC, function (err, insertIdCounter) {
+                        if(err) throw new Error(`userCardController creatUserCardPayHistory Error: ${err}`);
+                        else {
+                            return res.status(201).json({
+                                position: "userCardController creatUserCardPayHistory",
+                                message: `${insertIdCounter} rows was added!`
+                            });
+                        }
+                    });
+
                 }
             });
+
+            // await InquireCreditCardAuthorizationHistory 끝 
         }
     }
     catch (error) {

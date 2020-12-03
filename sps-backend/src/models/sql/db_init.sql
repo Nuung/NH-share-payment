@@ -32,7 +32,7 @@ CREATE TABLE  users (
 
 CREATE TABLE  user_cards (
   id      	    VARCHAR(40) NOT NULL PRIMARY KEY,
-  user_id 	    VARCHAR(100),
+  user_id 	    VARCHAR(40),
   name          VARCHAR(40),
   fin_card      VARCHAR(255),
   created_at    DATE,
@@ -42,15 +42,46 @@ CREATE TABLE  user_cards (
   ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- CREATE TABLE  report (
---   id      	   		  INTEGER auto_increment PRIMARY KEY,  
---   report_comment      VARCHAR(300),
---   report_user_id      VARCHAR(100),
---   reported_user_id    VARCHAR(100),
---   report_review_id	  VARCHAR(60),
---   reported_date		  DATE,
---   reported_clear_date DATE,
---   FOREIGN KEY (report_user_id) REFERENCES users(id),
---   FOREIGN KEY (reported_user_id) REFERENCES users(id),
---   FOREIGN KEY (report_review_id) REFERENCES reviews(id)
--- );
+CREATE TABLE  user_payment_history (
+  id      	    INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  user_id 	    VARCHAR(40),
+  card_id       VARCHAR(40) NOT NULL,
+  CardAthzNo    VARCHAR(30) NOT NULL,
+  Trdd          DATE,
+  Txtm          TIME,
+  Usam          VARCHAR(30),
+  AfstNoBrno    VARCHAR(20),
+  AfstNo        VARCHAR(30), -- 가맹점 번호 
+  AfstNm        VARCHAR(100), -- 가맹점 명 
+  AmslKnd       VARCHAR(2),
+  Tris          VARCHAR(2),
+  FOREIGN KEY ( user_id ) REFERENCES users(id) 
+  ON DELETE CASCADE
+  ON UPDATE CASCADE,
+  FOREIGN KEY ( card_id ) REFERENCES user_cards(id) 
+  ON DELETE CASCADE
+  ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE  user_payments (
+  id      	    INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  user_id 	    VARCHAR(40),
+  card_id       VARCHAR(40) NOT NULL,
+  CardAthzNo    VARCHAR(30) NOT NULL,
+  Trdd          DATE,
+  Txtm          TIME,
+  Usam          VARCHAR(30),
+  AfstNoBrno    VARCHAR(20),
+  AfstNo        VARCHAR(30), -- 가맹점 번호 
+  AfstNm        VARCHAR(100), -- 가맹점 명 
+  AmslKnd       VARCHAR(2),
+  Tris          VARCHAR(2)
+  category      VARCHAR(10),
+  created_at    DATE,
+  FOREIGN KEY ( user_id ) REFERENCES users(id) 
+  ON DELETE CASCADE
+  ON UPDATE CASCADE,
+  FOREIGN KEY ( card_id ) REFERENCES user_cards(id) 
+  ON DELETE CASCADE
+  ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
