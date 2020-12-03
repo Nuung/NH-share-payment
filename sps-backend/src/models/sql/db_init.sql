@@ -9,13 +9,14 @@ commit;
 
 USE spsProject;
 
-CREATE TABLE IF NOT EXISTS `customers` (
-  id          int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  email       varchar(255) NOT NULL,
-  name        varchar(255) NOT NULL,
-  active      BOOLEAN DEFAULT false,
-  created_at  DATE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+-- "TEST DATA BASE"
+-- CREATE TABLE IF NOT EXISTS `customers` (
+--   id          int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+--   email       varchar(255) NOT NULL,
+--   name        varchar(255) NOT NULL,
+--   active      BOOLEAN DEFAULT false,
+--   created_at  DATE
+-- ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE  users (
   id      	    VARCHAR(40) NOT NULL PRIMARY KEY,

@@ -8,11 +8,11 @@ module.exports = (app) => {
   // user restful CRUD API 
   app.route('/users')
     .get(user_api.getAllUser)
-    .post(validateUser, user_api.creatUser)
     .put(user_api.updateById)
     .delete(user_api.removeById);
 
   // get a user info and Login
+  app.route('/user').post(validateUser, user_api.creatUser)
   app.route('/user/id').post(user_api.getAUser);
   app.route('/user/login').post(user_api.logInUser);
   

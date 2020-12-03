@@ -40,9 +40,11 @@ const creatUser = async (req, res) => {
         // throw new Error(error);
     }
 };
-
-
-// Login A User and Get a JWT(Token)
+/**
+ * @desc    - Login A User and Get a JWT(Token)
+ * @method  - POST
+ * @apiDocs - { id, password } ~ after validatation
+ */
 const logInUser = async (req, res) => {
     try {
         const { id, password } = req.body;

@@ -34,9 +34,8 @@ const isAllEmpty = (value) => {
 
 // 오늘 날짜 + 시간 + 난수 기반으로 만드는 랜덤 Tuno value
 const randomIsTuno = (date) => {
-    const randNum = Math.floor(Math.random() * 100); // 0 ~ (max - 1) 까지의 정수 값을 생성
     const time = (new Date).getTime();
-    return date + String(time) + String(randNum);
+    return date + String(time);
 }
 
 //////////////////////////////////////////////////// make NH's API methods
@@ -44,13 +43,13 @@ const randomIsTuno = (date) => {
 const setHeader = (apiName) => {
     return {
         "ApiNm": apiName,
-        "Tsymd": new Date().yyyymmdd(),
+        "Tsymd": String(new Date().yyyymmdd()),
         "Trtm": "112428",
-        "Iscd": appConfig.parsed.ISCD,
+        "Iscd": String(appConfig.parsed.ISCD),
         "FintechApsno": "001",
         "ApiSvcCd": "DrawingTransferA",
-        "IsTuno": randomIsTuno(new Date().yyyymmdd()),
-        "AccessToken": appConfig.parsed.ACCESS_TOKEN
+        "IsTuno": String(randomIsTuno(new Date().yyyymmdd())).slice(0, 20),
+        "AccessToken": String(appConfig.parsed.ACCESS_TOKEN)
     };
 };
 
@@ -61,10 +60,9 @@ const nhAPIUrl = "https://developers.nonghyup.com";
  * @method  - POST
  * @apiDocs - https://developers.nonghyup.com/guide/GU_1030 
  */
-UserCard.OpenFinCardDirect = async function (userBirth, cardno) {
-    console.log(`UserCardServeice OpenFinCardDirect, ${userBirth}, ${cardno}`);
-    console.log(setHeader("OpenFinCardDirect"));
-
+UserCard.OpenFinCardDirect = async function (userBirth, cardno, result) {
+    // console.log(`UserCardServeice OpenFinCardDirect, ${userBirth}, ${cardno}`);
+    // console.log(setHeader("OpenFinCardDirect"));
     await axios.request({
         method: 'POST',
         url: `${nhAPIUrl}/OpenFinCardDirect.nh`,
@@ -74,85 +72,55 @@ UserCard.OpenFinCardDirect = async function (userBirth, cardno) {
         },
         data: {
             "Header": setHeader("OpenFinCardDirect"),
-            "Brdt": userBirth,
-            "Cano": cardno
+            "Brdt": String(userBirth),
+            "Cano": String(cardno)
         }
     }).then(response => {
         const { data: responseBody, status: responseCode } = response;
-        console.log(response);
-        return response;
+        if (responseCode == 200) result(null, responseBody);
+        else {
+            console.log(responseBody + ", Status code: " + responseCode);
+            result(null, responseBody);
+        }
     }).catch(e => {
         console.error(`UserCardServeice OpenFinCardDirect: ${e}`);
-        throw new Error(`UserCardServeice OpenFinCardDirect: ${e}`);
+        result(e, null);
     });
 }
+
 
 /**
  * @desc    - 핀-카드 직접 발급 확인 /CheckOpenFinCardDirect.nh
  * @method  - POST
  * @apiDocs - https://developers.nonghyup.com/guide/GU_1040
  */
-
-
-
-UserCard.CheckOpenFinCardDirect = async function (userBirth, pinCard) {
+UserCard.CheckOpenFinCardDirect = async function (userBirth, pinCard, result) {
     // console.log(`UserCardServeice CheckOpenFinCardDirect, ${userBirth}, ${pinCard}`);
     // console.log(setHeader("CheckOpenFinCardDirect"));
-
-    // request setting Option
-    const options = {
-        uri: `${nhAPIUrl}/CheckOpenFinCardDirect.nh`,
+    await axios.request({
         method: 'POST',
-        // timeout: ms초 이후에 타임아웃,
-        // followRedirect: 리다이렉트시키면 따라갈껀지 말껀지,
-        // maxRedirects: 리다이렉션의 최대 처리 갯수,
+        url: `${nhAPIUrl}/CheckOpenFinCardDirect.nh`,
         headers: {
             'accept': 'application/json',
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json'
         },
-        body: {
-            Header: setHeader("CheckOpenFinCardDirect"),
-            Rgno: pinCard,
-            Brdt: userBirth
-        },
-        json: true
-    };
-
-    request.post(options, function (err, response, body) {
-        if (err) {
-            console.error(`UserCardServeice CheckOpenFinCardDirect: ${e}`);
-            throw new Error(`UserCardServeice CheckOpenFinCardDirect: ${e}`);
+        data: {
+            "Header": setHeader("CheckOpenFinCardDirect"),
+            "Rgno": String(pinCard),
+            "Brdt": String(userBirth)
         }
-        if (response.statusCode == 200) {
-            console.log(body);
-            return body;
-        }
+    }).then(response => {
+        const { data: responseBody, status: responseCode } = response;
+        if (responseCode == 200) result(null, responseBody);
         else {
-            console.dir(body);
-            return JSON.stringify(body);
+            console.log(responseBody + ", Status code: " + responseCode);
+            result(null, responseBody);
         }
+    }).catch(e => {
+        console.error(`UserCardServeice CheckOpenFinCardDirect: ${e}`);
+        result(e, null);
+        // throw new Error(`UserCardServeice CheckOpenFinCardDirect: ${e}`);
     });
-
-    // await axios.request({
-    //     method: 'POST',
-    //     url: `${nhAPIUrl}/CheckOpenFinCardDirect.nh`,
-    //     headers: {
-    //         'accept': 'application/json',
-    //         'Content-Type': 'application/json'
-    //     },
-    //     data: {
-    //         "Header": setHeader("CheckOpenFinCardDirect"),
-    //         "Rgno": pinCard,
-    //         "Brdt": userBirth
-    //     }
-    // }).then(response => {
-    //     const { data: responseBody, status: responseCode } = response;
-    //     console.log(response);
-    //     return response;
-    // }).catch(e => {
-    //     console.error(`UserCardServeice CheckOpenFinCardDirect: ${e}`);
-    //     throw new Error(`UserCardServeice CheckOpenFinCardDirect: ${e}`);
-    // });
 }
 
 
@@ -160,20 +128,18 @@ UserCard.CheckOpenFinCardDirect = async function (userBirth, pinCard) {
 // result는 callback함수의 결과임 
 
 // Create a user
-UserCard.creatUserCard = async function (newUser, result) {
+UserCard.creatUserCard = async function (newUserCard, result) {
     try {
-        // 복호화 
-        newUser.password = bcrypt.hashSync(newUser.password, saltRounds);
-        // bcrypt.compareSync(newUser.password, hash); // true
-
-        connection.query("INSERT INTO users set ?", newUser, function (err, res) {
+        // 유저 핀 카드 넘버  복호화 할까 말까 고민 필요!
+        // newUser.password = bcrypt.hashSync(newUser.password, saltRounds);
+        connection.query("INSERT INTO user_cards set ?", newUserCard, function (err, res) {
             if (err) {
                 console.log("creatUser service error: ", err);
                 result(err, null);
             }
             else {
                 // console.log("inputed Id:" + res.insertId);
-                result(null, newUser);
+                result(null, newUserCard);
             }
         });
     } catch (error) {
@@ -181,6 +147,19 @@ UserCard.creatUserCard = async function (newUser, result) {
         throw new Error(`userServeice creatUser Error: ${error}`);
     }
 
+};
+
+// UserCard find By id for FinCard 중복 Check
+UserCard.findByFinCard = async function (FinCard) {
+    const connection = await pool.getConnection(async conn => conn);
+    try {
+        const [rows] = await connection.query("Select * from user_cards WHERE fin_card = ?", [FinCard]);
+        if (isAllEmpty(rows)) return false;
+        else return rows[0];
+    } catch (error) {
+        console.log(`userServeice findByFinCard Error: ${error}`);
+        throw new Error(`userServeice findByFinCard Error: ${error}`);
+    }
 };
 
 /*
@@ -193,19 +172,7 @@ User.verify = function (user, password) {
         throw new Error(`userServeice verify Error: ${error}`);
     }
 };
- 
-// User find By id for ID 중복 Check
-User.findById = async function (id) {
-    const connection = await pool.getConnection(async conn => conn);
-    try {
-        const [rows] = await connection.query("Select * from users WHERE id = ?", [id]);
-        if (isAllEmpty(rows)) return false;
-        else return rows[0];
-    } catch (error) {
-        console.log(`userServeice findById Error: ${error}`);
-        throw new Error(`userServeice findById Error: ${error}`);
-    }
-};
+
  
 // Get A user Information
 User.getAUser = async function (id, result) {

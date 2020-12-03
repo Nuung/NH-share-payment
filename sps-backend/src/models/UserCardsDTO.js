@@ -1,7 +1,7 @@
 'user strict';
 
 // Task object constructor
-const UserCard = function (user_card, isUpdate = false) { // 대상자 (수혜자)
+const UserCard = function (user_card, isUpdate = false) {
     /*
     id      	    VARCHAR(40) NOT NULL PRIMARY KEY,
     user_id 	    VARCHAR(100),
@@ -11,7 +11,7 @@ const UserCard = function (user_card, isUpdate = false) { // 대상자 (수혜�
     updated_at      DATE,
     */
 
-    if(Object.keys(user).length < 4) throw new Error("Check the number of value types");
+    if(Object.keys(user_card).length < 4) throw new Error("Check the number of value types");
     if (!isUpdate) {
         this.id = user_card.id; 
         this.user_id = user_card.user_id; 
