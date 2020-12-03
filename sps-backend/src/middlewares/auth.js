@@ -1,11 +1,11 @@
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
 
 const authMiddleware = (req, res, next) => {
-    // read the token from header or url 
-    const token = req.headers['x-access-token'] || req.query.token;
+    // read the token from header or url or cookie['user-login']
+    const token = req.headers['x-access-token'] || req.query.token || req.cookies['user-login'];
 
     // token does not exist
-    if (!token) {
+    if (!token || token === null || token === "") {
         return res.status(403).json({
             success: false,
             message: 'not logged in, access token check is needed!'
@@ -35,6 +35,6 @@ const authMiddleware = (req, res, next) => {
         req.decoded = decoded;
         next();
     }).catch(onError);
-}
+};
 
 module.exports = authMiddleware

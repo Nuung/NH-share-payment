@@ -9,22 +9,23 @@ const escapeJSON = require('escape-json-node');
 const appConfig = require('dotenv').config();
 
 // API mapping ------
-const customerApi = require('./src/routes/customerApi');
 const userApi = require('./src/routes/userApi');
+const userCardApi = require('./src/routes/userCardApi');
 
 const app = express();
 
 app.use(logger('dev'));
 app.use(express.json()); // body-parser setting ~ express include body-parser from 4.X version
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser(appConfig.parsed.COOKIE_SECRET));
+// app.use(cookieParser(appConfig.parsed.COOKIE_SECRET));
+app.use(cookieParser());
 app.use(cors()); // CORS 설정
 app.set('jwt-secret', appConfig.parsed.JWT_SECRET); // set the secret key variable for jwt
 
 
 // API 라우팅 ~ 선언부 ------
-customerApi(app);
 userApi(app);
+userCardApi(app);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

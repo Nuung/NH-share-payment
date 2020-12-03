@@ -1,14 +1,15 @@
 'use strict';
 
 const User = require('../services/userService');
-const expressVaildator = require('express-validator'); // 유효성 검사 
 const jwt = require('jsonwebtoken'); // User Login JWT Create
 
-// Creat A User
+/**
+ * @desc    - create new User
+ * @method  - POST
+ * @apiDocs - Notion 
+ */
 const creatUser = async (req, res) => {
     try {
-        // req.body 값에 대한 값 보증 필요 and Vaildatation
-        if (!req.body.name) return res.status(400).send({ error: true, message: 'Please provide name' });
 
         // Check Id value
         const isNew = await User.findById(req.body.id);
@@ -39,9 +40,11 @@ const creatUser = async (req, res) => {
         // throw new Error(error);
     }
 };
-
-
-// Login A User and Get a JWT(Token)
+/**
+ * @desc    - Login A User and Get a JWT(Token)
+ * @method  - POST
+ * @apiDocs - { id, password } ~ after validatation
+ */
 const logInUser = async (req, res) => {
     try {
         const { id, password } = req.body;
@@ -53,7 +56,7 @@ const logInUser = async (req, res) => {
                 // user does not exist
                 throw new Error('User Login failed: user does not exist')
             } else {
-                if (User.verify(user, password)) { // user exists, check the password
+                if (User.verifyPassword(user, password)) { // user exists, check the password
                     // create a promise that generates jwt asynchronously
                     return new Promise((resolve, reject) => {
                         jwt.sign(
@@ -80,6 +83,7 @@ const logInUser = async (req, res) => {
 
         // respond the token 
         const respond = (token) => {
+            res.cookie("user-login", token);
             res.json({
                 message: 'logged in successfully',
                 token
@@ -102,7 +106,7 @@ const logInUser = async (req, res) => {
 };
 
 
-// Check Login A User - JWT
+// 웹 토큰 단순 테스트를 위한 함수 하나 Check Login A User - JWT
 const userCheck = (req, res) => {
     res.json({
         success: true,
