@@ -19,13 +19,15 @@ exports.validateUser = [
         .bail(),
     check('id')
         .trim()
+        // .normalizeEmail()
         .not()
         .isEmpty()
-        .withMessage('Invalid email address!')
+        // .withMessage('Invalid email address!')
         .bail(),
     (req, res, next) => {
         const errors = validationResult(req);
-        if (!errors.isEmpty()) return res.status(422).json({ errors: errors.array() });
+        if (!errors.isEmpty())
+            return res.status(422).json({ errors: errors.array() });
         next();
     },
 ];

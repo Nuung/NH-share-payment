@@ -1,35 +1,44 @@
 'use strict';
 
 const UserCard = require('../services/userCardService');
-const { body } = require('express-validator'); // 유효성 검사 
 const jwt = require('jsonwebtoken'); // User Login JWT Create
 
 // Creat a user card
-// 카드 번호를 입력 받고 -> NH API를 통해 핀카드 발급 받고
-// -> NH API를 통해 발급 확인을 받고 -> 핀카드 번호를 입력해야함 
-
+// "카드 번호를 입력" 받고 -> NH API를 통해 핀카드 발급 받고
+// -> NH API를 통해 발급 확인을 받고 -> "핀카드 번호"를 DB에 입력해야함 
 const creatUserCard = async (req, res) => {
     try {
-        // req.body 값에 대한 값 보증 필요 and Vaildatation
-        if (!req.body.name) return res.status(400).send({ error: true, message: 'Please provide name' });
+        const { headers } = req;
+        // const tokenDecoded = req.cookies['user-login'].decoded;
+        const { cardno, pinCard } = req.body;
+        const { userBirth } = jwt.decode(headers['x-access-token']);
 
+        // await UserCard.OpenFinCardDirect(userBirth, cardno, function (err, response) {
+        //     if (err) throw new Error(`userCardController OpenFinCardDirect Error: ${err}`);
+        //     console.log(response);
+        // });
+
+        await UserCard.CheckOpenFinCardDirect(userBirth, pinCard, function (err, response) {
+            if (err) throw new Error(`userCardController CheckOpenFinCardDirect Error: ${err}`);
+            console.log(response);
+        });
         // Check Id value
-        const isNew = await User.findById(req.body.id);
-        if (isNew) {
-            return res.status(400).json({
-                position: "userCardController creatUserCard",
-                message: '이미 등록된 카드 번호 입니다!'
-            });
-        }
-        else {
-            // Main 
-            let newUser = new User(req.body);
-            await User.creatUser(newUser, function (err, user) {
-                console.log('userCardController creatUserCard')
-                if (err) return res.send(err);
-                return res.status(201).json({ user });
-            });
-        }
+        // const isNew = await User.findById(req.body.id);
+        // if (isNew) {
+        //     return res.status(400).json({
+        //         position: "userCardController creatUserCard",
+        //         message: '이미 등록된 카드 번호 입니다!'
+        //     });
+        // }
+        // else {
+        //     // Main 
+        //     let newUser = new User(req.body);
+        //     await User.creatUser(newUser, function (err, user) {
+        //         console.log('userCardController creatUserCard')
+        //         if (err) return res.send(err);
+        //         return res.status(201).json({ user });
+        //     });
+        // }
     }
     catch (error) {
         console.log(error);
@@ -120,7 +129,7 @@ const removeById = async (req, res) => {
 */
 
 module.exports = {
-    test
+    creatUserCard
     // getAUser,
     // getAllUser,
     // creatUser,

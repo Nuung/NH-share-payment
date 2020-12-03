@@ -1,5 +1,6 @@
 'use strict';
 const authMiddleware = require('../middlewares/auth'); // JTW 유효성 검사 
+const { validateUserCard } = require('../middlewares/validators/userCardValidator');
 
 module.exports = (app) => {
   const user_card_api = require('../controllers/userCardController.js');
@@ -7,7 +8,9 @@ module.exports = (app) => {
 
   // user restful CRUD API 
   app.use('/user/card', authMiddleware);
-  app.route('/user/card').get(user_card_api.test);
+  app.route('/user/card')
+    .post(validateUserCard, user_card_api.creatUserCard);
+
   //   .post(user_card_api.creatUser)
   //   .put(user_card_api.updateById)
   //   .delete(user_card_api.removeById);

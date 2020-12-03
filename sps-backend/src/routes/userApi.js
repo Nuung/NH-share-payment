@@ -15,7 +15,8 @@ module.exports = (app) => {
   // get a user info and Login
   app.route('/user/id').post(user_api.getAUser);
   app.route('/user/login').post(user_api.logInUser);
-  // Auth
+  
+  // Auth Test
   app.use('/user/check', authMiddleware);
   app.route('/user/check').get(user_api.userCheck);
 };
