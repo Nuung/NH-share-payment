@@ -1,5 +1,7 @@
 
 /* [프로시저] 디비 관리 유저 생성 ->  DB 생성 -> 유저에 권한 부여 */
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '루트비밀번호';
+
 DROP DATABASE IF EXISTS  spsProject;
 DROP USER IF EXISTS  spsProject@localhost;
 create user spsProject@localhost identified WITH mysql_native_password  by 'spsProject';
@@ -22,7 +24,7 @@ CREATE TABLE  users (
   id      	    VARCHAR(40) NOT NULL PRIMARY KEY,
   password 	    VARCHAR(100),
   name          VARCHAR(40),
-  birthday      VARCHAR(20), -- /([0-9]{2}(0[1-9]|1[0-2])(0[1-9]|[1,2][0-9]|3[0,1]))/
+  birthday      VARCHAR(20), 
   gender        TINYINT,
   login_type    VARCHAR(40),
   fin_account   VARCHAR(255),
@@ -51,8 +53,8 @@ CREATE TABLE  user_payment_history (
   Txtm          TIME,
   Usam          VARCHAR(30),
   AfstNoBrno    VARCHAR(20),
-  AfstNo        VARCHAR(30), -- 가맹점 번호 
-  AfstNm        VARCHAR(100), -- 가맹점 명 
+  AfstNo        VARCHAR(30), 
+  AfstNm        VARCHAR(100),
   AmslKnd       VARCHAR(2),
   Tris          VARCHAR(2),
   FOREIGN KEY ( user_id ) REFERENCES users(id) 
