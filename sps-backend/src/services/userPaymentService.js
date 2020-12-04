@@ -37,7 +37,7 @@ const randomIsTuno = (date) => {
     return date + String(time);
 }
 
-//////////////////////////////////////////////////// make Task's methods
+//////////////////////////////////////////////////// make payments Task's methods
 // result는 callback함수임 
 
 // Create a userPaymnet history. [ await 를 이용하기! ]
@@ -47,7 +47,9 @@ UserPayment.creatUserCardPayHistory = async function (userId, cardId, newUserPay
         const connection = await pool.getConnection(async conn => conn);
         let insertIdCounter = 0;
         for (let i = 0; i < newUserPaymentArr.length; i++) {
-            let userPayment = new UserPayment(userId, cardId, newUserPaymentArr[i]);
+            newUserPaymentArr[i]['user_id'] = userId;
+            newUserPaymentArr[i]['card_id'] = cardId;
+            let userPayment = new UserPayment(newUserPaymentArr[i]);
             const result = await connection.query("INSERT INTO user_payment_history set ?", userPayment);
             if (!result[0].insertId) throw new Error(`UserPaymentServeice user_payment_history Error`);
             else insertIdCounter++;
@@ -78,5 +80,49 @@ UserPayment.creatUserPayment = async function (newUserPayment, result) {
         throw new Error(`userServeice creatUser Error: ${error}`);
     }
 };
+
+
+//////////////////////////////////////////////////// make history Task's methods
+
+// Get all payment history for user_id
+UserPayment.getAllHistory = async function (userId, result) {
+    connection.query("Select * from user_payment_history WHERE user_id = ?", [userId], function (err, res) {
+        if (err) {
+            console.log("getAllHistory service error: ", err);
+            result(null, err);
+        }
+        else {
+            // console.log('User : ', res);
+            result(null, res);
+        }
+    });
+};
+
+// UserPayment find - paymentHistory data By id
+UserPayment.findHistoryById = async function (id) {
+    const connection = await pool.getConnection(async conn => conn);
+    try {
+        const [rows] = await connection.query("Select * from user_payment_history WHERE id = ?", [id]);
+        if (isAllEmpty(rows)) return false;
+        else return rows[0];
+    } catch (error) {
+        console.log(`userServeice findByFinCard Error: ${error}`);
+        throw new Error(`userServeice findByFinCard Error: ${error}`);
+    }
+};
+
+// UserPayment remove - paymentHistory data By id
+UserPayment.removeHistoryById = async function (id, result) {
+    connection.query("DELETE FROM user_payment_history WHERE id = ?", [id], function (err, res) {
+        if (err) {
+            console.log("error: ", err);
+            result(null, err);
+        }
+        else {
+            result(null, res);
+        }
+    });
+};
+
 
 module.exports = UserPayment;

@@ -4,6 +4,7 @@ const UserCard = require('../services/userCardService');
 const UserCardPayment = require('../services/userPaymentService');
 const jwt = require('jsonwebtoken'); // User Login JWT Create
 const { response } = require('express');
+const colors = require('colors'); // for log color :) 
 
 // Creat a user card
 // "카드 번호를 입력" 받고 -> NH API를 통해 핀카드 발급 번호 발급 받고
@@ -46,7 +47,7 @@ const creatUserCard = async (req, res) => {
                     };
                     const newUserCard = new UserCard(temp_);
                     UserCard.creatUserCard(newUserCard, function (err, user) {
-                        console.log('userCardController creatUserCard');
+                        console.log('userCardController creatUserCard Successfully!');
                         if (err) throw new Error(`userCardController creatUserCard Error: ${Rsms} And ${err}`);
                         return res.status(201).json({ user });
                     });
@@ -99,6 +100,7 @@ const creatUserCardPayHistory = async (req, res) => {
                     UserCardPayment.creatUserCardPayHistory(userId, targetCard.id, REC, function (err, insertIdCounter) {
                         if(err) throw new Error(`userCardController creatUserCardPayHistory Error: ${err}`);
                         else {
+                            console.log(colors.yellow.bgRed.bold("userCardController creatUserCardPayHistory ${insertIdCounter} rows was added successfully"));
                             return res.status(201).json({
                                 position: "userCardController creatUserCardPayHistory",
                                 message: `${insertIdCounter} rows was added!`

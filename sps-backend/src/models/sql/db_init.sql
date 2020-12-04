@@ -34,7 +34,7 @@ CREATE TABLE  users (
 
 CREATE TABLE  user_cards (
   id      	    VARCHAR(40) NOT NULL PRIMARY KEY,
-  user_id 	    VARCHAR(40),
+  user_id 	    VARCHAR(40) NOT NULL,
   name          VARCHAR(40),
   fin_card      VARCHAR(255),
   created_at    DATE,
@@ -46,7 +46,7 @@ CREATE TABLE  user_cards (
 
 CREATE TABLE  user_payment_history (
   id      	    INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  user_id 	    VARCHAR(40),
+  user_id 	    VARCHAR(40) NOT NULL,
   card_id       VARCHAR(40) NOT NULL,
   CardAthzNo    VARCHAR(30) NOT NULL,
   Trdd          DATE,
@@ -67,17 +67,17 @@ CREATE TABLE  user_payment_history (
 
 CREATE TABLE  user_payments (
   id      	    INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  user_id 	    VARCHAR(40),
+  user_id 	    VARCHAR(40) NOT NULL,
   card_id       VARCHAR(40) NOT NULL,
   CardAthzNo    VARCHAR(30) NOT NULL,
   Trdd          DATE,
   Txtm          TIME,
   Usam          VARCHAR(30),
   AfstNoBrno    VARCHAR(20),
-  AfstNo        VARCHAR(30), -- 가맹점 번호 
-  AfstNm        VARCHAR(100), -- 가맹점 명 
+  AfstNo        VARCHAR(30),
+  AfstNm        VARCHAR(100),
   AmslKnd       VARCHAR(2),
-  Tris          VARCHAR(2)
+  Tris          VARCHAR(2),
   category      VARCHAR(10),
   created_at    DATE,
   FOREIGN KEY ( user_id ) REFERENCES users(id) 

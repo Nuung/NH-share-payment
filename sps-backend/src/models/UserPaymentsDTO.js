@@ -1,7 +1,7 @@
 'user strict';
 
 // Task object constructor
-const UserPayment = function (user_id, card_id, user_payment, isHistory = true) {
+const UserPayment = function (user_payment, isHistory = true) {
     /*
     id      	  VARCHAR(40) NOT NULL AUTO_INCREMENT PRIMARY KEY,
     user_id 	  VARCHAR(40),
@@ -22,8 +22,8 @@ const UserPayment = function (user_id, card_id, user_payment, isHistory = true) 
     */
     // this.id = user_card.id; - auto increment
     if (isHistory) {
-        this.user_id = user_id;
-        this.card_id = card_id;
+        this.user_id = user_payment.user_id;
+        this.card_id = user_payment.card_id;
         this.CardAthzNo = user_payment.CardAthzNo;
         this.Trdd = user_payment.Trdd; // DATE 임 명심
         this.Txtm = user_payment.Txtm; // TIME 임 명심
@@ -35,8 +35,9 @@ const UserPayment = function (user_id, card_id, user_payment, isHistory = true) 
         this.Tris = user_payment.Tris;
     }
     else {
-        this.user_id = user_id;
-        this.card_id = card_id;
+        this.id = user_payment.id;
+        this.user_id = user_payment.user_id;
+        this.card_id = user_payment.card_id;
         this.CardAthzNo = user_payment.CardAthzNo;
         this.Trdd = user_payment.Trdd; // DATE 임 명심
         this.Txtm = user_payment.Txtm; // TIME 임 명심

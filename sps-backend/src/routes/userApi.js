@@ -1,6 +1,6 @@
 'use strict';
 const authMiddleware = require('../middlewares/auth'); // JTW 유효성 검사 
-const { validateUser } = require('../middlewares/validators/userValidator');
+const { validateUserCreate, validateUserLogin } = require('../middlewares/validators/userValidator');
 
 module.exports = (app) => {
   const user_api = require('../controllers/userController.js');
@@ -12,10 +12,11 @@ module.exports = (app) => {
     .delete(user_api.removeById);
 
   // get a user info and Login
-  app.route('/user').post(validateUser, user_api.creatUser)
+  app.route('/user').post(validateUserCreate, user_api.creatUser)
   app.route('/user/id').post(user_api.getAUser);
-  app.route('/user/login').post(user_api.logInUser);
+  app.route('/user/login').post(validateUserLogin, user_api.logInUser);
   
+  /////////////////////////////////////////////
   // Auth Test
   app.use('/user/check', authMiddleware);
   app.route('/user/check').get(user_api.userCheck);

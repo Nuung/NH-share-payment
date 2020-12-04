@@ -11,6 +11,7 @@ const appConfig = require('dotenv').config();
 // API mapping ------
 const userApi = require('./src/routes/userApi');
 const userCardApi = require('./src/routes/userCardApi');
+const userPaymentApi = require('./src/routes/userPaymentApi');
 
 const app = express();
 
@@ -26,6 +27,7 @@ app.set('jwt-secret', appConfig.parsed.JWT_SECRET); // set the secret key variab
 // API 라우팅 ~ 선언부 ------
 userApi(app);
 userCardApi(app);
+userPaymentApi(app);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

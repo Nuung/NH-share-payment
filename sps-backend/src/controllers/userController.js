@@ -54,7 +54,7 @@ const logInUser = async (req, res) => {
         const check = (user) => {
             if (!user) {
                 // user does not exist
-                throw new Error('User Login failed: user does not exist')
+                throw new Error('User Login failed: user does not exist');
             } else {
                 if (User.verifyPassword(user, password)) { // user exists, check the password
                     // create a promise that generates jwt asynchronously
@@ -71,35 +71,34 @@ const logInUser = async (req, res) => {
                                 issuer: 'spsProject',
                                 subject: 'userInfo'
                             }, (err, token) => {
-                                if (err) reject(err)
-                                resolve(token)
+                                if (err) reject(err);
+                                resolve(token);
                             })
                     });
-                } else {
-                    throw new Error('User Login failed: Wrong password cant be verified')
                 }
+                else throw new Error('Logged in Fail, wrong password cant be verified!');
             }
         };
 
         // respond the token 
         const respond = (token) => {
             res.cookie("user-login", token);
-            res.json({
+            res.status(201).json({
                 message: 'logged in successfully',
                 token
             })
         };
 
         // Main and Chainning (async await)
-        User.findById(id)
+        await User.findById(id)
             .then(check)
             .then(respond)
             .catch((err) => { throw new Error(err) });
 
     } catch (error) {
-        console.log(`userController logInUser: ${error}`);
+        // console.log(`userController logInUser: ${error}`);
         return res.status(404).json({
-            position: "userController creatUser",
+            position: "userController logInUser",
             message: error.message
         });
     }
