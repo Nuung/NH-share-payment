@@ -48,7 +48,7 @@ User.creatUser = async function (newUser, result) {
 
 };
 
-// User check the Password by bcrypt
+// User check the Password by bcrypt -> not a async!
 User.verifyPassword = function (user, password) {
     try { // 지금 들어온 input password를 hashing된 DB 값과 비교해봐야함 
         return (bcrypt.compareSync(password, user.password));
@@ -57,9 +57,6 @@ User.verifyPassword = function (user, password) {
         throw new Error(`userServeice verify Error: ${error}`);
     }
 };
-
-
-
 
 
 // User find By id for ID 중복 Check
