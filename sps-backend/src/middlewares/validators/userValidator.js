@@ -51,6 +51,9 @@ const validateUserLogin = [
         .not()
         .isEmpty()
         .withMessage('password can not be empty!')
+        .bail()
+        .isLength({ min: 3 })
+        .withMessage('Minimum 3 characters required in User id!')
         .bail(),
     (req, res, next) => {
         const errors = validationResult(req);
