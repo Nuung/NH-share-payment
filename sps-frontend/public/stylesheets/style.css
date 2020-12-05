@@ -1,0 +1,19 @@
+/* Place the navbar at the bottom of the page, and make it stick */
+.navbar_buttom {
+    text-align: center;
+    background-color: #6200EE;
+    overflow: hidden;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+  
+/* Style the links inside the navigation bar */
+.navbar_buttom p {
+    text-align: center;
+    display: block;
+    color: #f2f2f2;
+    padding: 10px 10px;
+    text-decoration: none;
+    font-size: 1rem;
+}
