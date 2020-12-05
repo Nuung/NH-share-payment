@@ -6,6 +6,7 @@
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+        <script src="lib/jquery/buttonChange.js"></script>
     </head>
     <body>
         <body data-new-gr-c-s-check-loaded="14.984.0" data-gr-ext-installed="">
@@ -17,49 +18,87 @@
                             <p class="font-weight-bold text-reset"></p>
                         </div>
                         <div class="col-md-6 text-center d-flex flex-column py-5 justify-content-center">
-                            <div class="auth-form-section">
+                            <div class="auth-form-section"> 
                                 <!-- <div class="logo"><img src="assets/images/logo.svg" class="img-fluid" alt="Unplug UI" width="200"></div> -->
                                 <h2>Register Individual Account!</h2>
                                 <p>For the purpose of industry regulation, <br>
                                 your details are required.</p>
-                                <form action="index.html" class="auth-form">
+                                <form action="" class="auth-form" name="auth-form"> <!-- 여기 막기 -->
                                     <div class="form-group">
-                                        <label for="userId" class="sr-only">UserId</label>
-                                        <input type="text" name="userId" id="userId" class="form-control" placeholder="ID">
+                                        <label for="id" class="sr-only">id</label>
+                                        <input type="text" name="id" id="id" class="form-control" placeholder="ID">
                                     </div>
                                     <div class="form-group">
-                                        <label for="userPassword" class="sr-only">Password</label>
-                                        <input type="password" name="userPassword" id="userPassword" class="form-control" placeholder="Password">
+                                        <label for="password" class="sr-only">password</label>
+                                        <input type="password" name="password" id="password" class="form-control" placeholder="Password">
                                     </div>
                                     <div class="form-group">
-                                        <label for="username" class="sr-only">Username</label>
-                                        <input type="text" name="username" id="username" class="form-control" placeholder="Name">
+                                        <label for="name" class="sr-only">name</label>
+                                        <input type="text" name="name" id="name" class="form-control" placeholder="Name">
                                     </div>
                                     <div class="form-group">
-                                        <label for="userBirthday" class="sr-only">userBirthday</label>
-                                        <input type="text" name="userBirthday" id="userBirthday" class="form-control" placeholder="Birthday">
+                                        <label for="birthday" class="sr-only">birthday</label>
+                                        <input type="text" name="birthday" id="birthday" class="form-control" placeholder="Birthday">
                                     </div>
                                     <div class="form-group">
-                                        <label for="userGender" class="sr-only">userGender</label>
-                                        <!-- <div class="custom-control custom-radio custom-control-inline">
-                                            <input type="radio" class="custom-control-input" id="userFemale" name="inlineDefaultRadiosExample">
-                                            <label class="custom-control-label" for="userFemale">Female</label>
-                                        </div>
-                                        <div class="custom-control custom-radio custom-control-inline">
-                                            <input type="radio" class="custom-control-input" id="userMale" name="inlineDefaultRadiosExample">
-                                            <label class="custom-control-label" for="userFemale">Male</label>
-                                        </div> -->
-
-                                        <div class="container">
-                                            <div class="btn-group" role="group" aria-label="...">
-                                              <button type="button" class="btn btn-primary button-class1">Female</button>
-                                              <button type="button" class="btn btn-default button-class2">Male</button>
-                                            </div>
+                                        <label for="userGender" class="sr-only">gender</label>
+                                        <!-- gender 0 , 1 날리는 요소를 찾아봐야할 것 같습니다 ..! -->
+                                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                            <label class="btn btn-primary button-class1">
+                                              <input type="radio" name="gender" id="gender" autocomplete="off" checked> Female
+                                            </label>
+                                            <label class="btn btn-default button-class2">
+                                              <input type="radio" name="gender" id="gender" autocomplete="off"> Male
+                                            </label>
                                         </div>
                                     </div>       
-                                    <button type="submit" class="btn btn-success btn-block mb-3">Sign up</button>
+                                    <button type="submit" id="sbmt" method="POST" class="btn btn-success btn-block mb-3">Sign up</button>
                                 </form>
 
+                                <form action="" id="card-form" class="card-form" name="card-form" style="display:none"> <!-- 여기 막기 -->
+                                    <!-- <div class="form-group">
+                                        <label for="id" class="sr-only">id</label>
+                                        <input type="text" name="id" id="id" class="form-control" placeholder="ID">
+                                    </div> -->
+                                    <div class="form-group">
+                                        <label for="name" class="sr-only">name</label>
+                                        <input type="text" name="name" id="name" class="form-control" placeholder="Card Name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="cardno" class="sr-only">cardno</label>
+                                        <input type="text" name="cardno" id="cardno" class="form-control" placeholder="Card Number">
+                                    </div>
+                                    <button type="submit" id="sbmt" method="POST" class="btn btn-success btn-block mb-3">Sign up</button>
+                                </form>
+
+    
+                                <script>
+                                    
+                                    $("#sbmt").unbind("click").click(function(event){
+	                                    event.preventDefault();
+                                        //ajax 작업
+                                        var data = $('#sbmt').serialize(); // 데이터 묶기
+                                        var cardForm = document.getElementById("card-form");
+                                            if(cardForm.style.display == 'none'){   
+                                                cardForm.style.display = 'block';
+                                                $("#sbmt").hide();//more버튼 숨기기
+                                                
+                                        }
+                                        $.ajax({
+                                            //url: " ",
+                                            data: data,
+                                            type: "POST",
+                                            cache: false
+                                        }).done(function (fragment) { // user create api 처리 끝난 후, 카드 폼 띄우기
+                                            //$("#list").replaceWith(fragment);
+                                            
+                                        });
+                                        
+                                    });
+
+                                    
+
+                                </script>
                             </div>
                         </div>
                     </div>
