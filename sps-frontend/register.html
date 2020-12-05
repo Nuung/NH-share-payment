@@ -23,7 +23,7 @@
                                 <h2>Register Individual Account!</h2>
                                 <p>For the purpose of industry regulation, <br>
                                 your details are required.</p>
-                                <form action="" class="auth-form" name="auth-form"> <!-- 여기 막기 -->
+                                <form action="" id="auth-form" class="auth-form" name="auth-form"> <!-- 여기 막기 -->
                                     <div class="form-group">
                                         <label for="id" class="sr-only">id</label>
                                         <input type="text" name="id" id="id" class="form-control" placeholder="ID">
@@ -119,8 +119,8 @@
                                         var cardForm = document.getElementById("card-form");
                                             if(cardForm.style.display == 'none'){   
                                                 cardForm.style.display = 'block';
-                                                $("#sbmt").hide();//more버튼 숨기기
-                                                
+                                                $("#sbmt").hide();
+                                                $("#auth-form").hide();
                                         }
                                         $.ajax({
                                             //url: " ",
