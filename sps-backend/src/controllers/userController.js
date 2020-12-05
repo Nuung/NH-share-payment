@@ -10,7 +10,6 @@ const jwt = require('jsonwebtoken'); // User Login JWT Create
  */
 const creatUser = async (req, res) => {
     try {
-
         // Check Id value
         const isNew = await User.findById(req.body.id);
         // console.log(`userController isNew vaule: ${isNew}`); // for check 
@@ -25,9 +24,29 @@ const creatUser = async (req, res) => {
             // Main 
             let newUser = new User(req.body);
             await User.creatUser(newUser, function (err, user) {
-                console.log('userController - creatUser')
                 if (err) return res.send(err);
-                return res.status(201).json({ user });
+                else {
+                    const secret = req.app.get('jwt-secret');
+                    jwt.sign(
+                        {
+                            userId: user.id,
+                            userName: user.name,
+                            userBirth: user.birthday
+                        },
+                        secret,
+                        {
+                            expiresIn: '7d',
+                            issuer: 'spsProject',
+                            subject: 'userInfo'
+                        }, (err, token) => {
+                            if (err) throw new Error('User Login failed: user does not exist');
+                            else {
+                                res.cookie("user-login", token);
+                                return res.status(201).json({ message: "회원가입에 성공했습니다." });
+                            }
+                        });
+                    // return res.status(201).json({ user });
+                }
             });
         }
     }
