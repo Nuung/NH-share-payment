@@ -24,9 +24,9 @@ const creatUser = async (req, res) => {
             // Main 
             let newUser = new User(req.body);
             await User.creatUser(newUser, function (err, user) {
-                console.log(`userController - creatUser: Clear create user ${user}`);
                 if (err) return res.send(err);
                 else {
+                    const secret = req.app.get('jwt-secret');
                     jwt.sign(
                         {
                             userId: user.id,
