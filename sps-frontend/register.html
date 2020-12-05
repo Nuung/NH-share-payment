@@ -1,185 +1,204 @@
 <html>
-    <head>
-        <meta charset='utf-8' />
-        <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no' />
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-        <script src="lib/jquery/buttonChange.js"></script>
-    </head>
-    <body>
-        <body data-new-gr-c-s-check-loaded="14.984.0" data-gr-ext-installed="">
-            <main class="auth">
-                <div class="container-fluid">
-                    <div class="row vh-100">
-                        <div class="col-md-6 text-center py-5 d-flex flex-column justify-content-center auth-bg-section text-white" style="background-color: skyblue">
-                            <h1 class="text-reset">SHARE <br> PAYMENT <br> SNS </h1>
-                            <p class="font-weight-bold text-reset"></p>
-                        </div>
-                        <div class="col-md-6 text-center d-flex flex-column py-5 justify-content-center">
-                            <div class="auth-form-section"> 
-                                <!-- <div class="logo"><img src="assets/images/logo.svg" class="img-fluid" alt="Unplug UI" width="200"></div> -->
-                                <h2>Register Individual Account!</h2>
-                                <p>For the purpose of industry regulation, <br>
-                                your details are required.</p>
-                                <form id="auth-form" class="auth-form" name="auth-form">
-                                    <div class="form-group">
-                                        <label for="id" class="sr-only">id</label>
-                                        <input type="text" name="id" id="id" class="form-control" placeholder="ID">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="password" class="sr-only">password</label>
-                                        <input type="password" name="password" id="password" class="form-control" placeholder="Password">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="name" class="sr-only">name</label>
-                                        <input type="text" name="name" id="name" class="form-control" placeholder="Name">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="birthday" class="sr-only">birthday</label>
-                                        <input type="text" name="birthday" id="birthday" class="form-control" placeholder="Birthday">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="userGender" class="sr-only">gender</label>
-                                            <!-- 여기여기여기여기 !!!! -->
-                                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                            <label class="btn btn-primary button-class1">
-                                              <input type="radio" name="gender" id="gender" value='1' autocomplete="off" checked> Female
-                                            </label>
-                                            <label class="btn btn-default button-class2">
-                                              <input type="radio" name="gender" id="gender" value='0' autocomplete="off"> Male
-                                            </label>
-                                        </div>
-                                    </div>       
-                                    <button type="submit" class="btn btn-success btn-block mb-3">Sign up</button>
-                                </form>
 
-                                <form id="card-form" class="card-form" name="card-form" style="display:none"> <!-- 여기 막기 -->
-                                    <!-- ID 는 은행마다 고유 번호 value 값으로 지정-->
-                                    <!-- <div class="form-group">
+<head>
+    <meta charset='utf-8' />
+    <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no' />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+    <script src="lib/jquery/buttonChange.js"></script>
+    <style>
+        .hidden__value__logintype,
+        .hidden__value__finaccount {
+            display: none;
+        }
+    </style>
+</head>
+
+<body data-new-gr-c-s-check-loaded="14.984.0" data-gr-ext-installed="">
+    <main class="auth">
+        <div class="container-fluid">
+            <div class="row vh-100">
+                <div class="col-md-6 text-center py-5 d-flex flex-column justify-content-center auth-bg-section text-white"
+                    style="background-color: skyblue">
+                    <h1 class="text-reset">SHARE <br> PAYMENT <br> SNS </h1>
+                    <p class="font-weight-bold text-reset"></p>
+                </div>
+                <div class="col-md-6 text-center d-flex flex-column py-5 justify-content-center">
+                    <div class="auth-form-section">
+                        <!-- <div class="logo"><img src="assets/images/logo.svg" class="img-fluid" alt="Unplug UI" width="200"></div> -->
+                        <h2>Register Individual Account!</h2>
+                        <p>For the purpose of industry regulation, <br>
+                            your details are required.</p>
+                        <form id="auth-form" class="auth-form" name="auth-form">
+                            <div class="form-group">
+                                <label for="id" class="sr-only">id</label>
+                                <input type="text" name="id" id="id" class="form-control" placeholder="ID">
+                            </div>
+                            <div class="form-group">
+                                <label for="password" class="sr-only">password</label>
+                                <input type="password" name="password" id="password" class="form-control"
+                                    placeholder="Password">
+                            </div>
+                            <div class="form-group">
+                                <label for="name" class="sr-only">name</label>
+                                <input type="text" name="name" id="name" class="form-control" placeholder="Name">
+                            </div>
+                            <div class="form-group">
+                                <label for="birthday" class="sr-only">birthday</label>
+                                <input type="text" name="birthday" id="birthday" class="form-control"
+                                    placeholder="Birthday">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="login_type" id="login_type"
+                                    class="form-control hidden__value__logintype" placeholder="login_type">
+                                <input type="text" name="fin_account" id="fin_account"
+                                    class="form-control hidden__value__finaccount" placeholder="fin_account">
+                            </div>
+                            <button type="submit" class="btn btn-success btn-block mb-3">Sign up</button>
+                        </form>
+
+                        <form id="card-form" class="card-form" name="card-form" style="display:none">
+                            <!-- 여기 막기 -->
+                            <!-- ID 는 은행마다 고유 번호 value 값으로 지정-->
+                            <!-- <div class="form-group">
                                         <label for="id" class="sr-only">id</label>
                                         <input type="text" name="id" id="id" class="form-control" placeholder="ID">
                                     </div> -->
 
-                                    <!--은행 선택 3*3 추후 이미지 리사이징 해서 넣어야 함-->
-                                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                        <div class="btn-group-vertical">
-                                            <label class="btn btn-light active">
-                                                <!-- 농협은행 -->
-                                                <input type="radio" name="options" id="option1" value="011" hidden> <img src="public/images/cardicons/nh.png" width="150px">
-                                              </label>
-                                              <label class="btn btn-light">
-                                                <!-- 하나은행 -->
-                                                <input type="radio" name="options" id="option4" value="081" hidden> <img src="public/images/kebhana.png" width="150px">
-                                              </label>
-                                              <label class="btn btn-light">
-                                                <!-- 국민은행 -->  
-                                                <input type="radio" name="options" id="option3" value="004" hidden> <img src="public/images/kb.png" width="150px">
-                                              </label>
-                                          </div>
-                                          <div class="btn-group-vertical">
-                                            <label class="btn btn-light active">
-                                                <!-- 농협상호금융 -->
-                                                <input type="radio" name="options" id="option2" value="012" hidden>  <img src="public/images/localnh.png" width="150px">
-                                              </label>
-                                              <label class="btn btn-light">
-                                                <!-- 우리은행 -->  
-                                                <input type="radio" name="options" id="option5" value="020" hidden>  <img src="public/images/woori.png" width="150px">
-                                              </label>
-                                              <label class="btn btn-light">
-                                                <!-- 신한은행 -->
-                                                <input type="radio" name="options" id="option6" value="088" hidden> <img src="public/images/shinhan.png" width="150px">
-                                              </label>
-                                          </div>
-                                          <div class="btn-group-vertical">
-                                            <label class="btn btn-light active">
-                                                <!-- 카카오뱅크 -->
-                                                <input type="radio" name="options" id="option7" value="090" hidden> <img src="public/images/kakao.png" width="150px">
-                                              </label>
-                                              <label class="btn btn-light">
-                                                <!-- 산업은행 -->  
-                                                <input type="radio" name="options" id="option8" value="002" hidden>  <img src="public/images/kdb.png" width="150px">
-                                              </label>
-                                              <label class="btn btn-light">
-                                                <!-- 기업은행 -->  
-                                                <input type="radio" name="options" id="option9" value="003" hidden> <img src="public/images/ibk.png" width="150px">
-                                              </label>
-                                          </div>
-                                      </div>
-                        
-                                    <div class="form-group">
-                                        <label for="name" class="sr-only">name</label>
-                                        <input type="text" name="name" id="name" class="form-control" placeholder="Card Name">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="cardno" class="sr-only">cardno</label>
-                                        <input type="text" name="cardno" id="cardno" class="form-control" placeholder="Card Number">
-                                    </div>
-                                    <button type="submit" method="POST" id="sbmt" method="POST" class="btn btn-success btn-block mb-3">Sign up</button>
-                                </form>
-
-    
-                                <script>
-
-                                    const form = document.getElementById('auth-form');
-                                    const cardForm = document.getElementById("card-form");
-
-                                    // $("#sbmt").unbind("click").click(function(event){
-                                    form.addEventListener('submit', function (event) {    
-	                                    event.preventDefault();
-                                        
-                                        //const formData = new FormData(form);
-                                         
-                                        fetch('http://localhost:3000/user', {
-                                            method: 'POST', // *GET, POST, PUT, DELETE, etc.
-                                            mode: 'cors', // no-cors, cors, *same-origin
-                                            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-                                            credentials: 'same-origin', // include, *same-origin, omit
-                                            headers: {
-                                                'Content-Type': 'application/json',
-                                                // 'Content-Type': 'application/x-www-form-urlencoded',
-                                            },
-                                            // redirect: 'follow', // manual, *follow, error
-                                            // referrer: 'no-referrer', // no-referrer, *client
-                                            body: JSON.stringify(Object.fromEntries(new FormData(event.target))) // // body data type must match "Content-Type" header
-                                        }).then((response) => {
-                                            const { status } = response;
-                                            // console.log(status + ", " + typeof(status));
-                                            if (status === 404) {
-                                                return Promise.reject(new Error("ID or Password가 틀립니다!"));
-                                            }
-                                            else if (status === 422) {
-                                                return Promise.reject(new Error("올바른 ID, Password값을 입력해 주세요!"));
-                                            }
-                                            else if (status === 201) {
-                                                return Promise.resolve("Login 성공!"); // async promise 성공시 반환이라 생각 
-                                            }
-                                            else return Promise.reject(new Error("Login Request is failed")); // async promise 실패시 반환이라 생각 
-                                        }).then((data) => { // 성공하면 여기오고
-                                            console.log(data);
-                                            
-                                            //card form 생성 및 auth form 사라짐
-                                            if(cardForm.style.display == 'none'){   
-                                                cardForm.style.display = 'block';
-                                                $("#auth-form").hide();
-                                            }
-
-                                            alert(data);
-                                            // window.location.href = "main.html"; // main html로 강제 이동시킴 
-                                        }).catch((error) => { // 실패하면 여기온다
-                                            console.warn(error);
-                                            alert(error);
-                                        });
-                                        
-                                    });
-
-                                </script>
+                            <!--은행 선택 3*3 추후 이미지 리사이징 해서 넣어야 함-->
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                <div class="btn-group-vertical">
+                                    <label class="btn btn-light active">
+                                        <!-- 농협은행 -->
+                                        <input type="radio" name="options" id="option1" value="011" hidden> <img
+                                            src="public/images/cardicons/nh.png" width="150px">
+                                    </label>
+                                    <label class="btn btn-light">
+                                        <!-- 하나은행 -->
+                                        <input type="radio" name="options" id="option4" value="081" hidden> <img
+                                            src="public/images/kebhana.png" width="150px">
+                                    </label>
+                                    <label class="btn btn-light">
+                                        <!-- 국민은행 -->
+                                        <input type="radio" name="options" id="option3" value="004" hidden> <img
+                                            src="public/images/kb.png" width="150px">
+                                    </label>
+                                </div>
+                                <div class="btn-group-vertical">
+                                    <label class="btn btn-light active">
+                                        <!-- 농협상호금융 -->
+                                        <input type="radio" name="options" id="option2" value="012" hidden> <img
+                                            src="public/images/localnh.png" width="150px">
+                                    </label>
+                                    <label class="btn btn-light">
+                                        <!-- 우리은행 -->
+                                        <input type="radio" name="options" id="option5" value="020" hidden> <img
+                                            src="public/images/woori.png" width="150px">
+                                    </label>
+                                    <label class="btn btn-light">
+                                        <!-- 신한은행 -->
+                                        <input type="radio" name="options" id="option6" value="088" hidden> <img
+                                            src="public/images/shinhan.png" width="150px">
+                                    </label>
+                                </div>
+                                <div class="btn-group-vertical">
+                                    <label class="btn btn-light active">
+                                        <!-- 카카오뱅크 -->
+                                        <input type="radio" name="options" id="option7" value="090" hidden> <img
+                                            src="public/images/kakao.png" width="150px">
+                                    </label>
+                                    <label class="btn btn-light">
+                                        <!-- 산업은행 -->
+                                        <input type="radio" name="options" id="option8" value="002" hidden> <img
+                                            src="public/images/kdb.png" width="150px">
+                                    </label>
+                                    <label class="btn btn-light">
+                                        <!-- 기업은행 -->
+                                        <input type="radio" name="options" id="option9" value="003" hidden> <img
+                                            src="public/images/ibk.png" width="150px">
+                                    </label>
+                                </div>
                             </div>
-                        </div>
+
+                            <div class="form-group">
+                                <label for="name" class="sr-only">name</label>
+                                <input type="text" name="name" id="name" class="form-control" placeholder="Card Name">
+                            </div>
+                            <div class="form-group">
+                                <label for="cardno" class="sr-only">cardno</label>
+                                <input type="text" name="cardno" id="cardno" class="form-control"
+                                    placeholder="Card Number">
+                            </div>
+                            <button type="submit" method="POST" id="sbmt" method="POST"
+                                class="btn btn-success btn-block mb-3">Sign up</button>
+                        </form>
                     </div>
                 </div>
-            </main>
-        </body>
-    </body>
+            </div>
+        </div>
+    </main>
+</body>
+<script>
+    'use strict';
+    const form = document.getElementById('auth-form');
+    const cardForm = document.getElementById("card-form");
+
+    // $("#sbmt").unbind("click").click(function(event){
+    form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        console.log(Object.fromEntries(new FormData(event.target)));
+        //const formData = new FormData(form);
+
+        fetch('http://localhost:3000/user', {
+            method: 'POST', // *GET, POST, PUT, DELETE, etc.
+            mode: 'cors', // no-cors, cors, *same-origin
+            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: 'same-origin', // include, *same-origin, omit
+            headers: {
+                'Content-Type': 'application/json',
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            // redirect: 'follow', // manual, *follow, error
+            // referrer: 'no-referrer', // no-referrer, *client
+            body: JSON.stringify(Object.fromEntries(new FormData(event.target))) // // body data type must match "Content-Type" header
+        }).then((response) => {
+            const { status } = response;
+            // console.log(status + ", " + typeof(status));
+            if (status === 404) {
+                return Promise.reject(new Error("ID or Password가 틀립니다!"));
+            }
+            else if (status === 422) {
+                return Promise.reject(new Error("올바른 ID, Password값을 입력해 주세요!"));
+            }
+            else if (status === 201) {
+                return Promise.resolve("Login 성공!"); // async promise 성공시 반환이라 생각 
+            }
+            else return Promise.reject(new Error("Login Request is failed")); // async promise 실패시 반환이라 생각 
+        }).then((data) => { // 성공하면 여기오고
+            console.log(data);
+
+            //card form 생성 및 auth form 사라짐
+            if (cardForm.style.display == 'none') {
+                cardForm.style.display = 'block';
+                $("#auth-form").hide();
+            }
+
+            alert(data);
+            // window.location.href = "main.html"; // main html로 강제 이동시킴 
+        }).catch((error) => { // 실패하면 여기온다
+            console.warn(error);
+            alert(error);
+        });
+    });
+</script>
+
 </html>
