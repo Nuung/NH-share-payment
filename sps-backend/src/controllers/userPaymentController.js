@@ -8,9 +8,9 @@ const colors = require('colors'); // for log color :) -> success "colors.bgGreen
 // 매번 API 호출하는 건 부담임, get payment history를 통해 생성된 payment history들 불러와야함
 const getAllPayHistory = async (req, res) => {
     try {
-        // const { userId, userName, userBirth } = jwt.decode(req.cookies['user-login']);
         const { headers } = req;
-        const { userId, userName, userBirth } = jwt.decode(headers['x-access-token']);
+        // const { userId, userName, userBirth } = jwt.decode(headers['x-access-token']);
+        const { userId, userName, userBirth } = jwt.decode(req.cookies['user-login']);
 
         await UserPayment.getAllHistory(userId, function (err, userPaymentHistory) {
             console.log(colors.bgGreen.black('userPaymentController - getAllHistory Successfully'));
@@ -34,10 +34,10 @@ const getAllPayHistory = async (req, res) => {
 // target id 찾아 그 내용 기반으로 payment 로 옮기고 => 모두 완료되면 그때 remove 실행
 const updatePayHistory = async (req, res) => {
     try {
-        // const { userId, userName, userBirth } = jwt.decode(req.cookies['user-login']);
         const { id, category } = req.body;
         const { headers } = req;
-        const { userId, userName, userBirth } = jwt.decode(headers['x-access-token']);
+        // const { userId, userName, userBirth } = jwt.decode(headers['x-access-token']);
+        const { userId, userName, userBirth } = jwt.decode(req.cookies['user-login']);
 
         let targetPayHistory = await UserPayment.findHistoryById(id);
         if (!targetPayHistory) {
