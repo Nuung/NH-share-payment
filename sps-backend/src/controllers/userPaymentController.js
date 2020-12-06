@@ -29,6 +29,29 @@ const getAllPayHistory = async (req, res) => {
     }
 }
 
+// MayBe for making a Graph about target user
+const getAllPayments = async (req, res) => {
+    try {
+        const { headers } = req;
+        // const { userId, userName, userBirth } = jwt.decode(headers['x-access-token']);
+        const { userId, userName, userBirth } = jwt.decode(req.cookies['user-login']);
+
+        await UserPayment.getAllPayments(userId, function (err, userPayment) {
+            console.log(colors.bgGreen.black('userPaymentController - getAllPayments Successfully'));
+            if (err) {
+                if (err) throw new Error(`userPaymentController getAllPayments Error: ${err}`);                
+            }
+            else return res.status(200).json({ userPayment });
+        });
+    }
+    catch (error) {
+        console.log(`userPaymentController getAllPayments: ${error}`);
+        return res.status(404).json({
+            position: "userPaymentController getAllPayments",
+            message: error.message
+        });
+    }
+}
 
 // History Tab에서 user가 특정 놈 눌러서 category 선택하면 일어날 인터렉션
 // target id 찾아 그 내용 기반으로 payment 로 옮기고 => 모두 완료되면 그때 remove 실행
@@ -48,7 +71,7 @@ const updatePayHistory = async (req, res) => {
         }
         else {
             // Main 
-            targetPayHistory['id'] = id;
+            targetPayHistory['id'] = id; // 얘를 고유하게 바꿔주는게 좋다! 
             targetPayHistory['category'] = category // category value input for real payment DB
             let newUserPayment = new UserPayment(targetPayHistory, false); // not a history
 
@@ -157,6 +180,7 @@ const removeById = async (req, res) => {
 */
 
 module.exports = {
+    getAllPayments,
     getAllPayHistory,
     updatePayHistory
 };

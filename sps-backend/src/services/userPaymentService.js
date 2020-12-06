@@ -40,27 +40,19 @@ const randomIsTuno = (date) => {
 //////////////////////////////////////////////////// make payments Task's methods
 // result는 callback함수임 
 
-// Create a userPaymnet history. [ await 를 이용하기! ]
-// Row which category was choosed by user will be removed!
-UserPayment.creatUserCardPayHistory = async function (userId, cardId, newUserPaymentArr, result) {
-    try {
-        const connection = await pool.getConnection(async conn => conn);
-        let insertIdCounter = 0;
-        for (let i = 0; i < newUserPaymentArr.length; i++) {
-            newUserPaymentArr[i]['user_id'] = userId;
-            newUserPaymentArr[i]['card_id'] = cardId;
-            let userPayment = new UserPayment(newUserPaymentArr[i]);
-            const result = await connection.query("INSERT INTO user_payment_history set ?", userPayment);
-            if (!result[0].insertId) throw new Error(`UserPaymentServeice user_payment_history Error`);
-            else insertIdCounter++;
-        } // for 
-        result(null, insertIdCounter);
-    } catch (error) {
-        console.log(`UserPaymentServeice user_payment_history Error: ${error}`);
-        throw new Error(`UserPaymentServeice user_payment_history Error: ${error}`);
-    }
+// Get all payment for user_id
+UserPayment.getAllPayments = async function (userId, result) {
+    connection.query("Select * from user_payments WHERE user_id = ?", [userId], function (err, res) {
+        if (err) {
+            console.log("getAllHistory service error: ", err);
+            result(null, err);
+        }
+        else {
+            // console.log('User : ', res);
+            result(null, res);
+        }
+    });
 };
-
 
 // Create a userPayment (Real data for user)
 UserPayment.creatUserPayment = async function (newUserPayment, result) {
@@ -83,6 +75,28 @@ UserPayment.creatUserPayment = async function (newUserPayment, result) {
 
 
 //////////////////////////////////////////////////// make history Task's methods
+
+// Create a userPaymnet history. [ await 를 이용하기! ]
+// Row which category was choosed by user will be removed!
+UserPayment.creatUserCardPayHistory = async function (userId, cardId, newUserPaymentArr, result) {
+    try {
+        const connection = await pool.getConnection(async conn => conn);
+        let insertIdCounter = 0;
+        for (let i = 0; i < newUserPaymentArr.length; i++) {
+            newUserPaymentArr[i]['user_id'] = userId;
+            newUserPaymentArr[i]['card_id'] = cardId;
+            let userPayment = new UserPayment(newUserPaymentArr[i]);
+            const result = await connection.query("INSERT INTO user_payment_history set ?", userPayment);
+            if (!result[0].insertId) throw new Error(`UserPaymentServeice user_payment_history Error`);
+            else insertIdCounter++;
+        } // for 
+        result(null, insertIdCounter);
+    } catch (error) {
+        console.log(`UserPaymentServeice user_payment_history Error: ${error}`);
+        throw new Error(`UserPaymentServeice user_payment_history Error: ${error}`);
+    }
+};
+
 
 // Get all payment history for user_id
 UserPayment.getAllHistory = async function (userId, result) {

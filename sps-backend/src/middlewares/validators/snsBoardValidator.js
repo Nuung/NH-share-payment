@@ -8,21 +8,19 @@ const validateSnsBoardCreate = [
         .escape()
         .not()
         .isEmpty()
-        .withMessage('SNS Board user_id can not be empty!')
-        .bail(),
-    check('title')
-        .trim()
-        .escape()
-        .not()
-        .isEmpty()
-        .withMessage('SNS Board title can not be empty!')
+        .withMessage('SnsBoard user_id can not be empty!')
         .bail(),
     check('content')
         .trim()
         .escape()
         .not()
         .isEmpty()
-        .withMessage('SNS Board content can not be empty!')
+        .withMessage('SnsBoard content can not be empty!')
+        .bail(),
+    check('tags')
+        .trim()
+        .escape()
+        .not()
         .bail(),
     (req, res, next) => {
         const errors = validationResult(req);
