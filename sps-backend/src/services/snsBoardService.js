@@ -43,7 +43,7 @@ const randomIsTuno = (date) => {
 
 
 // Create a userPayment (Real data for user)
-SnsBoard.creatUserPayment = async function (newUserPayment, result) {
+SnsBoard.creatBoard = async function (newUserPayment, result) {
     try {
         connection.query("INSERT INTO user_payments set ?", newUserPayment, function (err, res) {
             if (err) {
