@@ -27,10 +27,29 @@ const validateUserCreate = [
         .isLength({ min: 3 })
         .withMessage('Minimum 3 characters required in User id!')
         .bail(),
+    check('family')
+        .trim()
+        .escape()
+        .not()
+        .isEmpty()
+        .withMessage('User Family Value can not be empty!')
+        .bail()
+        .isNumeric()
+        .withMessage('User family must be number!')
+        .bail(),
+    check('budget')
+        .trim()
+        .escape()
+        .not()
+        .isEmpty()
+        .withMessage('User budget can not be empty!')
+        .bail()
+        .isNumeric()
+        .withMessage('User budget must be number')
+        .bail(),
     (req, res, next) => {
         const errors = validationResult(req);
-        if (!errors.isEmpty())
-            return res.status(422).json({ errors: errors.array() });
+        if (!errors.isEmpty()) return res.status(422).json({ errors: errors.array() });
         next();
     },
 ];
@@ -57,8 +76,7 @@ const validateUserLogin = [
         .bail(),
     (req, res, next) => {
         const errors = validationResult(req);
-        if (!errors.isEmpty())
-            return res.status(422).json({ errors: errors.array() });
+        if (!errors.isEmpty()) return res.status(422).json({ errors: errors.array() });
         next();
     },
 ];

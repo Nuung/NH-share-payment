@@ -109,11 +109,13 @@ User.updateById = function (updateUser, result) {
         gender,
         login_type,
         fin_account,
+        family,
+        budget,
         updated_at
     } = updateUser;
 
-    const sql = "UPDATE users SET `password` = ?, `name` = ?, `birthday` = ?, `gender` = ?, `login_type` = ?, `fin_account` = ?, `updated_at` = ? WHERE id = ?"
-    connection.query(sql, [password, name, birthday, gender, login_type, fin_account, updated_at, id],
+    const sql = "UPDATE users SET `password` = ?, `name` = ?, `birthday` = ?, `gender` = ?, `login_type` = ?, `fin_account` = ?, `family` = ?, `budget` = ?, `updated_at` = ? WHERE id = ?"
+    connection.query(sql, [password, name, birthday, gender, login_type, fin_account, family, budget, updated_at, id],
         function (err, res) {
             if (err) {
                 console.log("updateByid service error: ", err);

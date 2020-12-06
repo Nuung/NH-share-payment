@@ -23,6 +23,8 @@ const User = function (user, isUpdate = false) { // 대상자 (수혜자)
         this.gender = user.gender;
         this.login_type = user.login_type;
         this.fin_account = user.fin_account;
+        this.family = user.family;
+        this.budget = user.budget;
         this.created_at = new Date().toJSON().slice(0, 19).replace('T', ' '); // 생성된 날짜
         this.updated_at = new Date().toJSON().slice(0, 19).replace('T', ' '); // 초기 생성될땐 생성 날짜와 동일하게         
     }
@@ -34,6 +36,8 @@ const User = function (user, isUpdate = false) { // 대상자 (수혜자)
         this.gender = user.gender;
         this.login_type = user.login_type;
         this.fin_account = user.fin_account;
+        this.family = user.family;
+        this.budget = user.budget;        
         this.updated_at = new Date().toJSON().slice(0, 19).replace('T', ' '); // 초기 생성될땐 생성 날짜와 동일하게                 
     }
 };
