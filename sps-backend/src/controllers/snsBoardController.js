@@ -7,7 +7,34 @@ const colors = require('colors'); // for log color :) -> success "colors.bgGreen
 
 // User Create A Board
 const creatBoard = async (req, res) => {
-    
+    try {
+        const { userId, userName, userBirth } = jwt.decode(req.cookies['user-login']);
+
+        let reqInfo = {
+            // id: req.body.id,
+            user_id: userId,
+            title: req.body.title,
+            content: req.body.content,
+            great: 0,
+            disgreat: 0,
+            tags: req.body.tags
+        };
+        const newSnsBoard = new SnsBoard(reqInfo);
+        await SnsBoard.creatBoard(newSnsBoard, function (err, result) {
+            if (err) {
+                console.log('snsBoardController - creatBoard Error: ', err);
+                throw new Error(`snsBoardController - creatBoard Error: ${err}`);
+            }
+            return res.status(201).json(result);
+        });
+    }
+    catch (error) {
+        console.log(`snsBoardController creatBoard: ${error}`);
+        return res.status(404).json({
+            position: "snsBoardController creatBoard",
+            message: error.message
+        });
+    }
 };
 
 
@@ -99,6 +126,7 @@ const removeById = async (req, res) => {
 }
 
 module.exports = {
+    creatBoard,
     getAllBoardByUserId,
     getAllBoards,
     updateById,

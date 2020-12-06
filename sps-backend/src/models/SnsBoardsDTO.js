@@ -14,7 +14,7 @@ const SnsBoard = function (sns_board, isUpdate = false) {
     updated_at      DATE,
     */
     if(!isUpdate) { // created First and not a update
-        this.id = sns_board.id;
+        // this.id = sns_board.id;
         this.user_id = sns_board.user_id;
         this.title = sns_board.title;
         this.content = sns_board.content;
@@ -25,7 +25,7 @@ const SnsBoard = function (sns_board, isUpdate = false) {
         this.updated_at = new Date().toJSON().slice(0, 19).replace('T', ' ');
     }
     else {
-        this.id = sns_board.id;
+        // this.id = sns_board.id;
         this.user_id = sns_board.user_id;
         this.title = sns_board.title;
         this.content = sns_board.content;
