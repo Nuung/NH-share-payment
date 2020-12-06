@@ -318,11 +318,12 @@
 
                         <!-- Border Left Utilities -->
                         <!-- value 값 : 식비(1), 의류(2), 교육(3), 교통(4), 생활(5) -->
-                        <div class="col-lg-6">
-
-                            <div class="card mb-4 py-3 border-left-primary">
-                                <div class="card-body">
-                                <h2> 지출 내역 받아오기 </h2>
+                        <!-- CardAthzNo(카드 승인번호), Trdd(거래일자), Usam(거래금액) -->
+                        <ul class="col-lg-6">
+                            <!-- 여기부터 -->
+                            <li id="pay-card-body" class="card mb-4 py-3 border-left-primary">
+                                <div name="card-body" class="card-body">
+                                    <h2> 지출 내역 받아오기 </h2>
                                     <label class="radio-inline">
                                         <input type="radio" name="pay_category" id="pay_category" value="1"> 식비
                                     </label>
@@ -346,10 +347,9 @@
                                         <span class="text">등록</span>
                                     </button>     
                                 </div>
-                            </div>
-
-                            <div class="card mb-4 py-3 border-left-secondary">
-                                <div class="card-body">
+                            </li>
+                            <li id="pay-card-body" class="card mb-4 py-3 border-left-primary">
+                                <div name="card-body" class="card-body">
                                     <h2> 지출 내역 받아오기 </h2>
                                     <label class="radio-inline">
                                         <input type="radio" name="pay_category" id="pay_category" value="1"> 식비
@@ -372,206 +372,20 @@
                                             <i class="fas fa-flag"></i>
                                         </span>
                                         <span class="text">등록</span>
-                                    </button>   
+                                    </button>     
                                 </div>
-                            </div>
-
-                            <div class="card mb-4 py-3 border-left-success">
-                                <div class="card-body">
-                                    <h2> 지출 내역 받아오기 </h2>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="pay_category" id="pay_category" value="1"> 식비
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="pay_category" id="pay_category" value="2"> 의류
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="pay_category" id="pay_category" value="3"> 교육
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="pay_category" id="pay_category" value="4"> 교통
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="pay_category" id="pay_category" value="5"> 생활
-                                    </label>
-                                    <br>
-                                    <button type="button" class="btn btn-primary btn-icon-split">
-                                        <span class="icon text-white-50">
-                                            <i class="fas fa-flag"></i>
-                                        </span>
-                                        <span class="text">등록</span>
-                                    </button>    
-                                </div>
-                            </div>
-
-                            <div class="card mb-4 py-3 border-left-primary">
-                                <div class="card-body">
-                                    <h2> 지출 내역 받아오기 </h2>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="pay_category" id="pay_category" value="1"> 식비
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="pay_category" id="pay_category" value="2"> 의류
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="pay_category" id="pay_category" value="3"> 교육
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="pay_category" id="pay_category" value="4"> 교통
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="pay_category" id="pay_category" value="5"> 생활
-                                    </label>
-                                    <br>
-                                    <button type="button" class="btn btn-primary btn-icon-split">
-                                        <span class="icon text-white-50">
-                                            <i class="fas fa-flag"></i>
-                                        </span>
-                                        <span class="text">등록</span>
-                                    </button>    
-                                </div>
-                            </div>
-
-                            <div class="card mb-4 py-3 border-left-secondary">
-                                <div class="card-body">
-                                    <h2> 지출 내역 받아오기 </h2>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="pay_category" id="pay_category" value="1"> 식비
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="pay_category" id="pay_category" value="2"> 의류
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="pay_category" id="pay_category" value="3"> 교육
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="pay_category" id="pay_category" value="4"> 교통
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="pay_category" id="pay_category" value="5"> 생활
-                                    </label>
-                                    <br>
-                                    <button type="button" class="btn btn-primary btn-icon-split">
-                                        <span class="icon text-white-50">
-                                            <i class="fas fa-flag"></i>
-                                        </span>
-                                        <span class="text">등록</span>
-                                    </button>    
-                                </div>
-                            </div>
-
-                            <div class="card mb-4 py-3 border-left-success">
-                                <div class="card-body">
-                                    <h2> 지출 내역 받아오기 </h2>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="pay_category" id="pay_category" value="1"> 식비
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="pay_category" id="pay_category" value="2"> 의류
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="pay_category" id="pay_category" value="3"> 교육
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="pay_category" id="pay_category" value="4"> 교통
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="pay_category" id="pay_category" value="5"> 생활
-                                    </label>
-                                    <br>
-                                    <button type="button" class="btn btn-primary btn-icon-split">
-                                        <span class="icon text-white-50">
-                                            <i class="fas fa-flag"></i>
-                                        </span>
-                                        <span class="text">등록</span>
-                                    </button>    
-                                </div>
-                            </div>
-
-                            <div class="card mb-4 py-3 border-left-dark">
-                                <div class="card-body">
-                                    <h2> 지출 내역 받아오기 </h2>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="pay_category" id="pay_category" value="1"> 식비
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="pay_category" id="pay_category" value="2"> 의류
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="pay_category" id="pay_category" value="3"> 교육
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="pay_category" id="pay_category" value="4"> 교통
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="pay_category" id="pay_category" value="5"> 생활
-                                    </label>
-                                    <br>
-                                    <button type="button" class="btn btn-primary btn-icon-split">
-                                        <span class="icon text-white-50">
-                                            <i class="fas fa-flag"></i>
-                                        </span>
-                                        <span class="text">등록</span>
-                                    </button>    
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <!-- Border Bottom Utilities -->
-                        <!-- <div class="col-lg-6">
-
-                            <div class="card mb-4 py-3 border-bottom-primary">
-                                <div class="card-body">
-                                    .border-bottom-primary
-                                </div>
-                            </div>
-
-                            <div class="card mb-4 py-3 border-bottom-secondary">
-                                <div class="card-body">
-                                    .border-bottom-secondary
-                                </div>
-                            </div>
-
-                            <div class="card mb-4 py-3 border-bottom-success">
-                                <div class="card-body">
-                                    .border-bottom-success
-                                </div>
-                            </div>
-
-                            <div class="card mb-4 py-3 border-bottom-info">
-                                <div class="card-body">
-                                    .border-bottom-info
-                                </div>
-                            </div>
-
-                            <div class="card mb-4 py-3 border-bottom-warning">
-                                <div class="card-body">
-                                    .border-bottom-warning
-                                </div>
-                            </div>
-
-                            <div class="card mb-4 py-3 border-bottom-danger">
-                                <div class="card-body">
-                                    .border-bottom-danger
-                                </div>
-                            </div>
-
-                            <div class="card mb-4 py-3 border-bottom-dark">
-                                <div class="card-body">
-                                    .border-bottom-dark
-                                </div>
-                            </div>
-
-                        </div> -->
-
+                            </li>
+                            <!-- 여기까지 -->
+                        </ul>
+                        
                     </div>
-
+                    <!-- end Card -->
                 </div>
+                <!-- End Page Content -->
 
 
-
-
+            </div>
+        
             <!-- Footer -->
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
@@ -632,5 +446,31 @@
     <script src="./lib/bootstrap/js//chart-bar-demo.js"></script>
 
 </body>
+
+<!-- JS SECTION -->
+<script>
+    'use strict';
+
+    //------------------------------Get Dom------------------------------//
+    const signForm = document.getElementById('auth-form');
+    const cardForm = document.getElementById("card-form");
+
+
+    //------------------------------Function------------------------------//
+    const makeRandomId = () => String(Math.floor(Math.random() * (20)));
+
+
+    //------------------------------Main------------------------------//
+
+    function init() {
+        
+    }
+
+    //------------------------------document get ready------------------------------//
+    document.addEventListener("DOMContentLoaded", function () {
+        init();
+    });
+
+</script>
 
 </html>
