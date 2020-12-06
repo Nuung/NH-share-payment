@@ -79,51 +79,51 @@
                                 <div class="btn-group-vertical">
                                     <label class="btn btn-light active">
                                         <!-- 농협은행 -->
-                                        <input type="radio" name="options" id="option1" value="011" hidden> <img
+                                        <input type="radio" name="id" id="option1" value="011" hidden> <img
                                             src="public/images/cardicons/nh.png" width="150px">
                                     </label>
                                     <label class="btn btn-light">
                                         <!-- 하나은행 -->
-                                        <input type="radio" name="options" id="option4" value="081" hidden> <img
+                                        <input type="radio" name="id" id="option4" value="081" hidden> <img
                                             src="public/images/kebhana.png" width="150px">
                                     </label>
                                     <label class="btn btn-light">
                                         <!-- 국민은행 -->
-                                        <input type="radio" name="options" id="option3" value="004" hidden> <img
+                                        <input type="radio" name="id" id="option3" value="004" hidden> <img
                                             src="public/images/kb.png" width="150px">
                                     </label>
                                 </div>
                                 <div class="btn-group-vertical">
                                     <label class="btn btn-light active">
                                         <!-- 농협상호금융 -->
-                                        <input type="radio" name="options" id="option2" value="012" hidden> <img
+                                        <input type="radio" name="id" id="option2" value="012" hidden> <img
                                             src="public/images/localnh.png" width="150px">
                                     </label>
                                     <label class="btn btn-light">
                                         <!-- 우리은행 -->
-                                        <input type="radio" name="options" id="option5" value="020" hidden> <img
+                                        <input type="radio" name="id" id="option5" value="020" hidden> <img
                                             src="public/images/woori.png" width="150px">
                                     </label>
                                     <label class="btn btn-light">
                                         <!-- 신한은행 -->
-                                        <input type="radio" name="options" id="option6" value="088" hidden> <img
+                                        <input type="radio" name="id" id="option6" value="088" hidden> <img
                                             src="public/images/shinhan.png" width="150px">
                                     </label>
                                 </div>
                                 <div class="btn-group-vertical">
                                     <label class="btn btn-light active">
                                         <!-- 카카오뱅크 -->
-                                        <input type="radio" name="options" id="option7" value="090" hidden> <img
+                                        <input type="radio" name="id" id="option7" value="090" hidden> <img
                                             src="public/images/kakao.png" width="150px">
                                     </label>
                                     <label class="btn btn-light">
                                         <!-- 산업은행 -->
-                                        <input type="radio" name="options" id="option8" value="002" hidden> <img
+                                        <input type="radio" name="id" id="option8" value="002" hidden> <img
                                             src="public/images/kdb.png" width="150px">
                                     </label>
                                     <label class="btn btn-light">
                                         <!-- 기업은행 -->
-                                        <input type="radio" name="options" id="option9" value="003" hidden> <img
+                                        <input type="radio" name="id" id="option9" value="003" hidden> <img
                                             src="public/images/ibk.png" width="150px">
                                     </label>
                                 </div>
@@ -139,7 +139,7 @@
                                     placeholder="Card Number">
                             </div>
                             <button type="submit" method="POST" id="sbmt" method="POST"
-                                class="btn btn-success btn-block mb-3">Sign up</button>
+                                class="btn btn-success btn-block mb-3">Add Card</button>
                         </form>
                     </div>
                 </div>
@@ -149,56 +149,111 @@
 </body>
 <script>
     'use strict';
-    const form = document.getElementById('auth-form');
+
+    //------------------------------Get Dom------------------------------//
+    const signForm = document.getElementById('auth-form');
     const cardForm = document.getElementById("card-form");
 
-    // $("#sbmt").unbind("click").click(function(event){
-    form.addEventListener('submit', function (event) {
-        event.preventDefault();
-        console.log(Object.fromEntries(new FormData(event.target)));
-        //const formData = new FormData(form);
 
-        fetch('http://localhost:3000/user', {
-            method: 'POST', // *GET, POST, PUT, DELETE, etc.
-            mode: 'cors', // no-cors, cors, *same-origin
-            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-            credentials: 'same-origin', // include, *same-origin, omit
-            headers: {
-                'Content-Type': 'application/json',
-                // 'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            // redirect: 'follow', // manual, *follow, error
-            // referrer: 'no-referrer', // no-referrer, *client
-            body: JSON.stringify(Object.fromEntries(new FormData(event.target))) // // body data type must match "Content-Type" header
-        }).then((response) => {
-            const { status } = response;
-            // console.log(status + ", " + typeof(status));
-            if (status === 404) {
-                return Promise.reject(new Error("ID or Password가 틀립니다!"));
-            }
-            else if (status === 422) {
-                return Promise.reject(new Error("올바른 ID, Password값을 입력해 주세요!"));
-            }
-            else if (status === 201) {
-                return Promise.resolve("Login 성공!"); // async promise 성공시 반환이라 생각 
-            }
-            else return Promise.reject(new Error("Login Request is failed")); // async promise 실패시 반환이라 생각 
-        }).then((data) => { // 성공하면 여기오고
-            console.log(data);
+    //------------------------------Function------------------------------//
+    const makeRandomId = () => String(Math.floor(Math.random() * (20)));
 
-            //card form 생성 및 auth form 사라짐
-            if (cardForm.style.display == 'none') {
-                cardForm.style.display = 'block';
-                $("#auth-form").hide();
-            }
 
-            alert(data);
-            // window.location.href = "main.html"; // main html로 강제 이동시킴 
+    //------------------------------Main------------------------------//
+
+    function init() {
+        // Add SignUp Fetching
+        signForm.addEventListener('submit', function (event) {
+            event.preventDefault();
+            console.log(Object.fromEntries(new FormData(event.target)));
+            //const formData = new FormData(form);
+
+            fetch('http://localhost:3000/user', {
+                method: 'POST', // *GET, POST, PUT, DELETE, etc.
+                mode: 'cors', // no-cors, cors, *same-origin
+                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                credentials: 'include', // include, *same-origin, omit 
+                headers: {
+                    'Content-Type': 'application/json',
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                // redirect: 'follow', // manual, *follow, error
+                // referrer: 'no-referrer', // no-referrer, *client
+                body: JSON.stringify(Object.fromEntries(new FormData(event.target))) // // body data type must match "Content-Type" header
+            }).then((response) => {
+                const { status } = response;
+                // console.log(status + ", " + typeof(status));
+                if (status === 400) {
+                    return Promise.reject(new Error("ID가 이미 존재합니다!!"));
+                }
+                else if (status === 422) {
+                    return Promise.reject(new Error("올바른 ID, Password, 생년월일(yyymmdd)값을 입력해 주세요!"));
+                }
+                else if (status === 201) {
+                    return Promise.resolve("Login 성공!"); // async promise 성공시 반환이라 생각 
+                }
+                else return Promise.reject(new Error("Create User Request is failed")); // async promise 실패시 반환이라 생각 
+            }).then((data) => { // 성공하면 여기오고
+                // console.log(data);
+                //card form 생성 및 auth form 사라짐
+                if (cardForm.style.display == 'none') {
+                    cardForm.style.display = 'block';
+                    $("#auth-form").hide();
+                }
+            });
+        });
+
+        // Add Card Fetching
+        cardForm.addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            // set id value to Unique
+            let dataBody = Object.fromEntries(new FormData(event.target));
+            dataBody['id'] += (dataBody['name'] + makeRandomId());
+            console.log(dataBody);
+            // fetching body
+            fetch('http://localhost:3000/user/card', {
+                method: 'POST', // *GET, POST, PUT, DELETE, etc.
+                mode: 'cors', // no-cors, cors, *same-origin
+                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                credentials: 'include', // include, *same-origin, omit 
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                // redirect: 'follow', // manual, *follow, error
+                // referrer: 'no-referrer', // no-referrer, *client
+                body: JSON.stringify(dataBody) // body data type must match "Content-Type" header
+            }).then((response) => {
+                const { status } = response;
+                // console.log(status + ", " + typeof(status));
+                if (status === 400) {
+                    return Promise.reject(new Error("ID가 이미 존재합니다!!"));
+                }
+                else if (status === 422) {
+                    return Promise.reject(new Error("올바른 ID, Password, 생년월일(yyymmdd)값을 입력해 주세요!"));
+                }
+                else if (status === 201) {
+                    return Promise.resolve("Login 성공!"); // async promise 성공시 반환이라 생각 
+                }
+                else return Promise.reject(new Error("Create User Card Request is failed")); // async promise 실패시 반환이라 생각 
+            }).then((data) => { // 성공하면 여기오고
+                console.log(data);
+                window.location.href = "main.html"; // main html로 강제 이동시킴 
+            }).catch((error) => { // 실패하면 여기온다
+                console.warn(error);
+                alert(error);
+            });
         }).catch((error) => { // 실패하면 여기온다
             console.warn(error);
             alert(error);
         });
+    }
+
+    //------------------------------document get ready------------------------------//
+    document.addEventListener("DOMContentLoaded", function () {
+        init();
     });
+
 </script>
 
 </html>
