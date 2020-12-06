@@ -14,6 +14,19 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/bootstrap-slider.min.js" 
+        integrity="sha512-f0VlzJbcEB6KiW8ZVtL+5HWPDyW1+nJEjguZ5IVnSQkvZbwBt2RfCBY0CBO1PsMAqxxrG4Di6TfsCPP3ZRwKpA==" 
+        crossorigin="anonymous"></script>        
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/bootstrap-slider.js" 
+        integrity="sha512-tCkLWlSXiiMsUaDl5+8bqwpGXXh0zZsgzX6pB9IQCZH+8iwXRYfcCpdxl/owoM6U4ap7QZDW4kw7djQUiQ4G2A==" 
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/css/bootstrap-slider.css" 
+        integrity="sha512-SZgE3m1he0aEF3tIxxnz/3mXu/u/wlMNxQSnE0Cni9j/O8Gs+TjM9tm1NX34nRQ7GiLwUEzwuE3Wv2FLz2667w==" 
+        crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/css/bootstrap-slider.min.css" 
+        integrity="sha512-3q8fi8M0VS+X/3n64Ndpp6Bit7oXSiyCnzmlx6IDBLGlY5euFySyJ46RUlqIVs0DPCGOypqP8IRk/EyPvU28mQ==" 
+        crossorigin="anonymous" />                
+
     <script src="lib/jquery/buttonChange.js"></script>
     <script type="text/javascript" src="public/javascript/validator.min.js"></script>
     <style>
@@ -58,15 +71,23 @@
                                 <input type="text" name="birthday" id="birthday" class="form-control"
                                     placeholder="Birthday">
                             </div>
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                 <label for="family" class="sr-only">family</label>
                                 <input type="text" name="family" id="family" class="form-control"
                                     placeholder="Family">
+                            </div> -->
+                            <!-- 1인 가구, 2인 가구, 3인 가구 ...-->
+                            
+                            <div class="form-group">
+                                <label for="formControlRange">Family</label><hr>
+                                <!-- <input type="range" class="form-control-range" id="formControlRange"> -->
+                                <input id="family" type="text" name="family" data-slider-min="1" data-slider-max="5" data-slider-step="1" />
                             </div>
+                            <!-- 버짓 설정 hover -->
                             <div class="form-group">
                                 <label for="budget" class="sr-only">budget</label>
                                 <input type="text" name="budget" id="budget" class="form-control"
-                                    placeholder="Monthly Budget">
+                                    placeholder="Monthly Budget" data-toggle="tooltip" data-placement="right" title="1인 : 805,900 2인 : 1,274,100 3인 : 1,641,700 4인 : 2,153,300 5인 : 2,593,100">
                             </div>
                             <div class="form-group">
                                 <input type="text" name="login_type" id="login_type"
@@ -266,7 +287,7 @@
 
 </script>
 
-
+<!-- <script>
     /**
         ==============================
                 card reg reqeust
@@ -310,6 +331,35 @@
             console.warn(error);
             alert(error);
         });
+    });
+</script> -->
+<!-- <script>
+
+    // With JQuery
+    $("#ex15").slider({
+        min: 1000,
+        max: 10000000,
+        scale: 'logarithmic',
+        step: 10
+    });
+
+    // Without JQuery
+    let slider = new Slider('#ex15', {
+        min: 1000,
+        max: 10000000,
+        scale: 'logarithmic',
+        step: 10
+    });
+</script> -->
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+
+    // With JQuery
+    $("#family").slider();
+    $("#family").on("slide", function(slideEvt) {
+        $("#ex6SliderVal").text(slideEvt.value);
     });
 </script>
 </html>
