@@ -42,7 +42,7 @@ const creatUser = async (req, res) => {
                             if (err) throw new Error('CreateUser Jwt Token issue: ' + err);
                             else {
                                 console.log(token);
-                                return res.cookie("user-login", token, { secure: false, httpOnly: false })
+                                return res.cookie("user-login", token)
                                     .status(201).json({ message: "회원가입에 성공했습니다." });
                             }
                         });

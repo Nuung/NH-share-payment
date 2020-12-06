@@ -11,10 +11,10 @@ const colors = require('colors'); // for log color :)
 // -> NH API를 통해 발급 확인을 받고 -> "핀카드 번호"를 DB에 입력해야함 
 const creatUserCard = async (req, res) => {
     try {
-        // const tokenDecoded = req.cookies['user-login'].decoded;
         const { cardno } = req.body;
         const { headers } = req;
-        const { userId, userName, userBirth } = jwt.decode(headers['x-access-token']);
+        // const { userId, userName, userBirth } = jwt.decode(headers['x-access-token']);
+        const { userId, userName, userBirth } = jwt.decode(req.cookies['user-login']);
 
         // Check OpenFinCardDirect / axios를 promise 로 바꿔쓰든지 해야 callback 지옥에서 벗어날 수 있을 듯,, 체이닝이 안되 ㅠㅠ  
         await UserCard.OpenFinCardDirect(userBirth, cardno, function (err, response) {
@@ -74,7 +74,8 @@ const creatUserCard = async (req, res) => {
 const creatUserCardPayHistory = async (req, res) => {
     try {
         const { headers } = req;
-        const { userId, userName, userBirth } = jwt.decode(headers['x-access-token']);
+        // const { userId, userName, userBirth } = jwt.decode(headers['x-access-token']);
+        const { userId, userName, userBirth } = jwt.decode(req.cookies['user-login']);
 
         // get target UserCard by token's userId
         const targetCard = await UserCard.findByUserId(userId);
