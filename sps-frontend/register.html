@@ -191,7 +191,6 @@
             console.log(data);
 
             //card form 생성 및 auth form 사라짐
-            
             if (cardForm.style.display == 'none') {
                 cardForm.style.display = 'block';
                 $("#auth-form").hide();
@@ -223,7 +222,6 @@
             credentials: 'same-origin', // include, *same-origin, omit
             headers: {
                 'Content-Type': 'application/json',
-                'x-access-token': '23f17ed24e236b4dca80ac1caa5a87a1e49513f773833342854b78695908bf96'
                 // 'Content-Type': 'application/x-www-form-urlencoded',
             },
             // redirect: 'follow', // manual, *follow, error
@@ -244,7 +242,6 @@
             else return Promise.reject(new Error("Login Request is failed")); // async promise 실패시 반환이라 생각 
         }).then((data) => { // 성공하면 여기오고
             console.log(data);
-            
             window.location.href = "login.html"; // 로그인 페이지로 이동
             alert(data);
         }).catch((error) => { // 실패하면 여기온다
