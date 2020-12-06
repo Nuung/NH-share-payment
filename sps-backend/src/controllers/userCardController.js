@@ -12,51 +12,44 @@ const colors = require('colors'); // for log color :)
 const creatUserCard = async (req, res) => {
     try {
         const { cardno } = req.body;
-        const { headers } = req;
+        // const { headers } = req;
         // const { userId, userName, userBirth } = jwt.decode(headers['x-access-token']);
         const { userId, userName, userBirth } = jwt.decode(req.cookies['user-login']);
 
         // Check OpenFinCardDirect / axios를 promise 로 바꿔쓰든지 해야 callback 지옥에서 벗어날 수 있을 듯,, 체이닝이 안되 ㅠㅠ  
-        await UserCard.OpenFinCardDirect(userBirth, cardno, function (err, response) {
-            if (err) throw new Error(`userCardController OpenFinCardDirect Error: ${err}`);
 
-            // No error and Check the other value
-            const { Header: { Rsms }, Rgno } = response; // Rsms가 등록 번호
-            if (!Rgno) throw new Error(`이미 발급된 핀카드 또는 내부 데이터 에러: ${Rsms}`);
-            else {
-                // 등록 번호 기반으로 실제 핀 카드 받아야 함! 
-                UserCard.CheckOpenFinCardDirect(userBirth, Rgno, function (err, response) {
-                    if (err) throw new Error(`userCardController CheckOpenFinCardDirect Error: ${err}`);
-                    const { Fincard, Rsms } = response; // 드디어 발급된 핀 카드 번호 
 
-                    // Create A UserCard 
-                    // Check FinCard Number 중복
-                    // const isNew = await UserCard.findByFinCard(Fincard);
-                    // if (isNew) {
-                    //     return res.status(400).json({
-                    //         position: "userCardController creatUserCard",
-                    //         message: '이미 등록된 카드 번호 입니다!'
-                    //     });
-                    // }
-                    // Create Main Function
-                    const temp_ = { // make a new UserCard Obj
-                        id: req.body.id,
-                        user_id: userId,
-                        name: req.body.name,
-                        fin_card: Fincard
-                    };
-                    const newUserCard = new UserCard(temp_);
-                    UserCard.creatUserCard(newUserCard, function (err, user) {
-                        console.log('userCardController creatUserCard Successfully!');
-                        if (err) throw new Error(`userCardController creatUserCard Error: ${Rsms} And ${err}`);
-                        return res.status(201).json({ user });
+        await UserCard.OpenFinCardDirect(userBirth, cardno) // FinCard발급을 위한 발급 번호받기 ~ and of await
+            .then((response) => {
+                // No error and Check the other value
+                const { Header: { Rsms }, Rgno } = response; // Rsms가 등록 번호
+                if (!Rgno) throw new Error(`이미 발급된 핀카드 또는 내부 데이터 에러: ${Rsms}`);
+                return new Promise((resolve, reject) => {
+                    UserCard.CheckOpenFinCardDirect(userBirth, Rgno, function (err, response) {
+                        if (err) reject(`userCardController CheckOpenFinCardDirect Error: ${err}`);
+                        else {
+                            const { FinCard, Rsms } = response; // 드디어 발급된 핀 카드 번호 
+                            const temp_ = { // make a new UserCard Obj
+                                id: req.body.id,
+                                user_id: userId,
+                                name: req.body.name,
+                                fin_card: FinCard
+                            };
+                            const newUserCard = new UserCard(temp_);
+                            resolve(newUserCard, Rsms);
+                        }
                     });
-                }); // FinCard발급하기
-            }
-        }); // FinCard발급을 위한 발급 번호받기 ~ and of await
+                });
+            })
+            .then((newUserCard, Rsms) => {
+                return UserCard.creatUserCard(newUserCard, function (err, user) {
+                    console.log('userCardController creatUserCard Successfully!');
+                    if (err) throw new Error(`userCardController creatUserCard Error: ${Rsms} And ${err}`);
+                    return res.status(201).json({ user });
+                });
 
-        // end of await, 아래 영역 진입! 
-        console.log('\u001b[1m', "End of userCardController creatUserCard API");
+            })
+            .catch(err => { throw new Error(`userCardController OpenFinCardDirect Error: ${err}`) });
     }
     catch (error) {
         console.log(`userCardController creatUserCard: ${error}`);
@@ -99,7 +92,7 @@ const creatUserCardPayHistory = async (req, res) => {
                     console.log(REC);
                     // 중요한건 여기서 userCard payment (history) table update -> 유저가 카테고리 고를 수 있게 
                     UserCardPayment.creatUserCardPayHistory(userId, targetCard.id, REC, function (err, insertIdCounter) {
-                        if(err) throw new Error(`userCardController creatUserCardPayHistory Error: ${err}`);
+                        if (err) throw new Error(`userCardController creatUserCardPayHistory Error: ${err}`);
                         else {
                             console.log(colors.yellow.bgRed.bold("userCardController creatUserCardPayHistory ${insertIdCounter} rows was added successfully"));
                             return res.status(201).json({

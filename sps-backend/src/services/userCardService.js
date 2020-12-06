@@ -63,10 +63,10 @@ const nhAPIUrl = "https://developers.nonghyup.com";
  * @method  - POST
  * @apiDocs - https://developers.nonghyup.com/guide/GU_1030 
  */
-UserCard.OpenFinCardDirect = async function (userBirth, cardno, result) {
+UserCard.OpenFinCardDirect = async (userBirth, cardno) => {
     // console.log(`UserCardServeice OpenFinCardDirect, ${userBirth}, ${cardno}`);
     // console.log(setHeader("OpenFinCardDirect"));
-    await axios.request({
+    return await axios.request({
         method: 'POST',
         url: `${nhAPIUrl}/OpenFinCardDirect.nh`,
         headers: {
@@ -80,14 +80,14 @@ UserCard.OpenFinCardDirect = async function (userBirth, cardno, result) {
         }
     }).then(response => {
         const { data: responseBody, status: responseCode } = response;
-        if (responseCode == 200) result(null, responseBody);
+        if (responseCode == 200) return(responseBody);
         else {
             console.log(responseBody + ", Status code: " + responseCode);
-            result(null, responseBody);
+            return(responseBody);
         }
     }).catch(e => {
         console.error(`UserCardServeice OpenFinCardDirect: ${e}`);
-        result(e, null);
+        throw new Error(`UserCardServeice OpenFinCardDirect: ${e}`);
     });
 };
 
