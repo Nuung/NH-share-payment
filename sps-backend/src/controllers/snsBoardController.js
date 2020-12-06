@@ -4,6 +4,13 @@ const SnsBoard = require('../services/snsBoardService');
 const jwt = require('jsonwebtoken'); // User Login JWT Create
 const colors = require('colors'); // for log color :) -> success "colors.bgGreen.black"
 
+
+// User Create A Board
+const creatBoard = async (req, res) => {
+    
+};
+
+
 // Get A Board by user id
 const getAllBoardByUserId = async (req, res) => {
     try {
