@@ -1,6 +1,7 @@
 const createError = require('http-errors');
 const express = require('express');
 const cookieParser = require('cookie-parser');
+// const session = require('express-session');
 const logger = require('morgan');
 const cors = require('cors');
 const escapeJSON = require('escape-json-node');
@@ -20,7 +21,15 @@ app.use(express.json()); // body-parser setting ~ express include body-parser fr
 app.use(express.urlencoded({ extended: true }));
 // app.use(cookieParser(appConfig.parsed.COOKIE_SECRET));
 app.use(cookieParser());
-app.use(cors()); // CORS 설정
+// app.use(session({
+//     resave: false,
+//     saveUninitialized: false,
+//     secret: appConfig.parsed.SESSION_SECRET
+// }));
+app.use(cors({  // CORS 설정
+    origin: true,
+    credentials: true
+}));
 app.set('jwt-secret', appConfig.parsed.JWT_SECRET); // set the secret key variable for jwt
 
 

@@ -39,13 +39,13 @@ const creatUser = async (req, res) => {
                             issuer: 'spsProject',
                             subject: 'userInfo'
                         }, (err, token) => {
-                            if (err) throw new Error('User Login failed: user does not exist');
+                            if (err) throw new Error('CreateUser Jwt Token issue: ' + err);
                             else {
-                                res.cookie("user-login", token);
-                                return res.status(201).json({ message: "회원가입에 성공했습니다." });
+                                console.log(token);
+                                return res.cookie("user-login", token, { secure: false, httpOnly: false })
+                                    .status(201).json({ message: "회원가입에 성공했습니다." });
                             }
                         });
-                    // return res.status(201).json({ user });
                 }
             });
         }
