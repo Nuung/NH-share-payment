@@ -319,9 +319,9 @@
                         <!-- Border Left Utilities -->
                         <!-- value 값 : 식비(1), 의류(2), 교육(3), 교통(4), 생활(5) -->
                         <!-- CardAthzNo(카드 승인번호), Trdd(거래일자), Usam(거래금액) -->
-                        <ul class="col-lg-6">
+                        <ul id="pay-card-body" class="col-lg-6">
                             <!-- 여기부터 -->
-                            <li id="pay-card-body" class="card mb-4 py-3 border-left-primary">
+                            <!-- <li class="card mb-4 py-3 border-left-primary">
                                 <div name="card-body" class="card-body">
                                     <h2> 지출 내역 받아오기 </h2>
                                     <label class="radio-inline">
@@ -340,41 +340,14 @@
                                         <input type="radio" name="pay_category" id="pay_category" value="5"> 생활
                                     </label>
                                     <br>
-                                    <button type="button" class="btn btn-primary btn-icon-split">
+                                    <button id="category-submit" type="button" class="btn btn-primary btn-icon-split">
                                         <span class="icon text-white-50">
                                             <i class="fas fa-flag"></i>
                                         </span>
                                         <span class="text">등록</span>
                                     </button>     
                                 </div>
-                            </li>
-                            <li id="pay-card-body" class="card mb-4 py-3 border-left-primary">
-                                <div name="card-body" class="card-body">
-                                    <h2> 지출 내역 받아오기 </h2>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="pay_category" id="pay_category" value="1"> 식비
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="pay_category" id="pay_category" value="2"> 의류
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="pay_category" id="pay_category" value="3"> 교육
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="pay_category" id="pay_category" value="4"> 교통
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="pay_category" id="pay_category" value="5"> 생활
-                                    </label>
-                                    <br>
-                                    <button type="button" class="btn btn-primary btn-icon-split">
-                                        <span class="icon text-white-50">
-                                            <i class="fas fa-flag"></i>
-                                        </span>
-                                        <span class="text">등록</span>
-                                    </button>     
-                                </div>
-                            </li>
+                            </li> -->
                             <!-- 여기까지 -->
                         </ul>
                         
@@ -452,9 +425,7 @@
     'use strict';
 
     //------------------------------Get Dom------------------------------//
-    const signForm = document.getElementById('auth-form');
-    const cardForm = document.getElementById("card-form");
-
+    const categorySubmit = document.getElementById("category-submit")
 
     //------------------------------Function------------------------------//
     const makeRandomId = () => String(Math.floor(Math.random() * (20)));
@@ -464,6 +435,40 @@
 
     function init() {
         
+        fetch('http://localhost:3000/user/payment/history', {
+                method: 'GET', // *GET, POST, PUT, DELETE, etc.
+                mode: 'cors', // no-cors, cors, *same-origin
+                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                credentials: 'include', // include, *same-origin, omit 
+                headers: {
+                    'Content-Type': 'application/json',
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                // redirect: 'follow', // manual, *follow, error
+                // referrer: 'no-referrer', // no-referrer, *client
+                //body: JSON.stringify(Object.fromEntries(new FormData(event.target))) // // body data type must match "Content-Type" header
+            }).then((response) => {
+                const { status } = response;
+                console.log(status + ", " + typeof(status));
+                if (status === 400) {
+                    return Promise.reject(new Error("ID가 이미 존재합니다!!"));
+                }
+                else if (status === 422) {
+                    return Promise.reject(new Error("올바른 ID, Password, 생년월일(yyymmdd)값을 입력해 주세요!"));
+                }
+                else if (status === 201) {
+                    return Promise.resolve("Login 성공!"); // async promise 성공시 반환이라 생각 
+                }
+                else return Promise.reject(new Error("Create User Request is failed")); // async promise 실패시 반환이라 생각 
+            }).then((data) => { // 성공하면 여기오고
+                // console.log(data);
+                //CardAthzNo(카드 승인번호), Trdd(거래일자), Usam(거래금액)
+                markup = " ";
+                
+                $("#pay-card-list").append(markup);
+            });
+       
+
     }
 
     //------------------------------document get ready------------------------------//
