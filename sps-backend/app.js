@@ -13,6 +13,7 @@ const appConfig = require('dotenv').config();
 const userApi = require('./src/routes/userApi');
 const userCardApi = require('./src/routes/userCardApi');
 const userPaymentApi = require('./src/routes/userPaymentApi');
+const snsBoardApi = require('./src/routes/snsBoardApi');
 
 const app = express();
 
@@ -37,6 +38,7 @@ app.set('jwt-secret', appConfig.parsed.JWT_SECRET); // set the secret key variab
 userApi(app);
 userCardApi(app);
 userPaymentApi(app);
+snsBoardApi(app);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -87,3 +87,19 @@ CREATE TABLE  user_payments (
   ON DELETE CASCADE
   ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE  sns_boards (
+  id      	    INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  user_id 	    VARCHAR(40) NOT NULL,
+  title         VARCHAR(40),
+  content       TEXT,
+  great          INT(4) UNSIGNED,
+  disgreat       INT(4) UNSIGNED,
+  tags          VARCHAR(40),  
+  created_at    DATE,
+  updated_at    DATE,
+  FOREIGN KEY ( user_id ) REFERENCES users(id) 
+  ON DELETE CASCADE
+  ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
