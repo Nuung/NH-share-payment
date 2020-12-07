@@ -28,6 +28,8 @@ CREATE TABLE  users (
   gender        TINYINT,
   login_type    VARCHAR(40),
   fin_account   VARCHAR(255),
+  family        TINYINT UNSIGNED,
+  budget        INT UNSIGNED,
   created_at    DATE,
   updated_at    DATE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
