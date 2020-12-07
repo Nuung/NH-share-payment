@@ -36,4 +36,4 @@ const SnsBoard = function (sns_board, isUpdate = false) {
     }
 };
 
-module.exports = UserPayment;
+module.exports = SnsBoard;

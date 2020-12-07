@@ -96,4 +96,4 @@ SnsBoard.removeById = async function (id, result) {
 };
 
 
-module.exports = UserPayment;
+module.exports = SnsBoard;
