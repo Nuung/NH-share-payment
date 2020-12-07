@@ -63,7 +63,7 @@ const getAllBoardByUserId = async (req, res) => {
 };
 
 // Get All Boards
-const getAllBoards = async (req, res) => { 
+const getAllBoards = async (req, res) => {
     try {
         await SnsBoard.getAllBoards(function (err, boards) {
             console.log('snsBoardController - getAllBoards');
@@ -84,29 +84,71 @@ const getAllBoards = async (req, res) => {
 };
 
 // Update A Board by Id
-const updateById = async (req, res) => { 
+// const updateById = async (req, res) => {
 
-    const updatedBoard = new snsBoard(req.body, true);
+//     const updatedBoard = new snsBoard(req.body, true);
+//     try {
+//         await SnsBoard.updateById(updatedBoard, function (err, result) {
+//             if (err) {
+//                 console.log('snsBoardController - updateById Error: ', err);
+//                 throw new Error(`snsBoardController - updateById Error: ${err}`);
+//             }
+//             return res.status(201).send(result);
+//         });
+//     }
+//     catch (error) {
+//         console.log(`snsBoardController updateById: ${error}`);
+//         return res.status(404).json({
+//             position: "snsBoardController updateById",
+//             message: error.message
+//         });
+//     }
+// };
+
+// Update A Board's Great by target Id
+const updateBoardGreat = async (req, res) => { // user id , board id 필요함 
+    /*
+    1. target 글을 누르면 sns_board_likes의 user id find(Select) 확인
+    2. 없으면 target board id를 sns_board 에서 update ( +1 ) [ 사실 +1을 위해 find -> updat 2번의 쿼리 필요 ]
+    3. 있으면 target board id를 sns_board 에서 update ( -1 ) [ 사실 -1을 위해 find -> updat 2번의 쿼리 필요 ]
+    3. (1, 2모두 성공시) front에서 Get target board’s 따봉 개수 받아오고
+    4. 결과값으로 바뀐 부분 re render (변경 ㅇㅇ)
+    */
     try {
-        await SnsBoard.updateById(updatedBoard, function (err, result) {
-            if (err) {
-                console.log('snsBoardController - updateById Error: ', err);
-                throw new Error(`snsBoardController - updateById Error: ${err}`);
-            }
-            return res.status(201).send(result);
+        const { userId, userName, userBirth } = jwt.decode(req.cookies['user-login']);
+        const { id } = req.body;
+        const isGreat = await SnsBoard.findUserLike(userId);
+        const targetBoard = await SnsBoard.findById(id); // target Board Infomation
+
+        // Cant Find target Board Id
+        if (!targetBoard) return res.status(400).json({
+            position: "snsBoardController updateBoardGreat 'Cant Find target Board Id'",
+            message: error.message
         });
-    }
-    catch (error) {
-        console.log(`snsBoardController updateById: ${error}`);
+        else {
+            let greatNow = 0;
+            if (isGreat) greatNow = Number(targetBoard['great']) - 1; // disgreat 과정
+            else greatNow = Number(targetBoard['great']) + 1; // Great 과정
+
+            await SnsBoard.updateById(greatNow, id, (err, result) => {
+                if (err) {
+                    console.log('snsBoardController - updateBoardGreat Error: ', err);
+                    throw new Error(`snsBoardController - updateBoardGreat Error: ${err}`);
+                }
+                return res.status(201).send(result);
+            });
+        }
+    } catch (error) {
+        console.log(`snsBoardController updateBoardGreat: ${error}`);
         return res.status(404).json({
-            position: "snsBoardController updateById",
+            position: "snsBoardController updateBoardGreat",
             message: error.message
         });
     }
 };
 
 // Remove A Board By Id
-const removeById = async (req, res) => { 
+const removeById = async (req, res) => {
     try {
         await SnsBoard.removeById(req.body.id, function (err, result) {
             if (err) {
@@ -123,12 +165,14 @@ const removeById = async (req, res) => {
             message: error.message
         });
     }
-}
+};
+
 
 module.exports = {
     creatBoard,
+    updateBoardGreat,
     getAllBoardByUserId,
     getAllBoards,
-    updateById,
+    // updateById,
     removeById
 };

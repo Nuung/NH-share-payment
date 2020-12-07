@@ -14,4 +14,7 @@ module.exports = (app) => {
     .get(sns_board_api.getAllBoards)
     .post(validateSnsBoardCreate, sns_board_api.creatBoard); // create sns board 
 
+  app.use('/snsboard/like', authMiddleware);
+  app.route('/snsboard/like')
+    .put(sns_board_api.updateBoardGreat);
 };
