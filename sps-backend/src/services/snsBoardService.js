@@ -39,6 +39,22 @@ const randomIsTuno = (date) => {
 
 //////////////////////////////////////////////////// make sns_board_likes Task's methods
 
+// Create a sns_boards
+SnsBoard.creatBoardLike = async function (newLikeUser, result) {
+    try {
+        connection.query("INSERT INTO sns_board_likes set ?", newLikeUser, function (err, res) {
+            if (err) {
+                console.log("creatUser service error: ", err);
+                result(err, null);
+            }
+            else result(null, res);
+        });
+    } catch (error) {
+        console.log(`userServeice creatUser Error: ${error}`);
+        throw new Error(`userServeice creatUser Error: ${error}`);
+    }
+};
+
 // Find by user_id in sns_board_likes table! 
 SnsBoard.findUserLike = async function (user_id) {
     const connection = await pool.getConnection(async conn => conn);
@@ -50,6 +66,17 @@ SnsBoard.findUserLike = async function (user_id) {
         console.log(`snsBoardServeice findUserLike Error: ${error}`);
         throw new Error(`snsBoardServeice findUserLike Error: ${error}`);
     }
+};
+
+// UserPayment remove - paymentHistory data By id
+SnsBoard.removeLikeByBoardId = async function (board_id, result) {
+    connection.query("DELETE FROM sns_board_likes WHERE board_id = ?", [board_id], function (err, res) {
+        if (err) {
+            console.log("removeById service error: ", err);
+            result(null, err);
+        }
+        else result(null, res);
+    });
 };
 
 //////////////////////////////////////////////////// make sns_boards Task's methods
@@ -67,10 +94,10 @@ SnsBoard.findById = async function (board_id) {
     }
 };
 
-// Create a userPayment (Real data for user)
+// Create a sns_boards
 SnsBoard.creatBoard = async function (newUserPayment, result) {
     try {
-        connection.query("INSERT INTO user_payments set ?", newUserPayment, function (err, res) {
+        connection.query("INSERT INTO sns_boards set ?", newUserPayment, function (err, res) {
             if (err) {
                 console.log("creatUser service error: ", err);
                 result(err, null);
