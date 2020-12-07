@@ -12,7 +12,7 @@ module.exports = (app) => {
   // userPayment restfull API 
   app.use('/user/payment/history', authMiddleware);
   app.route('/user/payment/history')
-    .get(user_payment_api.getAllPayHistory);
-    // .put(validateUserUpdatePayHistory, user_payment_api.updatePayHistory);
+    .get(user_payment_api.getAllPayHistory)
+    .put(validateUserUpdatePayHistory, user_payment_api.updatePayHistory);
 
 };

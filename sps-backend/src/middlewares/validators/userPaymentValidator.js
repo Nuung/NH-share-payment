@@ -2,27 +2,20 @@
 
 const { check, validationResult } = require('express-validator');
 
-const validateSnsBoardCreate = [
-    check('user_id')
+const validateUserUpdatePayHistory = [
+    check('id')
         .trim()
         .escape()
         .not()
         .isEmpty()
-        .withMessage('SNS Board user_id can not be empty!')
+        .withMessage('Payment history id can not be empty!')
         .bail(),
-    check('title')
+    check('category')
         .trim()
         .escape()
         .not()
         .isEmpty()
-        .withMessage('SNS Board title can not be empty!')
-        .bail(),
-    check('content')
-        .trim()
-        .escape()
-        .not()
-        .isEmpty()
-        .withMessage('SNS Board content can not be empty!')
+        .withMessage('Payment history category can not be empty!')
         .bail(),
     (req, res, next) => {
         const errors = validationResult(req);
@@ -32,5 +25,5 @@ const validateSnsBoardCreate = [
 ];
 
 module.exports = {
-    validateSnsBoardCreate
+    validateUserUpdatePayHistory
 };

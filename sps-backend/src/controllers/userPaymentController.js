@@ -15,7 +15,7 @@ const getAllPayHistory = async (req, res) => {
         await UserPayment.getAllHistory(userId, function (err, userPaymentHistory) {
             console.log(colors.bgGreen.black('userPaymentController - getAllHistory Successfully'));
             if (err) {
-                if (err) throw new Error(`userPaymentController getAllPayHistory Error: ${err}`);                
+                if (err) throw new Error(`userPaymentController getAllPayHistory Error: ${err}`);
             }
             else return res.status(200).json({ userPaymentHistory });
         });
@@ -39,7 +39,7 @@ const getAllPayments = async (req, res) => {
         await UserPayment.getAllPayments(userId, function (err, userPayment) {
             console.log(colors.bgGreen.black('userPaymentController - getAllPayments Successfully'));
             if (err) {
-                if (err) throw new Error(`userPaymentController getAllPayments Error: ${err}`);                
+                if (err) throw new Error(`userPaymentController getAllPayments Error: ${err}`);
             }
             else return res.status(200).json({ userPayment });
         });
@@ -69,26 +69,26 @@ const updatePayHistory = async (req, res) => {
                 message: '찾을 수 없는 id 값 입니다.'
             });
         }
-        else {
-            // Main 
-            targetPayHistory['id'] = id; // 얘를 고유하게 바꿔주는게 좋다! 
-            targetPayHistory['category'] = category // category value input for real payment DB
-            let newUserPayment = new UserPayment(targetPayHistory, false); // not a history
+        else throw new Error("");
+        // else {
+        //     // Main 
+        //     targetPayHistory['id'] = id; // 얘를 고유하게 바꿔주는게 좋다! 
+        //     targetPayHistory['category'] = category // category value input for real payment DB
+        //     let newUserPayment = new UserPayment(targetPayHistory, false); // not a history
 
-            await UserPayment.creatUserPayment(newUserPayment, function (err, userPayment) {
-                // console.log('userPaymentController - creatUserPayment in updatePayHistory');
-                if (err) throw new Error(`userPaymentController creatUserPayment Error: ${err}`);
-                else {
-                    UserPayment.removeHistoryById(id, function (err, result) {
-                        if (err) throw new Error(`userPaymentController removeHistoryById Error: ${err}`);
-                        else {
-                            console.log(colors.bgGreen.black("userPaymentController removeHistoryById and Update payment Success!!"));
-                            return res.status(201).json({ result });
-                        }
-                    });
-                }
-            });
-        }
+        //     await UserPayment.creatUserPayment(newUserPayment, function (err, userPayment) {
+        //         // console.log('userPaymentController - creatUserPayment in updatePayHistory');
+        //         if (err) throw new Error(`userPaymentController creatUserPayment Error: ${err}`);
+        //         else {
+        //             console.log(userPayment);
+        //             UserPayment.removeHistoryById(id, function (err, result) {
+        //                 if (err) throw new Error(`userPaymentController removeHistoryById Error: ${err}`);
+        //                 console.log(colors.bgGreen.black("userPaymentController removeHistoryById and Update payment Success!!"));
+        //                 return res.status(201).json({ result });
+        //             });
+        //         }
+        //     });
+        // }
         // end of await, 아래 영역 진입! 
         console.log('\u001b[1m', "End of userPaymentController updatePayHistory API");
     }
