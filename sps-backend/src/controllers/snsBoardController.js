@@ -42,9 +42,10 @@ const creatBoard = async (req, res) => {
 const getAllBoardByUserId = async (req, res) => {
     try {
         // req.body (id value) 값에 대한 값 보증 필요 and Vaildatation
-        if (!req.body.userId) return res.status(400).send({ error: true, message: 'Please provide Board userId' });
+        // if (!req.body.userId) return res.status(400).send({ error: true, message: 'Please provide Board userId' });
+        const { userId, userName, userBirth } = jwt.decode(req.cookies['user-login']);
 
-        await SnsBoard.getAllBoardByUserId(req.body.userId, function (err, board) {
+        await SnsBoard.getAllBoardByUserId(userId, function (err, board) {
             console.log('snsBoardController - getAllBoardByUserId');
             if (err) {
                 console.log('snsBoardController - getAllBoardByUserId Error: ', err);
@@ -117,7 +118,7 @@ const updateBoardGreat = async (req, res) => { // user id , board id 필요함
     try {
         const { userId, userName, userBirth } = jwt.decode(req.cookies['user-login']);
         const { id } = req.body;
-        const isGreat = await SnsBoard.findUserLike(userId);
+        const isGreat = await SnsBoard.findUserLike(userId); // 얘는 Create to sns_board_likes 까지 해줘야함 
         const targetBoard = await SnsBoard.findById(id); // target Board Infomation
 
         // Cant Find target Board Id
@@ -126,18 +127,42 @@ const updateBoardGreat = async (req, res) => { // user id , board id 필요함
             message: error.message
         });
         else {
+            // console.log(targetBoard);
             let greatNow = 0;
-            if (isGreat) greatNow = Number(targetBoard['great']) - 1; // disgreat 과정
-            else greatNow = Number(targetBoard['great']) + 1; // Great 과정
+            if (isGreat) { // disgreat 과정 BoardLike target user remove, 0이면 더 이상 빼주면 안됨 
+                greatNow = Number(targetBoard['great']) - 1;
+            }
+            else { // Great 과정 BoardLike target user add(Create)
+                greatNow = Number(targetBoard['great']) + 1;
+            }
 
-            await SnsBoard.updateById(greatNow, id, (err, result) => {
+            SnsBoard.updateGreatById(greatNow, id, (err, result) => {
                 if (err) {
-                    console.log('snsBoardController - updateBoardGreat Error: ', err);
-                    throw new Error(`snsBoardController - updateBoardGreat Error: ${err}`);
+                    console.log('snsBoardController - updateBoardGreat, updateGreatById Error: ', err);
+                    throw new Error(`snsBoardController - updateBoardGreat, updateGreatById Error: ${err}`);
                 }
-                return res.status(201).send(result);
+                else if (result) {
+                    if (isGreat) {
+                        SnsBoard.removeLikeByBoardId(id, function (err, likeResult) {
+                            if (err) {
+                                console.log('snsBoardController - updateBoardGreat, removeById Error: ', err);
+                                throw new Error(`snsBoardController - updateBoardGreat, removeById Error: ${err}`);
+                            }
+                            return res.status(201).json(likeResult);
+                        });
+                    }
+                    else {
+                        SnsBoard.creatBoardLike({ user_id: userId, board_id: id, created_at: new Date(), updated_at: new Date() }, (err, likeResult) => {
+                            if (err) {
+                                console.log('snsBoardController - updateBoardGreat, creatBoardLike Error: ', err);
+                                throw new Error(`snsBoardController - updateBoardGreat, creatBoardLike Error: ${err}`);
+                            }
+                            return res.status(201).json(likeResult);
+                        });
+                    }
+                }
             });
-        }
+        } // else 
     } catch (error) {
         console.log(`snsBoardController updateBoardGreat: ${error}`);
         return res.status(404).json({

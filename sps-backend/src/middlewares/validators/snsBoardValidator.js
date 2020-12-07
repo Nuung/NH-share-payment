@@ -3,13 +3,6 @@
 const { check, validationResult } = require('express-validator');
 
 const validateSnsBoardCreate = [
-    check('user_id')
-        .trim()
-        .escape()
-        .not()
-        .isEmpty()
-        .withMessage('SnsBoard user_id can not be empty!')
-        .bail(),
     check('content')
         .trim()
         .escape()
