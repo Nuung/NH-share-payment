@@ -38,7 +38,7 @@ app.set('jwt-secret', appConfig.parsed.JWT_SECRET); // set the secret key variab
 userApi(app);
 userCardApi(app);
 userPaymentApi(app);
-snsBoardApi(app);
+// snsBoardApi(app);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
