@@ -105,3 +105,18 @@ CREATE TABLE  sns_boards (
   ON DELETE CASCADE
   ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE  sns_board_likes (
+  id      	    INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  user_id 	    VARCHAR(40) NOT NULL,
+  board_id      INT NOT NULL,  
+  created_at    DATE,
+  updated_at    DATE,
+  FOREIGN KEY ( user_id ) REFERENCES users(id) 
+  ON DELETE CASCADE
+  ON UPDATE CASCADE,
+  FOREIGN KEY ( board_id ) REFERENCES sns_boards(id) 
+  ON DELETE CASCADE
+  ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

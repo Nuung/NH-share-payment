@@ -7,11 +7,14 @@ module.exports = (app) => {
 
   app.use('/snsboard', authMiddleware);
   app.route('/snsboard')
-    .get(sns_board_api.getAllBoardByUserId);
+    .get(sns_board_api.getAllBoardByUserId); // token 에서 userId와 일치하는 글만 가져오기 
 
   app.use('/snsboards', authMiddleware);
   app.route('/snsboards')
-    .get(sns_board_api.getAllBoards)
+    .get(sns_board_api.getAllBoards) // 걍 다 가져오기 
     .post(validateSnsBoardCreate, sns_board_api.creatBoard); // create sns board 
 
+  app.use('/snsboard/like', authMiddleware);
+  app.route('/snsboard/like')
+    .put(sns_board_api.updateBoardGreat);
 };

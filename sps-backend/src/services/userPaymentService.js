@@ -58,14 +58,8 @@ UserPayment.getAllPayments = async function (userId, result) {
 UserPayment.creatUserPayment = async function (newUserPayment, result) {
     try {
         connection.query("INSERT INTO user_payments set ?", newUserPayment, function (err, res) {
-            if (err) {
-                console.log("creatUser service error: ", err);
-                result(err, null);
-            }
-            else {
-                // console.log("inputed Id:" + res.insertId);
-                result(null, newUserPayment);
-            }
+            if (err) result(err, null);
+            else result(null, res);
         });
     } catch (error) {
         console.log(`userServeice creatUser Error: ${error}`);
@@ -128,13 +122,8 @@ UserPayment.findHistoryById = async function (id) {
 // UserPayment remove - paymentHistory data By id
 UserPayment.removeHistoryById = async function (id, result) {
     connection.query("DELETE FROM user_payment_history WHERE id = ?", [id], function (err, res) {
-        if (err) {
-            console.log("error: ", err);
-            result(null, err);
-        }
-        else {
-            result(null, res);
-        }
+        if (err) result(null, err);
+        else result(null, res);
     });
 };
 

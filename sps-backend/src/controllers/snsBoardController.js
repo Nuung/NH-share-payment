@@ -42,9 +42,10 @@ const creatBoard = async (req, res) => {
 const getAllBoardByUserId = async (req, res) => {
     try {
         // req.body (id value) 값에 대한 값 보증 필요 and Vaildatation
-        if (!req.body.userId) return res.status(400).send({ error: true, message: 'Please provide Board userId' });
+        // if (!req.body.userId) return res.status(400).send({ error: true, message: 'Please provide Board userId' });
+        const { userId, userName, userBirth } = jwt.decode(req.cookies['user-login']);
 
-        await SnsBoard.getAllBoardByUserId(req.body.userId, function (err, board) {
+        await SnsBoard.getAllBoardByUserId(userId, function (err, board) {
             console.log('snsBoardController - getAllBoardByUserId');
             if (err) {
                 console.log('snsBoardController - getAllBoardByUserId Error: ', err);
@@ -63,7 +64,7 @@ const getAllBoardByUserId = async (req, res) => {
 };
 
 // Get All Boards
-const getAllBoards = async (req, res) => { 
+const getAllBoards = async (req, res) => {
     try {
         await SnsBoard.getAllBoards(function (err, boards) {
             console.log('snsBoardController - getAllBoards');
@@ -84,29 +85,95 @@ const getAllBoards = async (req, res) => {
 };
 
 // Update A Board by Id
-const updateById = async (req, res) => { 
+// const updateById = async (req, res) => {
 
-    const updatedBoard = new snsBoard(req.body, true);
+//     const updatedBoard = new snsBoard(req.body, true);
+//     try {
+//         await SnsBoard.updateById(updatedBoard, function (err, result) {
+//             if (err) {
+//                 console.log('snsBoardController - updateById Error: ', err);
+//                 throw new Error(`snsBoardController - updateById Error: ${err}`);
+//             }
+//             return res.status(201).send(result);
+//         });
+//     }
+//     catch (error) {
+//         console.log(`snsBoardController updateById: ${error}`);
+//         return res.status(404).json({
+//             position: "snsBoardController updateById",
+//             message: error.message
+//         });
+//     }
+// };
+
+// Update A Board's Great by target Id
+const updateBoardGreat = async (req, res) => { // user id , board id 필요함 
+    /*
+    1. target 글을 누르면 sns_board_likes의 user id find(Select) 확인
+    2. 없으면 target board id를 sns_board 에서 update ( +1 ) [ 사실 +1을 위해 find -> updat 2번의 쿼리 필요 ]
+    3. 있으면 target board id를 sns_board 에서 update ( -1 ) [ 사실 -1을 위해 find -> updat 2번의 쿼리 필요 ]
+    3. (1, 2모두 성공시) front에서 Get target board’s 따봉 개수 받아오고
+    4. 결과값으로 바뀐 부분 re render (변경 ㅇㅇ)
+    */
     try {
-        await SnsBoard.updateById(updatedBoard, function (err, result) {
-            if (err) {
-                console.log('snsBoardController - updateById Error: ', err);
-                throw new Error(`snsBoardController - updateById Error: ${err}`);
-            }
-            return res.status(201).send(result);
+        const { userId, userName, userBirth } = jwt.decode(req.cookies['user-login']);
+        const { id } = req.body;
+        const isGreat = await SnsBoard.findUserLike(userId); // 얘는 Create to sns_board_likes 까지 해줘야함 
+        const targetBoard = await SnsBoard.findById(id); // target Board Infomation
+
+        // Cant Find target Board Id
+        if (!targetBoard) return res.status(400).json({
+            position: "snsBoardController updateBoardGreat 'Cant Find target Board Id'",
+            message: error.message
         });
-    }
-    catch (error) {
-        console.log(`snsBoardController updateById: ${error}`);
+        else {
+            // console.log(targetBoard);
+            let greatNow = 0;
+            if (isGreat) { // disgreat 과정 BoardLike target user remove, 0이면 더 이상 빼주면 안됨 
+                greatNow = Number(targetBoard['great']) - 1;
+            }
+            else { // Great 과정 BoardLike target user add(Create)
+                greatNow = Number(targetBoard['great']) + 1;
+            }
+
+            SnsBoard.updateGreatById(greatNow, id, (err, result) => {
+                if (err) {
+                    console.log('snsBoardController - updateBoardGreat, updateGreatById Error: ', err);
+                    throw new Error(`snsBoardController - updateBoardGreat, updateGreatById Error: ${err}`);
+                }
+                else if (result) {
+                    if (isGreat) {
+                        SnsBoard.removeLikeByBoardId(id, function (err, likeResult) {
+                            if (err) {
+                                console.log('snsBoardController - updateBoardGreat, removeById Error: ', err);
+                                throw new Error(`snsBoardController - updateBoardGreat, removeById Error: ${err}`);
+                            }
+                            return res.status(201).json(likeResult);
+                        });
+                    }
+                    else {
+                        SnsBoard.creatBoardLike({ user_id: userId, board_id: id, created_at: new Date(), updated_at: new Date() }, (err, likeResult) => {
+                            if (err) {
+                                console.log('snsBoardController - updateBoardGreat, creatBoardLike Error: ', err);
+                                throw new Error(`snsBoardController - updateBoardGreat, creatBoardLike Error: ${err}`);
+                            }
+                            return res.status(201).json(likeResult);
+                        });
+                    }
+                }
+            });
+        } // else 
+    } catch (error) {
+        console.log(`snsBoardController updateBoardGreat: ${error}`);
         return res.status(404).json({
-            position: "snsBoardController updateById",
+            position: "snsBoardController updateBoardGreat",
             message: error.message
         });
     }
 };
 
 // Remove A Board By Id
-const removeById = async (req, res) => { 
+const removeById = async (req, res) => {
     try {
         await SnsBoard.removeById(req.body.id, function (err, result) {
             if (err) {
@@ -123,12 +190,14 @@ const removeById = async (req, res) => {
             message: error.message
         });
     }
-}
+};
+
 
 module.exports = {
     creatBoard,
+    updateBoardGreat,
     getAllBoardByUserId,
     getAllBoards,
-    updateById,
+    // updateById,
     removeById
 };

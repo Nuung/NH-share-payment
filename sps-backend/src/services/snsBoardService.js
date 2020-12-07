@@ -37,15 +37,67 @@ const randomIsTuno = (date) => {
     return date + String(time);
 }
 
-//////////////////////////////////////////////////// make payments Task's methods
-// result는 callback함수임 
-//   updateById removeById
+//////////////////////////////////////////////////// make sns_board_likes Task's methods
 
+// Create a sns_boards
+SnsBoard.creatBoardLike = async function (newLikeUser, result) {
+    try {
+        connection.query("INSERT INTO sns_board_likes set ?", newLikeUser, function (err, res) {
+            if (err) {
+                console.log("creatUser service error: ", err);
+                result(err, null);
+            }
+            else result(null, res);
+        });
+    } catch (error) {
+        console.log(`userServeice creatUser Error: ${error}`);
+        throw new Error(`userServeice creatUser Error: ${error}`);
+    }
+};
 
-// Create a userPayment (Real data for user)
+// Find by user_id in sns_board_likes table! 
+SnsBoard.findUserLike = async function (user_id) {
+    const connection = await pool.getConnection(async conn => conn);
+    try {
+        const [rows] = await connection.query("Select * from sns_board_likes WHERE user_id = ?", [user_id]);
+        if (isAllEmpty(rows)) return false;
+        else return true;
+    } catch (error) {
+        console.log(`snsBoardServeice findUserLike Error: ${error}`);
+        throw new Error(`snsBoardServeice findUserLike Error: ${error}`);
+    }
+};
+
+// UserPayment remove - paymentHistory data By id
+SnsBoard.removeLikeByBoardId = async function (board_id, result) {
+    connection.query("DELETE FROM sns_board_likes WHERE board_id = ?", [board_id], function (err, res) {
+        if (err) {
+            console.log("removeById service error: ", err);
+            result(null, err);
+        }
+        else result(null, res);
+    });
+};
+
+//////////////////////////////////////////////////// make sns_boards Task's methods
+
+// Find board by id
+SnsBoard.findById = async function (board_id) {
+    const connection = await pool.getConnection(async conn => conn);
+    try {
+        const [rows] = await connection.query("Select * from sns_boards WHERE id = ?", [board_id]);
+        if (isAllEmpty(rows)) return false;
+        else return rows[0];
+    } catch (error) {
+        console.log(`snsBoardServeice findUserLike Error: ${error}`);
+        throw new Error(`snsBoardServeice findUserLike Error: ${error}`);
+    }
+};
+
+// Create a sns_boards
 SnsBoard.creatBoard = async function (newUserPayment, result) {
     try {
-        connection.query("INSERT INTO user_payments set ?", newUserPayment, function (err, res) {
+        connection.query("INSERT INTO sns_boards set ?", newUserPayment, function (err, res) {
             if (err) {
                 console.log("creatUser service error: ", err);
                 result(err, null);
@@ -60,6 +112,7 @@ SnsBoard.creatBoard = async function (newUserPayment, result) {
         throw new Error(`userServeice creatUser Error: ${error}`);
     }
 };
+
 
 
 // Get all sns_boards for user_id
@@ -82,6 +135,20 @@ SnsBoard.getAllBoards = async function (result) {
         }
         else result(null, res);
     });
+};
+
+// Update Target Board's information
+SnsBoard.updateGreatById = async function (greatNow, board_id, result) {
+    const sql = "UPDATE sns_boards SET `great` = ? WHERE id = ?";
+    connection.query(sql, [greatNow, board_id],
+        function (err, res) {
+            if (err) {
+                console.log("updateGreatById service error: ", err);
+                result(null, `snsBoardService updateGreatById Error: ${err}`);
+            }
+            else result(null, res);
+        }
+    );
 };
 
 // UserPayment remove - paymentHistory data By id
