@@ -153,7 +153,6 @@
                             {{#userPaymentHistory}} 
                                 <li class="card mb-4 py-3 border-left-primary">
                                     <div name="card-body" class="card-body">
-                                        {{id}}
                                         <h3> 거래 금액 </h3>
                                         <span> {{Usam}} </span>
                                         <h3> 거래 일자 </h3>
@@ -161,7 +160,7 @@
                                         <h3> 카드 승인번호 </h3>
                                         <span> {{CardAthzNo}} </span>
                                         <hr>
-                                        <form id="category-form" class="category-form" name="category-form"> <!-- 여기부터 -->
+                                        <form id="category-form" class="category-form" name="category-form"> <!-- 여기부터  data-target-id="{{id}}" -->
                                             <label class="radio-inline">
                                                 <input type="radio" name="category" id="category" value="1"> 식비
                                             </label>
@@ -178,7 +177,7 @@
                                                 <input type="radio" name="category" id="category" value="5"> 생활
                                             </label>
                                             <br>
-                                            <button id="submit" type="button" class="btn btn-primary btn-icon-split">
+                                            <button type ="button" class="btn btn-primary btn-icon-split">
                                                 <span class="icon text-white-50">
                                                     <i class="fas fa-flag"></i>
                                                 </span>
@@ -268,6 +267,7 @@
     //------------------------------Get Dom------------------------------//
     //const categorySubmit = document.getElementById("category-submit")
     const categoryForm = document.getElementById("category-form")
+    //const temp = categoryForm.getAttribute('data-target-id'); 
 
     //------------------------------Function------------------------------//
     const makeRandomId = () => String(Math.floor(Math.random() * (20)));
@@ -318,45 +318,47 @@
             
         categoryForm.addEventListener('submit', function (event) {
             event.preventDefault();
-            console.log(Object.fromEntries(new FormData(event.target)));
+            //console.log(Object.fromEntries(new FormData(event.target)));
+            console.log('111111111 plz');
+            
             //const formData = new FormData(form);
-
-            fetch('http://localhost:3000/user/payment/history', {
-                method: 'PUT', // *GET, POST, PUT, DELETE, etc.
-                mode: 'cors', // no-cors, cors, *same-origin
-                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-                credentials: 'include', // include, *same-origin, omit 
-                headers: {
-                    'Content-Type': 'application/json',
-                    // 'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                // redirect: 'follow', // manual, *follow, error
-                // referrer: 'no-referrer', // no-referrer, *client
-                body: JSON.stringify(Object.fromEntries(new FormData(event.target))) // // body data type must match "Content-Type" header
-            }).then((response) => {
-                const { status } = response;
-                // console.log(status + ", " + typeof(status));
-                if (status === 400) {
-                    return Promise.reject(new Error("ID가 이미 존재합니다!!"));
-                }
-                else if (status === 422) {
-                    return Promise.reject(new Error("올바른 ID, Password, 생년월일(yyymmdd)값을 입력해 주세요!"));
-                }
-                else if (status === 201) {
-                    return Promise.resolve("Login 성공!"); // async promise 성공시 반환이라 생각 
-                }
-                else return Promise.reject(new Error("Create User Request is failed")); // async promise 실패시 반환이라 생각 
-            }).then((data) => { // 성공하면 여기오고
-                // console.log(data);
-                //card form 생성 및 auth form 사라짐
-                if (cardForm.style.display == 'none') {
-                    cardForm.style.display = 'block';
-                    $("#auth-form").hide();
-                }
-            }).catch((error) => { // 실패하면 여기온다
-                console.warn(error);
-                alert(error);
-            });
+            
+            // fetch('http://localhost:3000/user/payment/history', {
+            //     method: 'PUT', // *GET, POST, PUT, DELETE, etc.
+            //     mode: 'cors', // no-cors, cors, *same-origin
+            //     cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+            //     credentials: 'include', // include, *same-origin, omit 
+            //     headers: {
+            //         'Content-Type': 'application/json',
+            //         // 'Content-Type': 'application/x-www-form-urlencoded',
+            //     },
+            //     // redirect: 'follow', // manual, *follow, error
+            //     // referrer: 'no-referrer', // no-referrer, *client
+            //     body: JSON.stringify(Object.fromEntries(new FormData(event.target))) // // body data type must match "Content-Type" header
+            // }).then((response) => {
+            //     const { status } = response;
+            //     // console.log(status + ", " + typeof(status));
+            //     if (status === 400) {
+            //         return Promise.reject(new Error("ID가 이미 존재합니다!!"));
+            //     }
+            //     else if (status === 422) {
+            //         return Promise.reject(new Error("올바른 ID, Password, 생년월일(yyymmdd)값을 입력해 주세요!"));
+            //     }
+            //     else if (status === 201) {
+            //         return Promise.resolve("Login 성공!"); // async promise 성공시 반환이라 생각 
+            //     }
+            //     else return Promise.reject(new Error("Create User Request is failed")); // async promise 실패시 반환이라 생각 
+            // }).then((data) => { // 성공하면 여기오고
+            //     // console.log(data);
+            //     //card form 생성 및 auth form 사라짐
+            //     if (cardForm.style.display == 'none') {
+            //         cardForm.style.display = 'block';
+            //         $("#auth-form").hide();
+            //     }
+            // }).catch((error) => { // 실패하면 여기온다
+            //     console.warn(error);
+            //     alert(error);
+            // });
         });
 
     }
