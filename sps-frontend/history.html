@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SPS-Mypage</title>
+    <title>SPS-History</title>
 
     <!-- Custom fonts for this template-->
     <link href="./lib/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -19,6 +19,13 @@
 
     <!-- Custom styles for this template-->
     <link href="./lib/bootstrap/css/sb-admin-2.min.css" rel="stylesheet">
+    <!-- <script src="public/javascript/handlebars-v4.7.6.js"></script> -->
+    <style>
+
+        .hidden__value__idtype {
+            display: none;
+        }
+    </style>
 
 </head>
 
@@ -143,260 +150,60 @@
 
                         <!-- Border Left Utilities -->
                         <!-- value 값 : 식비(1), 의류(2), 교육(3), 교통(4), 생활(5) -->
-                        <div class="col-lg-6">
-
-                            <div class="card mb-4 py-3 border-left-primary">
-                                <div class="card-body">
-                                <h2> 지출 내역 받아오기 </h2>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="pay_category" id="pay_category" value="1"> 식비
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="pay_category" id="pay_category" value="2"> 의류
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="pay_category" id="pay_category" value="3"> 교육
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="pay_category" id="pay_category" value="4"> 교통
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="pay_category" id="pay_category" value="5"> 생활
-                                    </label>
-                                    <br>
-                                    <button type="button" class="btn btn-primary btn-icon-split">
-                                        <span class="icon text-white-50">
-                                            <i class="fas fa-flag"></i>
-                                        </span>
-                                        <span class="text">등록</span>
-                                    </button>     
-                                </div>
-                            </div>
-
-                            <div class="card mb-4 py-3 border-left-secondary">
-                                <div class="card-body">
-                                    <h2> 지출 내역 받아오기 </h2>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="pay_category" id="pay_category" value="1"> 식비
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="pay_category" id="pay_category" value="2"> 의류
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="pay_category" id="pay_category" value="3"> 교육
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="pay_category" id="pay_category" value="4"> 교통
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="pay_category" id="pay_category" value="5"> 생활
-                                    </label>
-                                    <br>
-                                    <button type="button" class="btn btn-primary btn-icon-split">
-                                        <span class="icon text-white-50">
-                                            <i class="fas fa-flag"></i>
-                                        </span>
-                                        <span class="text">등록</span>
-                                    </button>   
-                                </div>
-                            </div>
-
-                            <div class="card mb-4 py-3 border-left-success">
-                                <div class="card-body">
-                                    <h2> 지출 내역 받아오기 </h2>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="pay_category" id="pay_category" value="1"> 식비
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="pay_category" id="pay_category" value="2"> 의류
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="pay_category" id="pay_category" value="3"> 교육
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="pay_category" id="pay_category" value="4"> 교통
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="pay_category" id="pay_category" value="5"> 생활
-                                    </label>
-                                    <br>
-                                    <button type="button" class="btn btn-primary btn-icon-split">
-                                        <span class="icon text-white-50">
-                                            <i class="fas fa-flag"></i>
-                                        </span>
-                                        <span class="text">등록</span>
-                                    </button>    
-                                </div>
-                            </div>
-
-                            <div class="card mb-4 py-3 border-left-primary">
-                                <div class="card-body">
-                                    <h2> 지출 내역 받아오기 </h2>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="pay_category" id="pay_category" value="1"> 식비
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="pay_category" id="pay_category" value="2"> 의류
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="pay_category" id="pay_category" value="3"> 교육
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="pay_category" id="pay_category" value="4"> 교통
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="pay_category" id="pay_category" value="5"> 생활
-                                    </label>
-                                    <br>
-                                    <button type="button" class="btn btn-primary btn-icon-split">
-                                        <span class="icon text-white-50">
-                                            <i class="fas fa-flag"></i>
-                                        </span>
-                                        <span class="text">등록</span>
-                                    </button>    
-                                </div>
-                            </div>
-
-                            <div class="card mb-4 py-3 border-left-secondary">
-                                <div class="card-body">
-                                    <h2> 지출 내역 받아오기 </h2>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="pay_category" id="pay_category" value="1"> 식비
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="pay_category" id="pay_category" value="2"> 의류
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="pay_category" id="pay_category" value="3"> 교육
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="pay_category" id="pay_category" value="4"> 교통
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="pay_category" id="pay_category" value="5"> 생활
-                                    </label>
-                                    <br>
-                                    <button type="button" class="btn btn-primary btn-icon-split">
-                                        <span class="icon text-white-50">
-                                            <i class="fas fa-flag"></i>
-                                        </span>
-                                        <span class="text">등록</span>
-                                    </button>    
-                                </div>
-                            </div>
-
-                            <div class="card mb-4 py-3 border-left-success">
-                                <div class="card-body">
-                                    <h2> 지출 내역 받아오기 </h2>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="pay_category" id="pay_category" value="1"> 식비
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="pay_category" id="pay_category" value="2"> 의류
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="pay_category" id="pay_category" value="3"> 교육
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="pay_category" id="pay_category" value="4"> 교통
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="pay_category" id="pay_category" value="5"> 생활
-                                    </label>
-                                    <br>
-                                    <button type="button" class="btn btn-primary btn-icon-split">
-                                        <span class="icon text-white-50">
-                                            <i class="fas fa-flag"></i>
-                                        </span>
-                                        <span class="text">등록</span>
-                                    </button>    
-                                </div>
-                            </div>
-
-                            <div class="card mb-4 py-3 border-left-dark">
-                                <div class="card-body">
-                                    <h2> 지출 내역 받아오기 </h2>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="pay_category" id="pay_category" value="1"> 식비
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="pay_category" id="pay_category" value="2"> 의류
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="pay_category" id="pay_category" value="3"> 교육
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="pay_category" id="pay_category" value="4"> 교통
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="pay_category" id="pay_category" value="5"> 생활
-                                    </label>
-                                    <br>
-                                    <button type="button" class="btn btn-primary btn-icon-split">
-                                        <span class="icon text-white-50">
-                                            <i class="fas fa-flag"></i>
-                                        </span>
-                                        <span class="text">등록</span>
-                                    </button>    
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <!-- Border Bottom Utilities -->
-                        <!-- <div class="col-lg-6">
-
-                            <div class="card mb-4 py-3 border-bottom-primary">
-                                <div class="card-body">
-                                    .border-bottom-primary
-                                </div>
-                            </div>
-
-                            <div class="card mb-4 py-3 border-bottom-secondary">
-                                <div class="card-body">
-                                    .border-bottom-secondary
-                                </div>
-                            </div>
-
-                            <div class="card mb-4 py-3 border-bottom-success">
-                                <div class="card-body">
-                                    .border-bottom-success
-                                </div>
-                            </div>
-
-                            <div class="card mb-4 py-3 border-bottom-info">
-                                <div class="card-body">
-                                    .border-bottom-info
-                                </div>
-                            </div>
-
-                            <div class="card mb-4 py-3 border-bottom-warning">
-                                <div class="card-body">
-                                    .border-bottom-warning
-                                </div>
-                            </div>
-
-                            <div class="card mb-4 py-3 border-bottom-danger">
-                                <div class="card-body">
-                                    .border-bottom-danger
-                                </div>
-                            </div>
-
-                            <div class="card mb-4 py-3 border-bottom-dark">
-                                <div class="card-body">
-                                    .border-bottom-dark
-                                </div>
-                            </div>
-
-                        </div> -->
-
+                        <!-- CardAthzNo(카드 승인번호), Trdd(거래일자), Usam(거래금액) -->
+                        <ul id="pay-card-body" class="col-lg-6">
+                            <!-- 여기부터 -->
+                            <script src="public/javascript/handlebars-v4.7.6.js"></script>
+                            <script type="text/x-handlebars-template" id="cardTemplate">
+                            {{#userPaymentHistory}} 
+                                <li class="card mb-4 py-3 border-left-primary">
+                                    <div name="card-body" class="card-body">
+                                        <h3> 거래 금액 </h3>
+                                        <span> {{Usam}} </span>
+                                        <h3> 거래 일자 </h3>
+                                        <span> {{Trdd}} </span>
+                                        <h3> 카드 승인번호 </h3>
+                                        <span> {{CardAthzNo}} </span>
+                                        <hr>
+                                        <form id="category-form" class="category-form" name="category-form" data-target-id="{{id}}"> <!-- 여기부터  data-target-id="{{id}}" -->
+                                            <label class="radio-inline">
+                                                <input type="radio" name="category" id="category" value="1"> 식비
+                                            </label>
+                                            <label class="radio-inline">
+                                                <input type="radio" name="category" id="category" value="2"> 의류
+                                            </label>
+                                            <label class="radio-inline">
+                                                <input type="radio" name="category" id="category" value="3"> 교육
+                                            </label>
+                                            <label class="radio-inline">
+                                                <input type="radio" name="category" id="category" value="4"> 교통
+                                            </label>
+                                            <label class="radio-inline">
+                                                <input type="radio" name="category" id="category" value="5"> 생활
+                                            </label>
+                                            <br>
+                                            <button type ="submit" class="btn btn-primary btn-icon-split">
+                                                <span class="icon text-white-50">
+                                                    <i class="fas fa-flag"></i>
+                                                </span>
+                                                <span class="text">등록</span>
+                                            </button>
+                                        </form> <!-- 여기까지 -->    
+                                    </div>
+                                </li>
+                            {{/userPaymentHistory}}    
+                            </script>
+                            <!-- 여기까지 -->
+                        </ul>
+                        
                     </div>
-
+                    <!-- end Card -->
                 </div>
+                <!-- End Page Content -->
 
 
-
-
+            </div>
+        
             <!-- Footer -->
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
@@ -455,7 +262,150 @@
     <script src="./lib/bootstrap/js/chart-area-demo.js"></script>
     <script src="./lib/bootstrap/js//chart-pie-demo.js"></script>
     <script src="./lib/bootstrap/js//chart-bar-demo.js"></script>
-
 </body>
+
+<!-- JS SECTION -->
+<script>
+    'use strict';
+
+    //------------------------------Get Dom------------------------------//
+    //const categorySubmit = document.getElementById("category-submit")
+    //const categoryForm = document.getElementById("category-form");
+    //const temp = categoryForm.getAttribute('data-target-id'); 
+
+    //------------------------------Function------------------------------//
+    const makeRandomId = () => String(Math.floor(Math.random() * (20)));
+
+
+    //------------------------------Main------------------------------//
+
+    function init() {
+        
+        fetch('http://localhost:3000/user/payment/history', {
+                method: 'GET', // *GET, POST, PUT, DELETE, etc.
+                mode: 'cors', // no-cors, cors, *same-origin
+                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                credentials: 'include', // include, *same-origin, omit 
+                headers: {
+                    'Content-Type': 'application/json',
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                // redirect: 'follow', // manual, *follow, error
+                // referrer: 'no-referrer', // no-referrer, *client
+                //body: JSON.stringify(Object.fromEntries(new FormData(event.target))) // // body data type must match "Content-Type" header
+
+                
+            }).then((response) => {
+                const { status } = response;
+                console.log(status + ", " + typeof(status));
+                
+                return response.json();
+   
+                if (status === 400) {
+                    return Promise.reject(new Error("ID가 이미 존재합니다!!"));
+                }
+                else if (status === 422) {
+                    return Promise.reject(new Error("올바른 ID, Password, 생년월일(yyymmdd)값을 입력해 주세요!"));
+                }
+                else if (status === 201) {
+                    return Promise.resolve("Login 성공!"); // async promise 성공시 반환이라 생각 
+                }
+                else return Promise.reject(new Error("Create User Request is failed")); // async promise 실패시 반환이라 생각 
+            }).then((data) => { // 성공하면 여기오고
+                console.log('여기까지 왔다.');
+                //const rowNum = data.userPaymentHistory.length;
+                //const realData = data.userPaymentHistory;
+                makeTemplate(data);
+
+                
+            });
+
+    }
+
+    function makeTemplate(data){
+
+        //const Handlebars = require("handlebars");
+        console.log(data);
+
+        //const cardTemplate = document.querySelector("#cardTemplate").innerHTML;
+        const cardTemplate = $("#cardTemplate").html();
+        const cardBindTemplate = Handlebars.compile(cardTemplate);
+
+        let resultHTML = '';
+        resultHTML += cardBindTemplate(data);
+
+        const cardUI = document.querySelector("#pay-card-body");
+        cardUI.innerHTML = resultHTML;
+
+        const categoryForm = document.getElementById("category-form");
+
+        handleCategoryForm(categoryForm);
+        //categoryForm.addEventListener('submit', function(event){alert('h')});
+
+    }
+
+    function handleCategoryForm(categoryForm){
+        categoryForm.addEventListener('submit', function (event) {
+            event.preventDefault();
+            
+            // set id value to Unique
+            
+            const temp = categoryForm.getAttribute('data-target-id');
+            const temps = {"id" : temp};
+
+            // id + category
+            let _dataBody = Object.fromEntries(new FormData(event.target));
+            let dataBody = Object.assign(_dataBody, temps);
+            //console.log(_dataBody2);
+            
+            dataBody['id'] += (dataBody['name'] + makeRandomId());
+            console.log(dataBody);
+            // fetching body
+            fetch('http://localhost:3000/user/payment/history/', {
+                method: 'PUT', // *GET, POST, PUT, DELETE, etc.
+                mode: 'cors', // no-cors, cors, *same-origin
+                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                credentials: 'include', // include, *same-origin, omit 
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                // redirect: 'follow', // manual, *follow, error
+                // referrer: 'no-referrer', // no-referrer, *client
+                body: JSON.stringify(dataBody) // body data type must match "Content-Type" header
+            }).then((response) => {
+                const { status } = response;
+                // console.log(status + ", " + typeof(status));
+                if (status === 400) {
+                    return Promise.reject(new Error("ID가 이미 존재합니다!!"));
+                }
+                else if (status === 422) {
+                    return Promise.reject(new Error("올바른 ID, Password, 생년월일(yyymmdd)값을 입력해 주세요!"));
+                }
+                else if (status === 201) {
+                    return Promise.resolve("Login 성공!"); // async promise 성공시 반환이라 생각 
+                }
+                else return Promise.reject(new Error("Create User Card Request is failed")); // async promise 실패시 반환이라 생각 
+            }).then((data) => { // 성공하면 여기오고
+                console.log(data);
+                window.location.href = "main.html"; // main html로 강제 이동시킴 
+            }).catch((error) => { // 실패하면 여기온다
+                console.warn(error);
+                alert(error);
+            });
+        });
+
+    }
+    
+
+    //------------------------------document get ready------------------------------//
+    document.addEventListener("DOMContentLoaded", function () {
+        init();
+
+    });
+
+
+
+
+</script>
 
 </html>
