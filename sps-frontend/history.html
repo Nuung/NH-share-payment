@@ -20,12 +20,6 @@
     <!-- Custom styles for this template-->
     <link href="./lib/bootstrap/css/sb-admin-2.min.css" rel="stylesheet">
     <!-- <script src="public/javascript/handlebars-v4.7.6.js"></script> -->
-    <style>
-
-        .hidden__value__idtype {
-            display: none;
-        }
-    </style>
 
 </head>
 
@@ -146,7 +140,7 @@
                     <p class="mb-4"> 카드 지출 내역에서 해당 지출의 카테고리를 선택해주세요. </p>
 
                     <!-- Content Row -->
-                    <div class="row">
+                    <div class="row" id="cardRow">
 
                         <!-- Border Left Utilities -->
                         <!-- value 값 : 식비(1), 의류(2), 교육(3), 교통(4), 생활(5) -->
@@ -156,7 +150,7 @@
                             <script src="public/javascript/handlebars-v4.7.6.js"></script>
                             <script type="text/x-handlebars-template" id="cardTemplate">
                             {{#userPaymentHistory}} 
-                                <li class="card mb-4 py-3 border-left-primary">
+                                <li class="card mb-4 py-3 border-left-primary" id="target{{id}}">
                                     <div name="card-body" class="card-body">
                                         <h3> 거래 금액 </h3>
                                         <span> {{Usam}} </span>
@@ -293,8 +287,7 @@
                 // redirect: 'follow', // manual, *follow, error
                 // referrer: 'no-referrer', // no-referrer, *client
                 //body: JSON.stringify(Object.fromEntries(new FormData(event.target))) // // body data type must match "Content-Type" header
-
-                
+       
             }).then((response) => {
                 const { status } = response;
                 console.log(status + ", " + typeof(status));
@@ -312,7 +305,6 @@
                 }
                 else return Promise.reject(new Error("Create User Request is failed")); // async promise 실패시 반환이라 생각 
             }).then((data) => { // 성공하면 여기오고
-                console.log('여기까지 왔다.');
                 //const rowNum = data.userPaymentHistory.length;
                 //const realData = data.userPaymentHistory;
                 makeTemplate(data);
@@ -355,10 +347,8 @@
 
             // id + category
             let _dataBody = Object.fromEntries(new FormData(event.target));
-            let dataBody = Object.assign(_dataBody, temps);
-            //console.log(_dataBody2);
+            let dataBody = Object.assign(temps, _dataBody);
             
-            dataBody['id'] += (dataBody['name'] + makeRandomId());
             console.log(dataBody);
             // fetching body
             fetch('http://localhost:3000/user/payment/history/', {
@@ -387,7 +377,16 @@
                 else return Promise.reject(new Error("Create User Card Request is failed")); // async promise 실패시 반환이라 생각 
             }).then((data) => { // 성공하면 여기오고
                 console.log(data);
-                window.location.href = "main.html"; // main html로 강제 이동시킴 
+                alert('카테고리 선택 완료');
+
+                //remove li dom already seledted.
+                const target = document.getElementById('target'+temp);
+                const parent = target.parentElement;
+
+                parent.removeChild(target);
+
+                location.reload(); // 해당 div 만 업로드 할 수 있도록 하기.
+                
             }).catch((error) => { // 실패하면 여기온다
                 console.warn(error);
                 alert(error);
