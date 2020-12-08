@@ -14,6 +14,7 @@ const userApi = require('./src/routes/userApi');
 const userCardApi = require('./src/routes/userCardApi');
 const userPaymentApi = require('./src/routes/userPaymentApi');
 const snsBoardApi = require('./src/routes/snsBoardApi');
+const snsCommentApi = require('./src/routes/snsCommentApi');
 
 const app = express();
 
@@ -39,6 +40,7 @@ userApi(app);
 userCardApi(app);
 userPaymentApi(app);
 snsBoardApi(app);
+snsCommentApi(app);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
