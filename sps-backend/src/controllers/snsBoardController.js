@@ -136,7 +136,7 @@ const updateBoardGreat = async (req, res) => { // user id , board id 필요함
                 greatNow = Number(targetBoard['great']) + 1;
             }
 
-            SnsBoard.updateGreatById(greatNow, id, (err, result) => {
+            await SnsBoard.updateGreatById(greatNow, id, (err, result) => {
                 if (err) {
                     console.log('snsBoardController - updateBoardGreat, updateGreatById Error: ', err);
                     throw new Error(`snsBoardController - updateBoardGreat, updateGreatById Error: ${err}`);
