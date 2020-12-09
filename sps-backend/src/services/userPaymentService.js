@@ -67,6 +67,16 @@ UserPayment.creatUserPayment = async function (newUserPayment, result) {
     }
 };
 
+// Get Sum of user's all payment [ Usam 필드 합계 ]
+UserPayment.getSumOfAllPayments = async function (userId, result) {
+    connection.query("Select sum(Usam) as'sum' from user_payments WHERE user_id = ?", [userId], function (err, res) {
+        if (err) {
+            console.log("getAllHistory service error: ", err);
+            result(null, err);
+        }
+        else result(null, res);
+    });
+};
 
 //////////////////////////////////////////////////// make history Task's methods
 

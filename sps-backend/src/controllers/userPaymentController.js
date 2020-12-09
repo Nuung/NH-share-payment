@@ -8,7 +8,6 @@ const colors = require('colors'); // for log color :) -> success "colors.bgGreen
 // 매번 API 호출하는 건 부담임, get payment history를 통해 생성된 payment history들 불러와야함
 const getAllPayHistory = async (req, res) => {
     try {
-        const { headers } = req;
         // const { userId, userName, userBirth } = jwt.decode(headers['x-access-token']);
         const { userId, userName, userBirth } = jwt.decode(req.cookies['user-login']);
 
@@ -32,15 +31,12 @@ const getAllPayHistory = async (req, res) => {
 // MayBe for making a Graph about target user
 const getAllPayments = async (req, res) => {
     try {
-        const { headers } = req;
         // const { userId, userName, userBirth } = jwt.decode(headers['x-access-token']);
         const { userId, userName, userBirth } = jwt.decode(req.cookies['user-login']);
 
         await UserPayment.getAllPayments(userId, function (err, userPayment) {
             console.log(colors.bgGreen.black('userPaymentController - getAllPayments Successfully'));
-            if (err) {
-                if (err) throw new Error(`userPaymentController getAllPayments Error: ${err}`);
-            }
+            if (err) throw new Error(`userPaymentController getAllPayments Error: ${err}`);
             else return res.status(200).json({ userPayment });
         });
     }
@@ -53,12 +49,35 @@ const getAllPayments = async (req, res) => {
     }
 }
 
+// Target User id's sum of total payments [ Usam 필드 합계 ]
+const getSumOfAllPayments = async (req, res) => {
+    const msgLog = "userPaymentController - getSumOfAllPayments";
+    try {
+        const { userId, userName, userBirth } = jwt.decode(req.cookies['user-login']);
+
+        await UserPayment.getSumOfAllPayments(userId, function (err, sum) {
+            console.log(colors.bgGreen.black(`${msgLog} Successfully`));
+            if (err) throw new Error(`${msgLog} Error: ${err}`);
+            else {
+                const resultSum = { sum };
+                return res.status(200).json(resultSum['sum'][0]['sum']);
+            }
+        });
+    }
+    catch (error) {
+        console.log(`${msgLog}: ${error}`);
+        return res.status(404).json({
+            position: msgLog,
+            message: error.message
+        });
+    }
+}
+
 // History Tab에서 user가 특정 놈 눌러서 category 선택하면 일어날 인터렉션
 // target id 찾아 그 내용 기반으로 payment 로 옮기고 => 모두 완료되면 그때 remove 실행
 const updatePayHistory = async (req, res) => {
     try {
         const { id, category } = req.body;
-        const { headers } = req;
         // const { userId, userName, userBirth } = jwt.decode(headers['x-access-token']);
         const { userId, userName, userBirth } = jwt.decode(req.cookies['user-login']);
 
@@ -88,7 +107,7 @@ const updatePayHistory = async (req, res) => {
                 }
             });
         }
-        
+
         // end of await, 아래 영역 진입! 
         console.log('\u001b[1m', "End of userPaymentController updatePayHistory API");
     }
@@ -182,5 +201,6 @@ const removeById = async (req, res) => {
 module.exports = {
     getAllPayments,
     getAllPayHistory,
+    getSumOfAllPayments,
     updatePayHistory
 };
