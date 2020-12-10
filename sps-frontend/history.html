@@ -20,7 +20,36 @@
     <!-- Custom styles for this template-->
     <link href="./lib/bootstrap/css/sb-admin-2.min.css" rel="stylesheet">
     <!-- <script src="public/javascript/handlebars-v4.7.6.js"></script> -->
+    <style>
+        .hide_history {
+            opacity: 0;
+            /* transition: 0.8s ease-in-out; */
+            transition: opacity 1s, height 0 1s;
+            height: 0;
+            /* display: none; */
+        }
 
+        .hidden {
+            display: none;
+            opacity: 0;
+        }
+
+        .disappear {
+            animation: fade-out 1s;
+            animation-fill-mode: forwards;
+        }
+
+        @keyframes fade-out {
+            from {
+                opacity: 1;
+
+            }
+
+            to {
+                opacity: 0;
+            }
+        }
+    </style>
 </head>
 
 <body id="page-top">
@@ -148,12 +177,12 @@
                         <!-- Border Left Utilities -->
                         <!-- value 값 : 식비(1), 의류(2), 교육(3), 교통(4), 생활(5) -->
                         <!-- CardAthzNo(카드 승인번호), Trdd(거래일자), Usam(거래금액) -->
-                        <ul id="pay-card-body" class="col-lg-6">
+                        <ul id="pay-card-body" class="col-lg">
                             <!-- 여기부터 -->
                             <script src="public/javascript/handlebars-v4.7.6.js"></script>
                             <script type="text/x-handlebars-template" id="cardTemplate">
                             {{#userPaymentHistory}} 
-                                <li class="card mb-4 py-3 border-left-primary" id="target{{id}}">
+                                <li class="card mb-4 border-left-primary card-list" id="target{{id}}">
                                     <div name="card-body" class="card-body">
                                         <h3> 거래 금액 </h3>
                                         <span> {{Usam}} </span>
@@ -162,7 +191,7 @@
                                         <h3> 카드 승인번호 </h3>
                                         <span> {{CardAthzNo}} </span>
                                         <hr>
-                                        <form id="category-form" class="category-form" name="category-form" data-target-id="{{id}}"> <!-- 여기부터  data-target-id="{{id}}" -->
+                                        <form id="category-form" method="PUT" class="category-form" name="category-form" data-target-id="{{id}}"> <!-- 여기부터  data-target-id="{{id}}" -->
                                             <label class="radio-inline">
                                                 <input type="radio" name="category" value="1"> 식비
                                             </label>
@@ -256,9 +285,9 @@
     <script src="./lib/bootstrap/js/Chart.min.js"></script>
 
     <!-- Page level custom scripts -->
-    <script src="./lib/bootstrap/js/chart-area-demo.js"></script>
-    <script src="./lib/bootstrap/js//chart-pie-demo.js"></script>
-    <script src="./lib/bootstrap/js//chart-bar-demo.js"></script>
+    <!-- <script src="./lib/bootstrap/js/chart-area-demo.js"></script> -->
+    <!-- <script src="./lib/bootstrap/js//chart-pie-demo.js"></script> -->
+    <!-- <script src="./lib/bootstrap/js//chart-bar-demo.js"></script> -->
 </body>
 
 <!-- JS SECTION -->
@@ -273,11 +302,48 @@
     //------------------------------Function------------------------------//
     const makeRandomId = () => String(Math.floor(Math.random() * (20)));
 
+    // Set Category Form Atcion (submit)
+    const categortFormEvent = (event) => {
+
+        event.preventDefault();
+
+        // getting Data From Form
+        const dataBody = Object.fromEntries(new FormData(event.target));
+        dataBody['id'] = event.target.getAttribute('data-target-id');
+
+        // fetching body
+        fetch('http://localhost:3000/user/payment/history', {
+            method: 'PUT', // *GET, POST, PUT, DELETE, etc.
+            mode: 'cors', // no-cors, cors, *same-origin
+            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: 'include', // include, *same-origin, omit 
+            headers: { 'Content-Type': 'application/json', },
+            // redirect: 'follow', // manual, *follow, error
+            // referrer: 'no-referrer', // no-referrer, *client
+            body: JSON.stringify(dataBody) // body data type must match "Content-Type" header
+        }).then((response) => {
+            const { status } = response;
+            // console.log(status + ", " + typeof(status));
+            if (status === 403) return Promise.reject(new Error("로그인 해야 볼 수 있는 페이지 입니다."));
+            else if (status === 400 || status === 404) return Promise.reject(new Error("Inner Sever Error"));
+            else if (status === 422) return Promise.reject(new Error("올바론 카테고리 값을 선택해 주세요!"));
+        }).then(() => { // 성공하면 여기오고
+            alert('카테고리 선택 완료');
+            const removeTarget = event.target.parentElement;
+            removeTarget.classList.add('disappear');
+            // removeTarget.classList.add('hidden');
+        }).catch((error) => { // 실패하면 여기온다
+            console.warn(error);
+            alert(error);
+        });
+
+    }
 
     //------------------------------Main------------------------------//
 
     function init() {
 
+        // Getting User's history data
         fetch('http://localhost:3000/user/payment/history', {
             method: 'GET', // *GET, POST, PUT, DELETE, etc.
             mode: 'cors', // no-cors, cors, *same-origin
@@ -293,116 +359,37 @@
 
         }).then((response) => {
             const { status } = response;
-            console.log(status + ", " + typeof (status));
+            // console.log(status + ", " + typeof (status));
 
             return response.json();
-
-            if (status === 400) {
-                return Promise.reject(new Error("ID가 이미 존재합니다!!"));
-            }
-            else if (status === 422) {
-                return Promise.reject(new Error("올바른 ID, Password, 생년월일(yyymmdd)값을 입력해 주세요!"));
-            }
-            else if (status === 201) {
-                return Promise.resolve("Login 성공!"); // async promise 성공시 반환이라 생각 
-            }
+            if (status === 403) return Promise.reject(new Error("로그인 해야 볼 수 있는 페이지 입니다."));
+            else if (status === 400 || status === 404) return Promise.reject(new Error("Inner Sever Error"));
             else return Promise.reject(new Error("Create User Request is failed")); // async promise 실패시 반환이라 생각 
         }).then((data) => { // 성공하면 여기오고
-            //const rowNum = data.userPaymentHistory.length;
-            //const realData = data.userPaymentHistory;
-            makeTemplate(data);
+
+            // Handlebars JS 이용 
+            const cardTemplate = $("#cardTemplate").html();
+            const cardBindTemplate = Handlebars.compile(cardTemplate);
+
+            // Get pay card body DOM
+            const cardUI = document.querySelector("#pay-card-body");
+            cardUI.innerHTML = cardBindTemplate(data); // use template
+
+            // Get category form and Set Form Action Event
+            const categoryForm = document.querySelectorAll(".category-form");
+            categoryForm.forEach(category => { category.addEventListener('submit', categortFormEvent); });
 
 
+        }).catch((error) => { // 실패하면 여기온다
+            console.warn(error);
+            alert(error);
         });
-
-    }
-
-    function makeTemplate(data) {
-
-        //const Handlebars = require("handlebars");
-        console.log(data);
-
-        //const cardTemplate = document.querySelector("#cardTemplate").innerHTML;
-        const cardTemplate = $("#cardTemplate").html();
-        const cardBindTemplate = Handlebars.compile(cardTemplate);
-
-        let resultHTML = '';
-        resultHTML += cardBindTemplate(data);
-
-        const cardUI = document.querySelector("#pay-card-body");
-        cardUI.innerHTML = resultHTML;
-
-        const categoryForm = document.getElementById("category-form");
-
-        handleCategoryForm(categoryForm);
-        //categoryForm.addEventListener('submit', function(event){alert('h')});
-
-    }
-
-    function handleCategoryForm(categoryForm) {
-        categoryForm.addEventListener('submit', function (event) {
-            event.preventDefault();
-
-            // set id value to Unique
-
-            const temp = categoryForm.getAttribute('data-target-id');
-            const temps = { "id": temp };
-
-            // id + category
-            let _dataBody = Object.fromEntries(new FormData(event.target));
-            let dataBody = Object.assign(temps, _dataBody);
-
-            console.log(dataBody);
-            // fetching body
-            fetch('http://localhost:3000/user/payment/history/', {
-                method: 'PUT', // *GET, POST, PUT, DELETE, etc.
-                mode: 'cors', // no-cors, cors, *same-origin
-                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-                credentials: 'include', // include, *same-origin, omit 
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                // redirect: 'follow', // manual, *follow, error
-                // referrer: 'no-referrer', // no-referrer, *client
-                body: JSON.stringify(dataBody) // body data type must match "Content-Type" header
-            }).then((response) => {
-                const { status } = response;
-                // console.log(status + ", " + typeof(status));
-                if (status === 400) {
-                    return Promise.reject(new Error("ID가 이미 존재합니다!!"));
-                }
-                else if (status === 422) {
-                    return Promise.reject(new Error("올바른 ID, Password, 생년월일(yyymmdd)값을 입력해 주세요!"));
-                }
-                else if (status === 201) {
-                    return Promise.resolve("Login 성공!"); // async promise 성공시 반환이라 생각 
-                }
-                else return Promise.reject(new Error("Create User Card Request is failed")); // async promise 실패시 반환이라 생각 
-            }).then((data) => { // 성공하면 여기오고
-                console.log(data);
-                alert('카테고리 선택 완료');
-
-                //remove li dom already seledted.
-                const target = document.getElementById('target' + temp);
-                const parent = target.parentElement;
-
-                parent.removeChild(target);
-
-                location.reload(); // 해당 div 만 업로드 할 수 있도록 하기.
-
-            }).catch((error) => { // 실패하면 여기온다
-                console.warn(error);
-                alert(error);
-            });
-        });
-
     }
 
 
     //------------------------------document get ready------------------------------//
     document.addEventListener("DOMContentLoaded", function () {
         init();
-
     });
 
 
