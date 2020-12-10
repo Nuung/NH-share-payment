@@ -57,13 +57,13 @@
             </div>
 
             <!--히스토리, 마이페이지 메뉴-->
-        <li class="nav-item active">
-            <a class="nav-link" href="history.html">
-            <i class="fas fa-fw fa-history"></i>
-     
-                <span>History</span>&nbsp;<span class="badge badge-pill badge-light ">9</span></a>
+            <li class="nav-item active">
+                <a class="nav-link" href="history.html">
+                    <i class="fas fa-fw fa-history"></i>
+
+                    <span>History</span>&nbsp;<span class="badge badge-pill badge-light ">9</span></a>
                 <!--숫자에 처리해야 할 히스토리 개수-->
-        </li>
+            </li>
 
 
             <li class="nav-item">
@@ -75,10 +75,13 @@
                 <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="mypage-today.html"><i class="fas fa-fw fa-check"></i>&nbsp;&nbsp;Today</a>
+                        <a class="collapse-item" href="mypage-today.html"><i
+                                class="fas fa-fw fa-check"></i>&nbsp;&nbsp;Today</a>
                         <!--현재 페이지에 active 효과 넣어서 글씨 진하게-->
-                        <a class="collapse-item" href="mypage-day.html"><i class="fas fa-fw fa-calendar"></i>&nbsp;&nbsp;날짜별</a>
-                        <a class="collapse-item" href="mypage-item.html"><i class="fas fa-fw fa-th-list"></i>&nbsp;&nbsp;항목별</a>
+                        <a class="collapse-item" href="mypage-day.html"><i
+                                class="fas fa-fw fa-calendar"></i>&nbsp;&nbsp;날짜별</a>
+                        <a class="collapse-item" href="mypage-item.html"><i
+                                class="fas fa-fw fa-th-list"></i>&nbsp;&nbsp;항목별</a>
                     </div>
                 </div>
             </li>
@@ -116,14 +119,14 @@
                     <ul class="navbar-nav ml-auto">
 
 
-                       
+
                         <!-- 로그아웃 !!쿠키 삭제 추가해야 함!! -->
-                   
-                            <a class="nav-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Logout &nbsp;&nbsp;&nbsp;
-                            </a>
-                                                    
+
+                        <a class="nav-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                            Logout &nbsp;&nbsp;&nbsp;
+                        </a>
+
 
                     </ul>
 
@@ -161,19 +164,19 @@
                                         <hr>
                                         <form id="category-form" class="category-form" name="category-form" data-target-id="{{id}}"> <!-- 여기부터  data-target-id="{{id}}" -->
                                             <label class="radio-inline">
-                                                <input type="radio" name="category" id="category" value="1"> 식비
+                                                <input type="radio" name="category" value="1"> 식비
                                             </label>
                                             <label class="radio-inline">
-                                                <input type="radio" name="category" id="category" value="2"> 의류
+                                                <input type="radio" name="category" value="2"> 의류
                                             </label>
                                             <label class="radio-inline">
-                                                <input type="radio" name="category" id="category" value="3"> 교육
+                                                <input type="radio" name="category" value="3"> 교육
                                             </label>
                                             <label class="radio-inline">
-                                                <input type="radio" name="category" id="category" value="4"> 교통
+                                                <input type="radio" name="category" value="4"> 교통
                                             </label>
                                             <label class="radio-inline">
-                                                <input type="radio" name="category" id="category" value="5"> 생활
+                                                <input type="radio" name="category" value="5"> 생활
                                             </label>
                                             <br>
                                             <button type ="submit" class="btn btn-primary btn-icon-split">
@@ -189,7 +192,7 @@
                             </script>
                             <!-- 여기까지 -->
                         </ul>
-                        
+
                     </div>
                     <!-- end Card -->
                 </div>
@@ -197,7 +200,7 @@
 
 
             </div>
-        
+
             <!-- Footer -->
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
@@ -274,47 +277,47 @@
     //------------------------------Main------------------------------//
 
     function init() {
-        
-        fetch('http://localhost:3000/user/payment/history', {
-                method: 'GET', // *GET, POST, PUT, DELETE, etc.
-                mode: 'cors', // no-cors, cors, *same-origin
-                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-                credentials: 'include', // include, *same-origin, omit 
-                headers: {
-                    'Content-Type': 'application/json',
-                    // 'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                // redirect: 'follow', // manual, *follow, error
-                // referrer: 'no-referrer', // no-referrer, *client
-                //body: JSON.stringify(Object.fromEntries(new FormData(event.target))) // // body data type must match "Content-Type" header
-       
-            }).then((response) => {
-                const { status } = response;
-                console.log(status + ", " + typeof(status));
-                
-                return response.json();
-   
-                if (status === 400) {
-                    return Promise.reject(new Error("ID가 이미 존재합니다!!"));
-                }
-                else if (status === 422) {
-                    return Promise.reject(new Error("올바른 ID, Password, 생년월일(yyymmdd)값을 입력해 주세요!"));
-                }
-                else if (status === 201) {
-                    return Promise.resolve("Login 성공!"); // async promise 성공시 반환이라 생각 
-                }
-                else return Promise.reject(new Error("Create User Request is failed")); // async promise 실패시 반환이라 생각 
-            }).then((data) => { // 성공하면 여기오고
-                //const rowNum = data.userPaymentHistory.length;
-                //const realData = data.userPaymentHistory;
-                makeTemplate(data);
 
-                
-            });
+        fetch('http://localhost:3000/user/payment/history', {
+            method: 'GET', // *GET, POST, PUT, DELETE, etc.
+            mode: 'cors', // no-cors, cors, *same-origin
+            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: 'include', // include, *same-origin, omit 
+            headers: {
+                'Content-Type': 'application/json',
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            // redirect: 'follow', // manual, *follow, error
+            // referrer: 'no-referrer', // no-referrer, *client
+            //body: JSON.stringify(Object.fromEntries(new FormData(event.target))) // // body data type must match "Content-Type" header
+
+        }).then((response) => {
+            const { status } = response;
+            console.log(status + ", " + typeof (status));
+
+            return response.json();
+
+            if (status === 400) {
+                return Promise.reject(new Error("ID가 이미 존재합니다!!"));
+            }
+            else if (status === 422) {
+                return Promise.reject(new Error("올바른 ID, Password, 생년월일(yyymmdd)값을 입력해 주세요!"));
+            }
+            else if (status === 201) {
+                return Promise.resolve("Login 성공!"); // async promise 성공시 반환이라 생각 
+            }
+            else return Promise.reject(new Error("Create User Request is failed")); // async promise 실패시 반환이라 생각 
+        }).then((data) => { // 성공하면 여기오고
+            //const rowNum = data.userPaymentHistory.length;
+            //const realData = data.userPaymentHistory;
+            makeTemplate(data);
+
+
+        });
 
     }
 
-    function makeTemplate(data){
+    function makeTemplate(data) {
 
         //const Handlebars = require("handlebars");
         console.log(data);
@@ -336,19 +339,19 @@
 
     }
 
-    function handleCategoryForm(categoryForm){
+    function handleCategoryForm(categoryForm) {
         categoryForm.addEventListener('submit', function (event) {
             event.preventDefault();
-            
+
             // set id value to Unique
-            
+
             const temp = categoryForm.getAttribute('data-target-id');
-            const temps = {"id" : temp};
+            const temps = { "id": temp };
 
             // id + category
             let _dataBody = Object.fromEntries(new FormData(event.target));
             let dataBody = Object.assign(temps, _dataBody);
-            
+
             console.log(dataBody);
             // fetching body
             fetch('http://localhost:3000/user/payment/history/', {
@@ -380,13 +383,13 @@
                 alert('카테고리 선택 완료');
 
                 //remove li dom already seledted.
-                const target = document.getElementById('target'+temp);
+                const target = document.getElementById('target' + temp);
                 const parent = target.parentElement;
 
                 parent.removeChild(target);
 
                 location.reload(); // 해당 div 만 업로드 할 수 있도록 하기.
-                
+
             }).catch((error) => { // 실패하면 여기온다
                 console.warn(error);
                 alert(error);
@@ -394,7 +397,7 @@
         });
 
     }
-    
+
 
     //------------------------------document get ready------------------------------//
     document.addEventListener("DOMContentLoaded", function () {
