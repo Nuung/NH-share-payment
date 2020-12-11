@@ -24,7 +24,7 @@ class clustering():
         pca=PCA(n_components=0.95)
         pca.fit(x)
         x_pca=pca.transform(x)
-        knn=NearestNeighbors(n_neighbors=50).fit(x_pca)
+        knn=NearestNeighbors(n_neighbors=30).fit(x_pca)
         
         sk_version=vs.rstrip('.post1')
 
@@ -32,6 +32,7 @@ class clustering():
         joblib.dump(pca,'./model/PCA_{version}.pkl'.format(version=sk_version))
         joblib.dump(knn,'./model/KNN_{version}.pkl'.format(version=sk_version))
         
+        self.data=x_pca
         return
     
     #make_knn(df.iloc[:-50])
