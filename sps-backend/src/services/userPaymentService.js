@@ -54,6 +54,23 @@ UserPayment.getAllPayments = async function (userId, result) {
     });
 };
 
+
+// Get all payment for user_id and Between start date and end date
+UserPayment.getAllPaymentsByMonth = async function (userId, month, result) {
+    // Select * From user_payments WHERE MONTH(Trdd) LIKE '11' AND user_id = 'qlgks1@naver.com';
+    connection.query("Select * From user_payments WHERE MONTH(Trdd) LIKE ? AND user_id = ?", [month, userId], function (err, res) {
+        if (err) {
+            console.log("getAllHistory service error: ", err);
+            result(null, err);
+        }
+        else {
+            // console.log('User : ', res);
+            result(null, res);
+        }
+    });
+};
+
+
 // Create a userPayment (Real data for user)
 UserPayment.creatUserPayment = async function (newUserPayment, result) {
     try {

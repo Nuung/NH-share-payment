@@ -9,6 +9,10 @@ module.exports = (app) => {
   app.route('/user/payment')
     .get(user_payment_api.getAllPayments);
 
+  app.use('/user/payment/month', authMiddleware);
+  app.route('/user/payment/month')
+    .post(user_payment_api.getAllPaymentsByMonth);
+
   app.use('/user/payment/sum', authMiddleware);
   app.route('/user/payment/sum')
     .get(user_payment_api.getSumOfAllPayments); // cookie user id 이용
