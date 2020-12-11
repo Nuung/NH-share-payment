@@ -2,14 +2,13 @@
 <html lang="en">
 
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Share Payment SNS</title>
+    <title>SB Admin 2 - Register</title>
 
     <!-- Custom fonts for this template-->
     <link href="./lib/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -20,29 +19,34 @@
     <!-- Custom styles for this template-->
     <link href="./lib/bootstrap/css/sb-admin-2.min.css" rel="stylesheet">
 
-
-    <!-- Bootstrap core JavaScript-->
     <script src="./lib/bootstrap/js/jquery.min.js"></script>
-    <script src="./lib/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Core plugin JavaScript-->
-    <script src="./lib/bootstrap/js/jquery.easing.min.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script> -->
 
-    <!-- Custom scripts for all pages-->
-    <script src="./lib/bootstrap/js/sb-admin-2.min.js"></script>
-
-    <!-- Validation check -->
+    <!-- Validate Register form-->
     <script type="text/javascript" src="lib/jquery/jquery.validate.min.js"></script>
+    <!-- <script src="public/javascript/validate.js"></script> -->
 
     <!-- Slider -->
+
+    <!-- <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no' /> -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/bootstrap-slider.min.js"
         integrity="sha512-f0VlzJbcEB6KiW8ZVtL+5HWPDyW1+nJEjguZ5IVnSQkvZbwBt2RfCBY0CBO1PsMAqxxrG4Di6TfsCPP3ZRwKpA=="
         crossorigin="anonymous"></script>
-    <link rel="stylesheet"
+    <!-- <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/css/bootstrap-slider.min.css"
         integrity="sha512-3q8fi8M0VS+X/3n64Ndpp6Bit7oXSiyCnzmlx6IDBLGlY5euFySyJ46RUlqIVs0DPCGOypqP8IRk/EyPvU28mQ=="
-        crossorigin="anonymous" />
-
+        crossorigin="anonymous" /> -->
 
     <style>
         /* .family__sliderLable {
@@ -82,7 +86,6 @@
             color: red
         }
     </style>
-
 </head>
 
 <body class="bg-gradient-primary">
@@ -101,15 +104,15 @@
                             </div>
                             <form id="auth-form" class="user">
                                 <div class="form-group">
-                                    <input id="id" type="email" name="id" class="form-control form-control-user"
+                                    <input id="id" type="email" class="form-control form-control-user"
                                         placeholder="Email Address">
                                 </div>
                                 <div class="form-group">
-                                    <input id="password" name="password" type="password" class="form-control form-control-user"
+                                    <input id="password" type="password" class="form-control form-control-user"
                                         placeholder="Password">
                                 </div>
                                 <div class="form-group">
-                                    <input id="name" name="name" type="text" class="form-control form-control-user"
+                                    <input id="name" type="text" class="form-control form-control-user"
                                         placeholder="Name">
                                 </div>
                                 <div class="form-group">
@@ -162,87 +165,10 @@
                                     <i class="fab fa-facebook-f fa-fw"></i> Register with Facebook
                                 </a>
                             </form>
-                            <form id="card-form" class="card-form" name="card-form" style="display:none">
-                                <!-- 여기 막기 -->
-                                <!-- ID 는 은행마다 고유 번호 value 값으로 지정-->
-                                <!-- <div class="form-group">
-                                            <label for="id" class="sr-only">id</label>
-                                            <input type="text" name="id" id="id" class="form-control" placeholder="ID">
-                                        </div> -->
-    
-                                <!--은행 선택 3*3 추후 이미지 리사이징 해서 넣어야 함-->
-                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                    <div class="btn-group-vertical">
-                                        <label class="btn btn-light active">
-                                            <!-- 농협은행 -->
-                                            <input type="radio" name="id" value="011" hidden />
-                                            <img src="public/images/cardicons/nh.png" width="150px" />
-                                        </label>
-                                        <label class="btn btn-light">
-                                            <!-- 하나은행 -->
-                                            <input type="radio" name="id" value="081" hidden />
-                                            <img src="public/images/kebhana.png" width="150px" />
-                                        </label>
-                                        <label class="btn btn-light">
-                                            <!-- 국민은행 -->
-                                            <input type="radio" name="id" value="004" hidden />
-                                            <img src="public/images/kb.png" width="150px" />
-                                        </label>
-                                    </div>
-                                    <div class="btn-group-vertical">
-                                        <label class="btn btn-light active">
-                                            <!-- 농협상호금융 -->
-                                            <input type="radio" name="id" value="012" hidden />
-                                            <img src="public/images/localnh.png" width="150px" />
-                                        </label>
-                                        <label class="btn btn-light">
-                                            <!-- 우리은행 -->
-                                            <input type="radio" name="id" value="020" hidden />
-                                            <img src="public/images/woori.png" width="150px" />
-                                        </label>
-                                        <label class="btn btn-light">
-                                            <!-- 신한은행 -->
-                                            <input type="radio" name="id" value="088" hidden />
-                                            <img src="public/images/shinhan.png" width="150px" />
-                                        </label>
-                                    </div>
-                                    <div class="btn-group-vertical">
-                                        <label class="btn btn-light active">
-                                            <!-- 카카오뱅크 -->
-                                            <input type="radio" name="id" value="090" hidden />
-                                            <img src="public/images/kakao.png" width="150px" />
-                                        </label>
-                                        <label class="btn btn-light">
-                                            <!-- 산업은행 -->
-                                            <input type="radio" name="id" value="002" hidden />
-                                            <img src="public/images/kdb.png" width="150px" />
-                                        </label>
-                                        <label class="btn btn-light">
-                                            <!-- 기업은행 -->
-                                            <input type="radio" name="id" value="003" hidden />
-                                            <img src="public/images/ibk.png" width="150px" />
-                                        </label>
-                                    </div>
-                                </div>
-    
-                                <div class="form-group">
-                                    <label for="name" class="sr-only">name</label>
-                                    <input type="text" name="name" id="name" class="form-control" placeholder="Card Name" minlength="3">
-                                </div>
-                                <div class="form-group">
-                                    <label for="cardno" class="sr-only">cardno</label>
-                                    <input type="text" name="cardno" id="cardno" class="form-control"
-                                        placeholder="Card Number">
-                                </div>
-                                <button type="submit" class="btn btn-primary btn-block mb-3">Register</button>
-                            </form>
-
-
-                            
-                            <!-- 잃어버린 비밀번호 찾기 ***  
+                            <hr>
                             <div class="text-center">
                                 <a class="small" href="forgot-password.html">Forgot Password?</a>
-                            </div> -->
+                            </div>
                             <div class="text-center">
                                 <a class="small" href="login.html">Already have an account? Login!</a>
                             </div>
@@ -252,12 +178,21 @@
                 </div>
             </div>
         </div>
+
     </div>
 
-</body>
+    <!-- Bootstrap core JavaScript-->
+    <script src="./lib/bootstrap/js/bootstrap.bundle.min.js"></script>
 
+    <!-- Core plugin JavaScript-->
+    <!-- <script src="./lib/bootstrap/js/jquery.easing.min.js"></script> -->
+
+    <!-- Custom scripts for all pages-->
+    <script src="./lib/bootstrap/js/sb-admin-2.min.js"></script>
+
+</body>
 <script>
-    // 'use strict';
+    'use strict';
 
     //------------------------------Get Dom------------------------------//
     const signForm = document.getElementById('auth-form');
@@ -271,7 +206,7 @@
     //------------------------------Main------------------------------//
 
     function init() {
-        
+
         // Add SignUp Fetching
         signForm.addEventListener('submit', function (event) {
             event.preventDefault();
@@ -326,6 +261,7 @@
             let dataBody = Object.fromEntries(new FormData(event.target));
             dataBody['id'] += (dataBody['name'] + makeRandomId());
             console.log(dataBody);
+            
             // fetching body
             fetch('http://localhost:3000/user/card', {
                 method: 'POST', // *GET, POST, PUT, DELETE, etc.
@@ -365,75 +301,74 @@
     }
 
     //------------------------------document get ready------------------------------//
-    document.addEventListener("DOMContentLoaded", function () {
-        init();
+    init();
+    $('[data-toggle="tooltip"]').tooltip();
 
-        // jQuery
-        $('[data-toggle="tooltip"]').tooltip();
-        
-        // With JQuery for slider
-        $("#family").slider(); // setting up jquery slider
-        const defaultSliderValue = $("#family").val();
-        $("#ex6SliderVal").text(defaultSliderValue); // jquery slider options
-        $('.family__sliderValue').text(defaultSliderValue);
+    $("#family").slider(); // setting up jquery slider
+    const defaultSliderValue = $("#family").val();
+    $("#ex6SliderVal").text(defaultSliderValue); // jquery slider options
+    $('.family__sliderValue').text(defaultSliderValue);
 
-        $("#family").on("slide", function (slideEvt) {
-            $("#ex6SliderVal").text(slideEvt.value);
-            $('.family__sliderValue').text(slideEvt.value);
-        });
+    $("#family").on("slide", function (slideEvt) {
+        $("#ex6SliderVal").text(slideEvt.value);
+        $('.family__sliderValue').text(slideEvt.value);
     });
 
-</script>
 
-<!-- gender button exchange event JS -->
-<script type = "text/javascript">
-    $(function() {
+    $(document).ready(function () {
 
-        $('.button-class1').click(function(){
-          if( $(this).hasClass('btn-default') ) $(this).removeClass('btn-default');
-          if( !$(this).hasClass('btn-primary') ) $(this).addClass('btn-primary');
-          if( $('.button-class2').hasClass('btn-primary') ) $('.button-class2').removeClass('btn-primary');
-          if( !$('.button-class2').hasClass('btn-default') ) $('.button-class2').addClass('btn-default');
-        });
-        
-        $('.button-class2').click(function(){
-          if( $(this).hasClass('btn-default') ) $(this).removeClass('btn-default');
-          if( !$(this).hasClass('btn-primary') ) $(this).addClass('btn-primary');
-          if( $('.button-class1').hasClass('btn-primary') ) $('.button-class1').removeClass('btn-primary');
-          if( !$('.button-class1').hasClass('btn-default') ) $('.button-class1').addClass('btn-default');
-        });
-      
-      });
-</script>
 
-<script>
+        // jQuery
+
+        // With JQuery for slider
+
+    });
+
+    // document.addEventListener("DOMContentLoaded", function () {
+    //     init();
+
+    //     // jQuery
+    //     $('[data-toggle="tooltip"]').tooltip();
+
+    //     // With JQuery for slider
+    //     $("#family").slider(); // setting up jquery slider
+    //     const defaultSliderValue = $("#family").val();
+    //     $("#ex6SliderVal").text(defaultSliderValue); // jquery slider options
+    //     $('.family__sliderValue').text(defaultSliderValue);
+
+    //     $("#family").on("slide", function (slideEvt) {
+    //         $("#ex6SliderVal").text(slideEvt.value);
+    //         $('.family__sliderValue').text(slideEvt.value);
+    //     });
+
+    // });
 
 </script>
 
 <!-- FORM VALIDATION CHECK JS -->
-<script type = "text/javascript">
-    $(function() {
+<script type="text/javascript">
+    $(function () {
 
-        $.validator.addMethod("birthdayCheck", function(birthday, element) {
+        $.validator.addMethod("birthdayCheck", function (birthday, element) {
             return this.optional(element) || birthday.match(/([12]\d{3}(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01]))/);
         }, "생년월일을 올바르게 입력해주세요. (yyyymmdd) ");
 
-        $.validator.addMethod("cardNumberCheck", function(cardno, element) {
+        $.validator.addMethod("cardNumberCheck", function (cardno, element) {
             return this.optional(element) || cardno.match(/(5[1-5]\d{14})|(4\d{12})(\d{3}?)|3[47]\d{13}|(6011\d{12})/);
         }, "카드번호를 올바르게 입력해주세요.");
 
         $("#auth-form").validate({
-            rules : {
-                birthday : { birthdayCheck : true }
-             }
+            rules: {
+                birthday: { birthdayCheck: true }
+            }
         });
 
         $("#card-form").validate({
-            rules : {
-                cardno : { cardNumberCheck : true }
-             }
+            rules: {
+                cardno: { cardNumberCheck: true }
+            }
         });
-    
+
         $.extend($.validator.messages, {
             required: "필수 항목입니다.",
             remote: "항목을 수정하세요.",
@@ -455,15 +390,37 @@
         });
     });
 
-    $.validator.setDefaults({
-        onkeyup:false,
-        onclick:false,
-        onfocusout:false,
-        showErrors:function(errorMap, errorList){
-            if(this.numberOfInvalids()) {
-                alert(errorList[0].message);
-            }
-        }
+    // $.validator.setDefaults({
+    //     onkeyup:false,
+    //     onclick:false,
+    //     onfocusout:false,
+    //     showErrors:function(errorMap, errorList){
+    //         if(this.numberOfInvalids()) {
+    //             alert(errorList[0].message);
+    //         }
+    //     }
+    // });
+</script>
+
+
+<!-- gender button exchange event JS -->
+<script type="text/javascript">
+    $(function () {
+
+        $('.button-class1').click(function () {
+            if ($(this).hasClass('btn-default')) $(this).removeClass('btn-default');
+            if (!$(this).hasClass('btn-primary')) $(this).addClass('btn-primary');
+            if ($('.button-class2').hasClass('btn-primary')) $('.button-class2').removeClass('btn-primary');
+            if (!$('.button-class2').hasClass('btn-default')) $('.button-class2').addClass('btn-default');
+        });
+
+        $('.button-class2').click(function () {
+            if ($(this).hasClass('btn-default')) $(this).removeClass('btn-default');
+            if (!$(this).hasClass('btn-primary')) $(this).addClass('btn-primary');
+            if ($('.button-class1').hasClass('btn-primary')) $('.button-class1').removeClass('btn-primary');
+            if (!$('.button-class1').hasClass('btn-default')) $('.button-class1').addClass('btn-default');
+        });
+
     });
 </script>
 

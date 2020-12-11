@@ -172,7 +172,7 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                 이번 달 예산</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">200,000</div>
+                                                <div id="budget__" class="h5 mb-0 font-weight-bold text-gray-800"></div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -249,24 +249,55 @@
 
                         </div>
 
+
+
+
                         
-                        <!-- Area Chart -->
-                        <div class="col-xl-8 col-lg-7">
+
+
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-primary">Area Chart</h6>
+                                <h6 class="m-0 font-weight-bold text-primary">카드 사용내역</h6>
                             </div>
                             <div class="card-body">
-                                <div class="chart-area">
-                                    <canvas id="myAreaChart"></canvas>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th>카드 이름</th>
+                                                <th>사용처</th>
+                                                <th>사용날짜</th>
+                                                <th>사용시간</th>
+                                                <th>금액</th>
+                                            </tr>
+                                        </thead>
+                                        <!-- <tfoot>
+                                            <tr>
+                                                <th>카드 이름</th>
+                                                <th>사용처</th>
+                                                <th>날짜</th>
+                                                <th>금액</th>
+                                            </tr>
+                                        </tfoot> -->
+                                        <tbody id="pay-card-body">
+                                            <script src="public/javascript/handlebars-v4.7.6.js"></script>
+                                            <script type="text/x-handlebars-template" id="cardTemplate">
+                                            {{#userPayment}}
+                                            <tr>
+                                                <td>{{card_id}}</td>
+                                                <td>System Architect</td>
+                                                <td>{{Trdd}}</td>
+                                                <td>{{Txtm}}</td>
+                                                <td>{{Usam}}</td>
+                                            </tr>
+                                            {{/userPayment}}
+                                            </script>
+                                                                                        
+                                        </tbody>
+                                    </table>
                                 </div>
-                                <hr>
-                                Styling for the area chart can be found in the
-                                <code>./lib/bootstrap/js/chart-area-demo.js</code> file.
                             </div>
                         </div>
-
-                    </div>
 
                 </div>
                 <!-- /.container-fluid -->
@@ -337,5 +368,167 @@
     <script src="./lib/bootstrap/js//chart-bar-demo.js"></script>
 
 </body>
+
+
+
+
+
+
+<!-- JS SECTION -->
+<script>
+    'use strict';
+
+    //------------------------------Get Dom------------------------------//
+    //const categorySubmit = document.getElementById("category-submit")
+    //const categoryForm = document.getElementById("category-form");
+    //const temp = categoryForm.getAttribute('data-target-id'); 
+
+    //------------------------------Function------------------------------//
+    const makeRandomId = () => String(Math.floor(Math.random() * (20)));
+
+    // Set Category Form Atcion (submit)
+    const categortFormEvent = (event) => {
+
+        event.preventDefault();
+
+        // getting Data From Form
+        const dataBody = Object.fromEntries(new FormData(event.target));
+        dataBody['id'] = event.target.getAttribute('data-target-id');
+
+        // fetching body
+        fetch('http://localhost:3000/user/payment', {
+            method: 'GET', // *GET, POST, PUT, DELETE, etc.
+            mode: 'cors', // no-cors, cors, *same-origin
+            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: 'include', // include, *same-origin, omit 
+            headers: { 'Content-Type': 'application/json', },
+            // redirect: 'follow', // manual, *follow, error
+            // referrer: 'no-referrer', // no-referrer, *client
+            body: JSON.stringify(dataBody) // body data type must match "Content-Type" header
+        }).then((response) => {
+            const { status } = response;
+            // console.log(status + ", " + typeof(status));
+            if (status === 403) return Promise.reject(new Error("로그인 해야 볼 수 있는 페이지 입니다."));
+            else if (status === 400 || status === 404) return Promise.reject(new Error("Inner Sever Error"));
+            else if (status === 422) return Promise.reject(new Error("올바론 카테고리 값을 선택해 주세요!"));
+            // else return Promise.reject(new Error("로그인 해야 볼 수 있는 페이지 입니다."));
+        }).then(() => { // 성공하면 여기오고
+            console.log(data);
+            alert('카테고리 선택 완료');
+            const removeTarget = event.target.parentElement.parentElement;
+            $(removeTarget).fadeOut();
+            // removeTarget.removeChild(event.target.parentElement);
+        }).catch((error) => { // 실패하면 여기온다
+            console.warn(error);
+            alert(error);
+        });
+
+    }
+
+    //------------------------------Main------------------------------//
+
+    function init() {
+
+        // Getting User's history data
+        fetch('http://localhost:3000/user/payment', {
+            method: 'GET', // *GET, POST, PUT, DELETE, etc.
+            mode: 'cors', // no-cors, cors, *same-origin
+            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: 'include', // include, *same-origin, omit 
+            headers: {
+                'Content-Type': 'application/json',
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            // redirect: 'follow', // manual, *follow, error
+            // referrer: 'no-referrer', // no-referrer, *client
+            //body: JSON.stringify(Object.fromEntries(new FormData(event.target))) // // body data type must match "Content-Type" header
+
+        }).then((response) => {
+            const { status } = response;
+            // console.log(status + ", " + typeof (status));
+
+            return response.json();
+            if (status === 403) return Promise.reject(new Error("로그인 해야 볼 수 있는 페이지 입니다."));
+            else if (status === 400 || status === 404) return Promise.reject(new Error("Inner Sever Error"));
+            else return Promise.reject(new Error("Create User Request is failed")); // async promise 실패시 반환이라 생각 
+        }).then((data) => { // 성공하면 여기오고
+
+                console.log(data);
+
+            // Handlebars JS 이용 
+            const cardTemplate = $("#cardTemplate").html();
+            const cardBindTemplate = Handlebars.compile(cardTemplate);
+
+            // Get pay card body DOM
+            const cardUI = document.querySelector("#pay-card-body");
+            cardUI.innerHTML = cardBindTemplate(data); // use template
+
+            // Get category form and Set Form Action Event
+            const categoryForm = document.querySelectorAll(".category-form");
+            categoryForm.forEach(category => { category.addEventListener('submit', categortFormEvent); });
+
+            
+
+        }).catch((error) => { // 실패하면 여기온다
+            console.warn(error);
+            alert(error);
+        });
+
+        fetch('http://localhost:3000/users', {
+            method: 'GET', // *GET, POST, PUT, DELETE, etc.
+            mode: 'cors', // no-cors, cors, *same-origin
+            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: 'include', // include, *same-origin, omit 
+            headers: {
+                'Content-Type': 'application/json',
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            // redirect: 'follow', // manual, *follow, error
+            // referrer: 'no-referrer', // no-referrer, *client
+            //body: JSON.stringify(Object.fromEntries(new FormData(event.target))) // // body data type must match "Content-Type" header
+
+        }).then((response) => {
+            const { status } = response;
+            // console.log(status + ", " + typeof (status));
+
+            return response.json();
+            if (status === 403) return Promise.reject(new Error("로그인 해야 볼 수 있는 페이지 입니다."));
+            else if (status === 400 || status === 404) return Promise.reject(new Error("Inner Sever Error"));
+            else return Promise.reject(new Error("Create User Request is failed")); // async promise 실패시 반환이라 생각 
+        }).then((data) => { // 성공하면 여기오고
+
+            console.log(data);
+
+            let temp = data['user'][0]['budget'];
+            console.log(temp);
+            let insTag = "<div class=\"h5 mb-0 font-weight-bold text-gray-800\">"+ temp +"</div>";
+            $("#budget__").html(insTag);
+            
+
+        }).catch((error) => { // 실패하면 여기온다
+            console.warn(error);
+            alert(error);
+        });
+    }
+
+
+    //------------------------------document get ready------------------------------//
+    document.addEventListener("DOMContentLoaded", function () {
+        init();
+        // 모바일 환경에서는 사이드 바가 토글되게
+        const windowWidth = $(window).width();
+        if (windowWidth <= 768) {
+            $('body').toggleClass('sidebar-toggled');
+            $('#accordionSidebar').toggleClass('toggled');
+        }
+    });
+
+
+
+
+</script>
+
+
+
 
 </html>
