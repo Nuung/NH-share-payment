@@ -8,7 +8,6 @@ const colors = require('colors'); // for log color :) -> success "colors.bgGreen
 // 매번 API 호출하는 건 부담임, get payment history를 통해 생성된 payment history들 불러와야함
 const getAllPayHistory = async (req, res) => {
     try {
-        const { headers } = req;
         // const { userId, userName, userBirth } = jwt.decode(headers['x-access-token']);
         const { userId, userName, userBirth } = jwt.decode(req.cookies['user-login']);
 
@@ -27,20 +26,17 @@ const getAllPayHistory = async (req, res) => {
             message: error.message
         });
     }
-}
+};
 
 // MayBe for making a Graph about target user
 const getAllPayments = async (req, res) => {
     try {
-        const { headers } = req;
         // const { userId, userName, userBirth } = jwt.decode(headers['x-access-token']);
         const { userId, userName, userBirth } = jwt.decode(req.cookies['user-login']);
 
         await UserPayment.getAllPayments(userId, function (err, userPayment) {
             console.log(colors.bgGreen.black('userPaymentController - getAllPayments Successfully'));
-            if (err) {
-                if (err) throw new Error(`userPaymentController getAllPayments Error: ${err}`);
-            }
+            if (err) throw new Error(`userPaymentController getAllPayments Error: ${err}`);
             else return res.status(200).json({ userPayment });
         });
     }
@@ -51,6 +47,57 @@ const getAllPayments = async (req, res) => {
             message: error.message
         });
     }
+};
+
+
+// Get all user's payment between "start and end"
+const getAllPaymentsByMonth = async (req, res) => {
+    const msgLog = "userPaymentController - getAllPaymentsByMonth";
+    try {
+        const { userId, userName, userBirth } = jwt.decode(req.cookies['user-login']);
+        const { month } = req.body;
+        
+        await UserPayment.getAllPaymentsByMonth(userId, month, function (err, userPayment) {
+            if (err) {
+                console.log(colors.bgGreen.black(`${msgLog}: ${err}`));
+                throw new Error(`${msgLog} Error: ${err}`);
+            }
+            else return res.status(200).json({ userPayment });
+        });
+    }
+    catch (error) {
+        console.log(colors.bgGreen.black(`${msgLog}: ${err}`));
+        return res.status(404).json({
+            position: msgLog,
+            message: error.message
+        });
+    }
+};
+
+
+
+// Target User id's sum of total payments [ Usam 필드 합계 ]
+const getSumOfAllPayments = async (req, res) => {
+    const msgLog = "userPaymentController - getSumOfAllPayments";
+    try {
+        const { userId, userName, userBirth } = jwt.decode(req.cookies['user-login']);
+
+        await UserPayment.getSumOfAllPayments(userId, function (err, sum) {
+            console.log(colors.bgGreen.black(`${msgLog} Successfully`));
+            if (err) throw new Error(`${msgLog} Error: ${err}`);
+            else {
+                const resultSum = { sum };
+                return res.status(200).json(resultSum['sum'][0]['sum']);
+            }
+        });
+    }
+    catch (error) {
+        console.log(`${msgLog}: ${error}`);
+        return res.status(404).json({
+            position: msgLog,
+            message: error.message
+        });
+    }
 }
 
 // History Tab에서 user가 특정 놈 눌러서 category 선택하면 일어날 인터렉션
@@ -58,7 +105,6 @@ const getAllPayments = async (req, res) => {
 const updatePayHistory = async (req, res) => {
     try {
         const { id, category } = req.body;
-        const { headers } = req;
         // const { userId, userName, userBirth } = jwt.decode(headers['x-access-token']);
         const { userId, userName, userBirth } = jwt.decode(req.cookies['user-login']);
 
@@ -88,7 +134,7 @@ const updatePayHistory = async (req, res) => {
                 }
             });
         }
-        
+
         // end of await, 아래 영역 진입! 
         console.log('\u001b[1m', "End of userPaymentController updatePayHistory API");
     }
@@ -101,86 +147,11 @@ const updatePayHistory = async (req, res) => {
     }
 };
 
-/*
-// Get A User
-const getAUser = async (req, res) => {
-    try {
-        // req.body (id value) 값에 대한 값 보증 필요 and Vaildatation
-        if (!req.body.id) res.status(400).send({ error: true, message: 'Please provide id' });
-
-        await User.getAUser(req.body.id, function (err, user) {
-            console.log('userController - getAUser')
-            if (err) {
-                res.send(err);
-                console.log('res a user', user);
-            }
-            return res.status(200).json(user)
-            // res.send(user);
-        });
-    }
-    catch (error) {
-        console.log(error);
-        throw new Error(error);
-    }
-};
-
-// Get All User
-const getAllUser = async (req, res) => {
-    try {
-        await User.getAllUser(function (err, user) {
-            console.log('userController - getAllUser')
-            if (err) {
-                res.send(err);
-                console.log('res', user);
-            }
-            res.status(200).json({ user })
-            // res.send(user);
-        });
-    }
-    catch (error) {
-        console.log(error);
-        throw new Error(error);
-    }
-};
-
-const updateById = async (req, res) => {
-
-    const updateUser = new User(req.body, true);
-    try {
-        await User.updateByid(updateUser, function (err, result) {
-            console.log('userController - updateByid')
-            if (err) res.send(err);
-            res.status(201).send(result);
-        });
-    }
-    catch (error) {
-        console.log('userController - updateByid' + error);
-        throw new Error(error);
-    }
-};
-
-const removeById = async (req, res) => {
-
-    try {
-        await User.removeById(req.body.id, function (err, result) {
-            console.log('userController - removeById')
-            if (err) {
-                res.send(err);
-                console.log('res a user', result);
-            }
-            res.status(201).send(result)
-            // res.send(user);
-        });
-    }
-    catch (error) {
-        console.log(error);
-        throw new Error(error);
-    }
-}
-*/
 
 module.exports = {
     getAllPayments,
+    getAllPaymentsByMonth,
     getAllPayHistory,
+    getSumOfAllPayments,
     updatePayHistory
 };
