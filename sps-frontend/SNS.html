@@ -298,60 +298,17 @@
 
     const feedCardEvent = (event) => {
         //alert('hh');
+        
         var m = BootstrapModalWrapperFactory.createModal({
-            title: '<span>test</span>',
+            title: '<span></span>',
             message: '<div class="text-center"> SNS 게시글 </div>',
             closable: true,
             closeByBackdrop: true
         });
         m.originalModal.find(".modal-dialog").css({transition: 'all 0.5s'});
         m.show();
-    // setTimeout(function () {
-    //     m.updateSize("modal-lg");
-    //     m.updateTitle("Message Received");
-    //     m.updateMessage("Message Content");
-    //     m.addButton({
-    //         label: "Close",
-    //         cssClass: "btn btn-secondary",
-    //         action: function (modalWrapper, button, buttonData, originalEvent) {
-    //             return modalWrapper.hide();
-    //         }
-    //     });
-    // }, 2000);
-
-        //event.preventDefault();
         
 
-        // getting Data From Form
-        // const dataBody = Object.fromEntries(new FormData(event.target));
-        // dataBody['id'] = event.target.getAttribute('data-target-id');
-
-        // // fetching body
-        // fetch('http://localhost:3000/user/payment/history', {
-        //     method: 'PUT', // *GET, POST, PUT, DELETE, etc.
-        //     mode: 'cors', // no-cors, cors, *same-origin
-        //     cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-        //     credentials: 'include', // include, *same-origin, omit 
-        //     headers: { 'Content-Type': 'application/json', },
-        //     // redirect: 'follow', // manual, *follow, error
-        //     // referrer: 'no-referrer', // no-referrer, *client
-        //     body: JSON.stringify(dataBody) // body data type must match "Content-Type" header
-        // }).then((response) => {
-        //     const { status } = response;
-        //     // console.log(status + ", " + typeof(status));
-        //     if (status === 403) return Promise.reject(new Error("로그인 해야 볼 수 있는 페이지 입니다."));
-        //     else if (status === 400 || status === 404) return Promise.reject(new Error("Inner Sever Error"));
-        //     else if (status === 422) return Promise.reject(new Error("올바론 카테고리 값을 선택해 주세요!"));
-        //     // else return Promise.reject(new Error("로그인 해야 볼 수 있는 페이지 입니다."));
-        // }).then(() => { // 성공하면 여기오고
-        //     alert('카테고리 선택 완료');
-        //     const removeTarget = event.target.parentElement.parentElement;
-        //     $(removeTarget).fadeOut();
-        //     // removeTarget.removeChild(event.target.parentElement);
-        // }).catch((error) => { // 실패하면 여기온다
-        //     console.warn(error);
-        //     alert(error);
-        // });
 
 }
     
@@ -379,7 +336,7 @@
             // console.log(status + ", " + typeof (status));
 
             return response.json();
-
+            temp = {month : mon};
             // 여기 고치기 !!! 
             if (status === 403) return Promise.reject(new Error("로그인 해야 볼 수 있는 페이지 입니다."));
             else if (status === 400 || status === 404) return Promise.reject(new Error("잘못된 페이지 접근입니다.")); // 이따 물어봐야지

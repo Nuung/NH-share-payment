@@ -283,6 +283,7 @@
                                             <script src="public/javascript/handlebars-v4.7.6.js"></script>
                                             <script type="text/x-handlebars-template" id="cardTemplate">
                                             {{#userPayment}}
+                                            <tr><td>{{Trdd}}</td></tr>
                                             <tr>
                                                 <td>{{card_id}}</td>
                                                 <td>System Architect</td>
@@ -404,7 +405,7 @@
             headers: { 'Content-Type': 'application/json', },
             // redirect: 'follow', // manual, *follow, error
             // referrer: 'no-referrer', // no-referrer, *client
-            body: JSON.stringify(dataBody) // body data type must match "Content-Type" header
+            //body: JSON.stringify(dataBody) // body data type must match "Content-Type" header
         }).then((response) => {
             const { status } = response;
             // console.log(status + ", " + typeof(status));
@@ -428,10 +429,16 @@
     //------------------------------Main------------------------------//
 
     function init() {
+        const temp_date = new Date();
+        const mon = temp_date.getDate();
 
+        let dataBody = new Object();
+        dataBody['month'] = mon;
+
+        console.log(dataBody);
         // Getting User's history data
-        fetch('http://localhost:3000/user/payment', {
-            method: 'GET', // *GET, POST, PUT, DELETE, etc.
+        fetch('http://localhost:8080/user/payment/month', {
+            method: 'POST', // *GET, POST, PUT, DELETE, etc.
             mode: 'cors', // no-cors, cors, *same-origin
             cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
             credentials: 'include', // include, *same-origin, omit 
@@ -441,7 +448,7 @@
             },
             // redirect: 'follow', // manual, *follow, error
             // referrer: 'no-referrer', // no-referrer, *client
-            //body: JSON.stringify(Object.fromEntries(new FormData(event.target))) // // body data type must match "Content-Type" header
+            body: dataBody // // body data type must match "Content-Type" header
 
         }).then((response) => {
             const { status } = response;
