@@ -419,6 +419,8 @@
     //------------------------------Main------------------------------//
 
     function init() {
+        // cardApproveFetch();
+
         // Getting User's history data
         fetch('http://44.242.175.149:3000/user/payment/history', {
             method: 'GET', // *GET, POST, PUT, DELETE, etc.
@@ -463,12 +465,7 @@
 
 
 
-<<<<<<< HEAD
-            //console.log(data['userPaymentHistory'][0]['budget']);
-=======
             // console.log(data['userPaymentHistory'][0]['budget']);
->>>>>>> origin/master
-
         }).catch((error) => { // 실패하면 여기온다
             console.warn(error);
             alert(error);
