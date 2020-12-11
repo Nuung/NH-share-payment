@@ -297,17 +297,70 @@
     const makeRandomId = () => String(Math.floor(Math.random() * (20)));
 
     const feedCardEvent = (event) => {
-        //alert('hh');
-        
+
         var m = BootstrapModalWrapperFactory.createModal({
-            title: '<span></span>',
-            message: '<div class="text-center"> SNS 게시글 </div>',
+            title: '<span>'+'</span>',
+            message: '<div class="text-center"> SNS 게시글'+'<div id="commentText"> </div></div>',
             closable: true,
             closeByBackdrop: true
         });
         m.originalModal.find(".modal-dialog").css({transition: 'all 0.5s'});
         m.show();
+        //alert('hh');
         
+        fetch('http://localhost:3000/snsboard/:boardId', {
+            method: 'GET', // *GET, POST, PUT, DELETE, etc.
+            mode: 'cors', // no-cors, cors, *same-origin
+            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: 'include', // include, *same-origin, omit 
+            headers: {
+                'Content-Type': 'application/json',
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            // redirect: 'follow', // manual, *follow, error
+            // referrer: 'no-referrer', // no-referrer, *client
+            //body: JSON.stringify(Object.fromEntries(new FormData(event.target))) // // body data type must match "Content-Type" header
+
+        }).then((response) => {
+            const { status } = response;
+            // console.log(status + ", " + typeof (status));
+            return response.json();
+            // 여기 고치기 !!! 
+            if (status === 403) return Promise.reject(new Error("로그인 해야 볼 수 있는 페이지 입니다."));
+            else if (status === 400 || status === 404) return Promise.reject(new Error("잘못된 페이지 접근입니다.")); // 이따 물어봐야지
+            else if (status === 422) return Promise.reject(new Error("입력이 잘못 되었습니다."));
+            // else return Promise.reject(new Error("Create User Request is failed")); // async promise 실패시 반환이라 생각 
+        }).then((data) => { // 성공하면 여기오고
+            console.log(data);
+            console.log(10);
+            const commentText = document.querySelector("#commentText");
+            //commentText.innerHTML(data);
+
+            // Handlebars JS 이용 
+            // const snsFeedTemplate = $("#snsFeedTemplate").html();
+            // const snsBindTemplate = Handlebars.compile(snsFeedTemplate);
+
+            // // Get pay card body DOM
+            // const snsUI = document.querySelector("#sns-card-body");
+            // snsUI.innerHTML = snsBindTemplate(data); // use template
+
+            // // Get category form and Set Form Action Event
+            // const feedCard = document.querySelectorAll("#feedCard");
+            // feedCard.forEach( function(feedCard){
+            //     feedCard.addEventListener('click', feedCardEvent); 
+            // });
+
+                
+
+
+        }).catch((error) => { // 실패하면 여기온다
+            console.warn(error);
+            alert(error);
+        });
+        
+
+
+
 
 
 }
