@@ -21,6 +21,23 @@
     <link href="./lib/bootstrap/css/sb-admin-2.min.css" rel="stylesheet">
     <!-- <script src="public/javascript/handlebars-v4.7.6.js"></script> -->
     <style>
+        .history__heading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+
+        .history__heading__left {
+            font-weight: bold;
+        }
+
+        .history__heading__middle {
+            display: flex;
+            text-align: center;
+            flex: 2;
+        }
+
         .card__list {
             text-align: center;
         }
@@ -177,8 +194,11 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-1 text-gray-800">History</h1>
-                    <p class="mb-4"> 카드 지출 내역에서 해당 지출의 카테고리를 선택해주세요.</p>
+                    <div class="history__heading">
+                        <h1 class="history__heading__left h3 mb-1 text-gray-800">History</h1>
+                        <p class="history__heading__middle mb-4"> 카드 지출 내역에서 해당 지출의 카테고리를 선택해주세요.</p>
+                        <button class="btn btn-primary history__heading__right">BUTTON</button>
+                    </div>
 
                     <!-- Content Row -->
                     <div class="row" id="cardRow">
