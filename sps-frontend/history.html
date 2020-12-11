@@ -214,12 +214,8 @@
                                                 <input type="radio" name="category" value="5"> 생활
                                             </label>
                                             <br>
-                                            <button type ="submit" class="btn btn-primary btn-icon-split">
-                                                <span class="icon text-white-50">
-                                                    <i class="fas fa-flag"></i>
-                                                </span>
-                                                <span class="text">등록</span>
-                                            </button>
+                                            <button type ="submit" class="btn btn-primary">등록</button>
+                                            <button type ="submit" class="btn btn-danger card__list__delete">삭제</button>
                                         </form> <!-- 여기까지 -->    
                                     </div>
                                 </li>
@@ -307,6 +303,44 @@
 
     //------------------------------Function------------------------------//
     const makeRandomId = () => String(Math.floor(Math.random() * (20)));
+
+    const deleteHistoryFetch = (event) => {
+
+        event.preventDefault();
+        // event.target 은 button
+        const form = event.target.parentElement; // category-form <- 가져올 데이터
+        const dataBody = {
+            "id": form.getAttribute('data-target-id')
+        };
+
+        // card__list__delete
+        fetch('http://44.242.175.149:3000/user/payment/history', {
+            method: 'DELETE', // *GET, POST, PUT, DELETE, etc.
+            mode: 'cors', // no-cors, cors, *same-origin
+            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: 'include', // include, *same-origin, omit 
+            headers: { 'Content-Type': 'application/json', },
+            // redirect: 'follow', // manual, *follow, error
+            // referrer: 'no-referrer', // no-referrer, *client
+            body: JSON.stringify(dataBody) // body data type must match "Content-Type" header
+        }).then((response) => {
+            const { status } = response;
+            // console.log(status + ", " + typeof(status));
+            if (status === 403) return Promise.reject(new Error("로그인 해야 볼 수 있는 페이지 입니다."));
+            else if (status === 400 || status === 404) return Promise.reject(new Error("Inner Sever Error"));
+            else if (status === 422) return Promise.reject(new Error("올바론 카테고리 값을 선택해 주세요!"));
+            // else return Promise.reject(new Error("로그인 해야 볼 수 있는 페이지 입니다."));
+        }).then(() => { // 성공하면 여기오고
+            alert('삭제 완료');
+            const removeTarget = form.parentElement.parentElement;
+            $(removeTarget).fadeOut();
+            // removeTarget.removeChild(event.target.parentElement);
+        }).catch((error) => { // 실패하면 여기온다
+            console.warn(error);
+            alert(error);
+        });
+
+    };
 
     // Set Category Form Atcion (submit)
     const categortFormEvent = (event) => {
@@ -419,9 +453,21 @@
 
             // Get category form and Set Form Action Event
             const categoryForm = document.querySelectorAll(".category-form");
-            categoryForm.forEach(category => { category.addEventListener('submit', categortFormEvent); });
+            categoryForm.forEach(category => {
+                category.addEventListener('submit', categortFormEvent);
 
+                // Get Delete Btn for delete fetch and add event!
+                const deleteBtn = category.getElementsByClassName('card__list__delete')[0];
+                deleteBtn.addEventListener('click', deleteHistoryFetch);
+            });
+
+
+
+<<<<<<< HEAD
             //console.log(data['userPaymentHistory'][0]['budget']);
+=======
+            // console.log(data['userPaymentHistory'][0]['budget']);
+>>>>>>> origin/master
 
         }).catch((error) => { // 실패하면 여기온다
             console.warn(error);
