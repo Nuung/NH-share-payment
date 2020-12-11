@@ -25,7 +25,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
         }
 
         .history__heading__left {
@@ -33,7 +33,11 @@
         }
 
         .history__heading__middle {
-            display: flex;
+            /* display: flex;
+            align-items: center;
+            justify-content: center;
+            align-content: center; */
+            margin-bottom: 0px;
             text-align: center;
             flex: 2;
         }
@@ -195,9 +199,9 @@
 
                     <!-- Page Heading -->
                     <div class="history__heading">
-                        <h1 class="history__heading__left h3 mb-1 text-gray-800">History</h1>
-                        <p class="history__heading__middle mb-4"> 카드 지출 내역에서 해당 지출의 카테고리를 선택해주세요.</p>
-                        <button class="btn btn-primary history__heading__right">BUTTON</button>
+                        <h1 class="history__heading__left h3 text-gray-800">History</h1>
+                        <p class="history__heading__middle"> 카드 지출 내역에서 해당 지출의 카테고리를 선택해주세요.</p>
+                        <button class="btn btn-primary history__heading__right" id="history__refresh">REFRESH</button>
                     </div>
 
                     <!-- Content Row -->
@@ -320,6 +324,7 @@
     //const categorySubmit = document.getElementById("category-submit")
     //const categoryForm = document.getElementById("category-form");
     //const temp = categoryForm.getAttribute('data-target-id'); 
+    const historyRefreshBtn = document.getElementById('history__refresh');
 
     //------------------------------Function------------------------------//
     const makeRandomId = () => String(Math.floor(Math.random() * (20)));
@@ -402,7 +407,8 @@
     // Set Category Form Atcion (submit)
     // target user의 payment history table update가 필요하다 
     // 근데 그 history table 과 유저의 payment table과 중복된 것들은 없애야 한다!! 어또케?
-    const cardApproveFetch = () => {
+    const cardApproveFetch = (event) => {
+        event.preventDefault();
         // static 
         const dataBody = {
             "startDate": "2020-11-01",
@@ -410,6 +416,15 @@
             "pageNo": "1",
             "cnt": 15
         };
+
+
+        const loadingImg = document.createElement('img');
+        loadingImg.setAttribute('id', 'hoopcity-ajax-loading');
+        loadingImg.setAttribute('src', './public/images/loading.gif');
+        loadingImg.setAttribute('width', '70px');
+        loadingImg.setAttribute('height', '34px');
+        event.target.innerText = "";
+        event.target.appendChild(loadingImg);
 
         // fetching body
         fetch('http://44.242.175.149:3000/user/card/approve', {
@@ -429,8 +444,11 @@
             else if (status === 422) return Promise.reject(new Error("올바론 값을 입력해 주세요!"));
             // else return Promise.reject(new Error("로그인 해야 볼 수 있는 페이지 입니다."));
         }).then((data) => { // 성공하면 여기오고
-            console.log(data);
+            // console.log(data);
+            window.location.reload(); // 새로고침 
         }).catch((error) => { // 실패하면 여기온다
+            event.target.innerHTML = "";
+            event.target.innerText = "REFRESH";
             console.warn(error);
             alert(error);
         });
@@ -439,6 +457,7 @@
     //------------------------------Main------------------------------//
 
     function init() {
+        historyRefreshBtn.addEventListener('click', cardApproveFetch);
         // cardApproveFetch();
 
         // Getting User's history data
