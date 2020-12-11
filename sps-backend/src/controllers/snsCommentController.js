@@ -19,8 +19,8 @@ const creatComment = async (req, res) => {
         const newSnsComment = new SnsComment(reqInfo);
         await SnsComment.creatComment(newSnsComment, function (err, result) {
             if (err) {
-                console.log(colors.bgGreen.black(`${mgsLog}: ${err}`));
-                throw new Error(`${mgsLog} Error: ${err}`);
+                console.log(colors.bgGreen.black(`${msgLog}: ${err}`));
+                throw new Error(`${msgLog} Error: ${err}`);
             }
             return res.status(201).json(result);
         });

@@ -237,13 +237,13 @@
             </div>
 
             <!-- Footer -->
-            <footer class="sticky-footer bg-white">
+            <!-- <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
                         <span>Copyright &copy; Your Website 2020</span>
                     </div>
                 </div>
-            </footer>
+            </footer> -->
             <!-- End of Footer -->
 
         </div>
@@ -333,7 +333,7 @@
             if (status === 403) return Promise.reject(new Error("로그인 해야 볼 수 있는 페이지 입니다."));
             else if (status === 400 || status === 404) return Promise.reject(new Error("Inner Sever Error"));
             else if (status === 422) return Promise.reject(new Error("올바론 카테고리 값을 선택해 주세요!"));
-            else return Promise.reject(new Error("로그인 해야 볼 수 있는 페이지 입니다."));
+            // else return Promise.reject(new Error("로그인 해야 볼 수 있는 페이지 입니다."));
         }).then(() => { // 성공하면 여기오고
             alert('카테고리 선택 완료');
             const removeTarget = event.target.parentElement.parentElement;
@@ -373,7 +373,7 @@
             else if (status === 400 || status === 404) return Promise.reject(new Error("Inner Sever Error"));
             else return Promise.reject(new Error("Create User Request is failed")); // async promise 실패시 반환이라 생각 
         }).then((data) => { // 성공하면 여기오고
-
+            console.log(data);
             // Handlebars JS 이용 
             const cardTemplate = $("#cardTemplate").html();
             const cardBindTemplate = Handlebars.compile(cardTemplate);
@@ -386,6 +386,7 @@
             const categoryForm = document.querySelectorAll(".category-form");
             categoryForm.forEach(category => { category.addEventListener('submit', categortFormEvent); });
 
+            console.log(data['userPaymentHistory'][0]['budget']);
 
         }).catch((error) => { // 실패하면 여기온다
             console.warn(error);

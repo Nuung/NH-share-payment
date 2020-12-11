@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>SB Admin 2 - Register</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="./lib/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="./lib/bootstrap/css/sb-admin-2.min.css" rel="stylesheet">
+
+    <script src="./lib/bootstrap/js/jquery.min.js"></script>
+
+    <!-- <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script> -->
+
+    <!-- Validate Register form-->
+    <script type="text/javascript" src="lib/jquery/jquery.validate.min.js"></script>
+    <!-- <script src="public/javascript/validate.js"></script> -->
+
+    <!-- Slider -->
+
+    <!-- <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no' /> -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/bootstrap-slider.min.js"
+        integrity="sha512-f0VlzJbcEB6KiW8ZVtL+5HWPDyW1+nJEjguZ5IVnSQkvZbwBt2RfCBY0CBO1PsMAqxxrG4Di6TfsCPP3ZRwKpA=="
+        crossorigin="anonymous"></script>
+    <!-- <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/css/bootstrap-slider.min.css"
+        integrity="sha512-3q8fi8M0VS+X/3n64Ndpp6Bit7oXSiyCnzmlx6IDBLGlY5euFySyJ46RUlqIVs0DPCGOypqP8IRk/EyPvU28mQ=="
+        crossorigin="anonymous" /> -->
+
+    <style>
+        /* .family__sliderLable {
+            margin-right: 17px;
+            padding-left: 30px;
+        } */
+
+        /* .family__sliderValue {
+            margin-left: 15px;
+        } */
+
+        .gender__sliderLable {
+            margin-top: 7px;
+            margin-right: 17px;
+        }
+
+        .hidden__value__logintype,
+        .hidden__value__finaccount {
+            display: none;
+        }
+
+        /* Bootstrap tooltip Custom */
+        .tooltip-inner {
+            white-space: pre-wrap;
+            background-color: rgba(51, 124, 246, 1);
+        }
+
+        .tooltip.bs-tooltip-auto[x-placement^=bottom] .arrow::before,
+        .tooltip.bs-tooltip-bottom .arrow::before {
+            margin-left: -3px;
+            text-align: center;
+            border-width: 0 5px 5px;
+            border-bottom-color: rgba(51, 124, 246, 1);
+        }
+
+        .label.error {
+            color: red
+        }
+    </style>
+</head>
+
+<body class="bg-gradient-primary">
+
+    <div class="container">
+
+        <div class="card o-hidden border-0 shadow-lg my-5">
+            <div class="card-body p-0">
+                <!-- Nested Row within Card Body -->
+                <div class="row">
+                    <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+                    <div class="col-lg-7">
+                        <div class="p-5">
+                            <div class="text-center">
+                                <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
+                            </div>
+                            <form id="auth-form" class="user">
+                                <div class="form-group">
+                                    <input id="id" type="email" class="form-control form-control-user"
+                                        placeholder="Email Address">
+                                </div>
+                                <div class="form-group">
+                                    <input id="password" type="password" class="form-control form-control-user"
+                                        placeholder="Password">
+                                </div>
+                                <div class="form-group">
+                                    <input id="name" type="text" class="form-control form-control-user"
+                                        placeholder="Name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="birthday" class="sr-only">birthday</label>
+                                    <input type="text" name="birthday" id="birthday"
+                                        class="form-control form-control-user" placeholder="Birthday (yyyymmdd) ">
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                            <label for="formControlRange" class="gender__sliderLable">Gender :
+                                            </label><br />
+                                            <label class="btn btn-primary button-class1">
+                                                <input type="radio" name="gender" id="gender" autocomplete="off"
+                                                    value="1" checked> Female
+                                            </label>
+                                            <label class="btn btn-default button-class2">
+                                                <input type="radio" name="gender" id="gender" autocomplete="off"
+                                                    value="0"> Male
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="formControlRange" class="family__sliderLable">Family : </label>
+                                        <!-- <input type="range" class="form-control-range" id="formControlRange"> -->
+                                        <input id="family" type="text" name="family" data-slider-min="1"
+                                            data-slider-max="5" data-slider-step="1" />
+                                        <span class="family__sliderValue"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="budget" class="sr-only">budget</label>
+                                    <input type="number" name="budget" id="budget"
+                                        class="form-control form-control-user" placeholder="Monthly Budget"
+                                        data-toggle="tooltip" data-placement="bottom" data-html="true"
+                                        title="1인 : 805,900 <br/> 2인 : 1,274,100 <br/> 3인 : 1,641,700 <br/> 4인 : 2,153,300 <br/> 5인 : 2,593,100">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" name="login_type" id="login_type"
+                                        class="form-control hidden__value__logintype" placeholder="login_type">
+                                    <input type="text" name="fin_account" id="fin_account"
+                                        class="form-control hidden__value__finaccount" placeholder="fin_account">
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-user btn-block">Sign up</button>
+                                <hr>
+                                <a href="index.html" class="btn btn-google btn-user btn-block">
+                                    <i class="fab fa-google fa-fw"></i> Register with Google
+                                </a>
+                                <a href="index.html" class="btn btn-facebook btn-user btn-block">
+                                    <i class="fab fa-facebook-f fa-fw"></i> Register with Facebook
+                                </a>
+                            </form>
+                            <hr>
+                            <div class="text-center">
+                                <a class="small" href="forgot-password.html">Forgot Password?</a>
+                            </div>
+                            <div class="text-center">
+                                <a class="small" href="login.html">Already have an account? Login!</a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="./lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <!-- <script src="./lib/bootstrap/js/jquery.easing.min.js"></script> -->
+
+    <!-- Custom scripts for all pages-->
+    <script src="./lib/bootstrap/js/sb-admin-2.min.js"></script>
+
+</body>
+<script>
+    'use strict';
+
+    //------------------------------Get Dom------------------------------//
+    const signForm = document.getElementById('auth-form');
+    const cardForm = document.getElementById("card-form");
+
+
+    //------------------------------Function------------------------------//
+    const makeRandomId = () => String(Math.floor(Math.random() * (20)));
+
+
+    //------------------------------Main------------------------------//
+
+    function init() {
+
+        // Add SignUp Fetching
+        signForm.addEventListener('submit', function (event) {
+            event.preventDefault();
+
+
+            console.log(Object.fromEntries(new FormData(event.target)));
+            //const formData = new FormData(form);
+
+            fetch('http://localhost:3000/user', {
+                method: 'POST', // *GET, POST, PUT, DELETE, etc.
+                mode: 'cors', // no-cors, cors, *same-origin
+                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                credentials: 'include', // include, *same-origin, omit 
+                headers: {
+                    'Content-Type': 'application/json',
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                // redirect: 'follow', // manual, *follow, error
+                // referrer: 'no-referrer', // no-referrer, *client
+                body: JSON.stringify(Object.fromEntries(new FormData(event.target))) // // body data type must match "Content-Type" header
+            }).then((response) => {
+                const { status } = response;
+                // console.log(status + ", " + typeof(status));
+                if (status === 400) {
+                    return Promise.reject(new Error("ID가 이미 존재합니다!!"));
+                }
+                else if (status === 422) {
+                    return Promise.reject(new Error("올바른 ID, Password, 생년월일(yyymmdd)값을 입력해 주세요!"));
+                }
+                else if (status === 201) {
+                    return Promise.resolve("Login 성공!"); // async promise 성공시 반환이라 생각 
+                }
+                else return Promise.reject(new Error("Create User Request is failed")); // async promise 실패시 반환이라 생각 
+            }).then((data) => { // 성공하면 여기오고
+                // console.log(data);
+                //card form 생성 및 auth form 사라짐
+                if (cardForm.style.display == 'none') {
+                    cardForm.style.display = 'block';
+                    $("#auth-form").hide();
+                }
+            }).catch((error) => { // 실패하면 여기온다
+                console.warn(error);
+                alert(error);
+            });
+        });
+
+        // Add Card Fetching
+        cardForm.addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            // set id value to Unique
+            let dataBody = Object.fromEntries(new FormData(event.target));
+            dataBody['id'] += (dataBody['name'] + makeRandomId());
+            console.log(dataBody);
+            
+            // fetching body
+            fetch('http://localhost:3000/user/card', {
+                method: 'POST', // *GET, POST, PUT, DELETE, etc.
+                mode: 'cors', // no-cors, cors, *same-origin
+                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                credentials: 'include', // include, *same-origin, omit 
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                // redirect: 'follow', // manual, *follow, error
+                // referrer: 'no-referrer', // no-referrer, *client
+                body: JSON.stringify(dataBody) // body data type must match "Content-Type" header
+            }).then((response) => {
+                const { status } = response;
+                // console.log(status + ", " + typeof(status));
+                if (status === 400) {
+                    return Promise.reject(new Error("ID가 이미 존재합니다!!"));
+                }
+                else if (status === 422) {
+                    return Promise.reject(new Error("올바른 ID, Password, 생년월일(yyymmdd)값을 입력해 주세요!"));
+                }
+                else if (status === 201) {
+                    return Promise.resolve("Login 성공!"); // async promise 성공시 반환이라 생각 
+                }
+                else return Promise.reject(new Error("Create User Card Request is failed")); // async promise 실패시 반환이라 생각 
+            }).then((data) => { // 성공하면 여기오고
+                console.log(data);
+                window.location.href = "main.html"; // main html로 강제 이동시킴 
+            }).catch((error) => { // 실패하면 여기온다
+                console.warn(error);
+                alert(error);
+            });
+        });
+
+        // about slider
+
+    }
+
+    //------------------------------document get ready------------------------------//
+    init();
+    $('[data-toggle="tooltip"]').tooltip();
+
+    $("#family").slider(); // setting up jquery slider
+    const defaultSliderValue = $("#family").val();
+    $("#ex6SliderVal").text(defaultSliderValue); // jquery slider options
+    $('.family__sliderValue').text(defaultSliderValue);
+
+    $("#family").on("slide", function (slideEvt) {
+        $("#ex6SliderVal").text(slideEvt.value);
+        $('.family__sliderValue').text(slideEvt.value);
+    });
+
+
+    $(document).ready(function () {
+
+
+        // jQuery
+
+        // With JQuery for slider
+
+    });
+
+    // document.addEventListener("DOMContentLoaded", function () {
+    //     init();
+
+    //     // jQuery
+    //     $('[data-toggle="tooltip"]').tooltip();
+
+    //     // With JQuery for slider
+    //     $("#family").slider(); // setting up jquery slider
+    //     const defaultSliderValue = $("#family").val();
+    //     $("#ex6SliderVal").text(defaultSliderValue); // jquery slider options
+    //     $('.family__sliderValue').text(defaultSliderValue);
+
+    //     $("#family").on("slide", function (slideEvt) {
+    //         $("#ex6SliderVal").text(slideEvt.value);
+    //         $('.family__sliderValue').text(slideEvt.value);
+    //     });
+
+    // });
+
+</script>
+
+<!-- FORM VALIDATION CHECK JS -->
+<script type="text/javascript">
+    $(function () {
+
+        $.validator.addMethod("birthdayCheck", function (birthday, element) {
+            return this.optional(element) || birthday.match(/([12]\d{3}(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01]))/);
+        }, "생년월일을 올바르게 입력해주세요. (yyyymmdd) ");
+
+        $.validator.addMethod("cardNumberCheck", function (cardno, element) {
+            return this.optional(element) || cardno.match(/(5[1-5]\d{14})|(4\d{12})(\d{3}?)|3[47]\d{13}|(6011\d{12})/);
+        }, "카드번호를 올바르게 입력해주세요.");
+
+        $("#auth-form").validate({
+            rules: {
+                birthday: { birthdayCheck: true }
+            }
+        });
+
+        $("#card-form").validate({
+            rules: {
+                cardno: { cardNumberCheck: true }
+            }
+        });
+
+        $.extend($.validator.messages, {
+            required: "필수 항목입니다.",
+            remote: "항목을 수정하세요.",
+            email: "유효하지 않은 E-Mail주소입니다.",
+            url: "유효하지 않은 URL입니다.",
+            date: "올바른 날짜를 입력하세요.",
+            dateISO: "올바른 날짜(ISO)를 입력하세요.",
+            number: "Budget 입력을 확인해주세요. 유효한 숫자가 아닙니다.",
+            digits: "숫자만 입력 가능합니다.",
+            creditcard: "신용카드 번호가 바르지 않습니다.",
+            equalTo: "같은 값을 다시 입력하세요.",
+            extension: "올바른 확장자가 아닙니다.",
+            maxlength: $.validator.format("{0}자를 넘을 수 없습니다. "),
+            minlength: $.validator.format("{0}자 이상 입력하세요."),
+            rangelength: $.validator.format("문자 길이가 {0} 에서 {1} 사이의 값을 입력하세요."),
+            range: $.validator.format("{0} 에서 {1} 사이의 값을 입력하세요."),
+            max: $.validator.format("{0} 이하의 값을 입력하세요."),
+            min: $.validator.format("{0} 이상의 값을 입력하세요.")
+        });
+    });
+
+    // $.validator.setDefaults({
+    //     onkeyup:false,
+    //     onclick:false,
+    //     onfocusout:false,
+    //     showErrors:function(errorMap, errorList){
+    //         if(this.numberOfInvalids()) {
+    //             alert(errorList[0].message);
+    //         }
+    //     }
+    // });
+</script>
+
+
+<!-- gender button exchange event JS -->
+<script type="text/javascript">
+    $(function () {
+
+        $('.button-class1').click(function () {
+            if ($(this).hasClass('btn-default')) $(this).removeClass('btn-default');
+            if (!$(this).hasClass('btn-primary')) $(this).addClass('btn-primary');
+            if ($('.button-class2').hasClass('btn-primary')) $('.button-class2').removeClass('btn-primary');
+            if (!$('.button-class2').hasClass('btn-default')) $('.button-class2').addClass('btn-default');
+        });
+
+        $('.button-class2').click(function () {
+            if ($(this).hasClass('btn-default')) $(this).removeClass('btn-default');
+            if (!$(this).hasClass('btn-primary')) $(this).addClass('btn-primary');
+            if ($('.button-class1').hasClass('btn-primary')) $('.button-class1').removeClass('btn-primary');
+            if (!$('.button-class1').hasClass('btn-default')) $('.button-class1').addClass('btn-default');
+        });
+
+    });
+</script>
+
+</html>
