@@ -21,6 +21,15 @@
     <link href="./lib/bootstrap/css/sb-admin-2.min.css" rel="stylesheet">
     <!-- <script src="public/javascript/handlebars-v4.7.6.js"></script> -->
     <style>
+        .card__list {
+            text-align: center;
+        }
+
+        .card__list__boldtext {
+            font-weight: 700;
+            font-size: 1.35rem;
+        }
+
         .hide_history {
             opacity: 0;
             /* transition: 0.8s ease-in-out; */
@@ -182,14 +191,11 @@
                             <script src="public/javascript/handlebars-v4.7.6.js"></script>
                             <script type="text/x-handlebars-template" id="cardTemplate">
                             {{#userPaymentHistory}} 
-                                <li class="card mb-4 border-left-primary card-list" id="target{{id}}">
+                                <li class="card mb-4 border-left-primary card__list" id="target{{id}}">
                                     <div name="card-body" class="card-body">
-                                        <h3> 거래 금액 </h3>
-                                        <span> {{Usam}} </span>
-                                        <h3> 거래 일자 </h3>
-                                        <span> {{Trdd}} </span>
-                                        <h3> 카드 승인번호 </h3>
-                                        <span> {{CardAthzNo}} </span>
+                                        <div><span class="card__list__boldtext"> 거래 금액 </span><span> {{Usam}} </span></div>
+                                        <div><span class="card__list__boldtext"> 거래 일자 </span><span> {{Trdd}} </span></div>
+                                        <div><span class="card__list__boldtext"> 카드 승인번호 </span><span> {{CardAthzNo}} </span></div>
                                         <hr>
                                         <form id="category-form" method="PUT" class="category-form" name="category-form" data-target-id="{{id}}"> <!-- 여기부터  data-target-id="{{id}}" -->
                                             <label class="radio-inline">
@@ -327,11 +333,12 @@
             if (status === 403) return Promise.reject(new Error("로그인 해야 볼 수 있는 페이지 입니다."));
             else if (status === 400 || status === 404) return Promise.reject(new Error("Inner Sever Error"));
             else if (status === 422) return Promise.reject(new Error("올바론 카테고리 값을 선택해 주세요!"));
+            else return Promise.reject(new Error("로그인 해야 볼 수 있는 페이지 입니다."));
         }).then(() => { // 성공하면 여기오고
             alert('카테고리 선택 완료');
-            const removeTarget = event.target.parentElement;
-            removeTarget.classList.add('disappear');
-            // removeTarget.classList.add('hidden');
+            const removeTarget = event.target.parentElement.parentElement;
+            $(removeTarget).fadeOut();
+            // removeTarget.removeChild(event.target.parentElement);
         }).catch((error) => { // 실패하면 여기온다
             console.warn(error);
             alert(error);
@@ -390,6 +397,12 @@
     //------------------------------document get ready------------------------------//
     document.addEventListener("DOMContentLoaded", function () {
         init();
+        // 모바일 환경에서는 사이드 바가 토글되게
+        const windowWidth = $(window).width();
+        if (windowWidth <= 768) {
+            $('body').toggleClass('sidebar-toggled');
+            $('#accordionSidebar').toggleClass('toggled');
+        }
     });
 
 
