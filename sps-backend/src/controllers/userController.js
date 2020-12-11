@@ -155,6 +155,29 @@ const getAUser = async (req, res) => {
     }
 };
 
+// Get A user by token 
+const getAUserByAuth = async (req, res) => {
+    try {
+        // req.body (id value) 값에 대한 값 보증 필요 and Vaildatation
+        // if (!req.body.id) res.status(400).send({ error: true, message: 'Please provide id' });
+        const { userId, userName, userBirth } = jwt.decode(req.cookies['user-login']);
+
+        await User.getAUser(userId, function (err, user) {
+            console.log('userController - getAUser')
+            if (err) {
+                res.send(err);
+                console.log('res a user', user);
+            }
+            return res.status(200).json(user)
+            // res.send(user);
+        });
+    }
+    catch (error) {
+        console.log(error);
+        throw new Error(error);
+    }
+};
+
 // Get All User
 const getAllUser = async (req, res) => {
     try {
@@ -211,6 +234,7 @@ const removeById = async (req, res) => {
 
 module.exports = {
     getAUser,
+    getAUserByAuth,
     getAllUser,
     creatUser,
     updateById,
