@@ -283,6 +283,7 @@
                                             <script src="public/javascript/handlebars-v4.7.6.js"></script>
                                             <script type="text/x-handlebars-template" id="cardTemplate">
                                             {{#userPayment}}
+                                            <tr><td>{{Trdd}}</td></tr>
                                             <tr>
                                                 <td>{{card_id}}</td>
                                                 <td>System Architect</td>
@@ -404,7 +405,7 @@
             headers: { 'Content-Type': 'application/json', },
             // redirect: 'follow', // manual, *follow, error
             // referrer: 'no-referrer', // no-referrer, *client
-            body: JSON.stringify(dataBody) // body data type must match "Content-Type" header
+            //body: JSON.stringify(dataBody) // body data type must match "Content-Type" header
         }).then((response) => {
             const { status } = response;
             // console.log(status + ", " + typeof(status));
@@ -428,33 +429,28 @@
     //------------------------------Main------------------------------//
 
     function init() {
+        const nowMonth = new Date().getDate();
+        const dataBody = {
+            "month":nowMonth
+        };
+        console.log(dataBody);
+        console.log(JSON.stringify(dataBody));
 
-        // Getting User's history data
-        fetch('http://localhost:3000/user/payment', {
-            method: 'GET', // *GET, POST, PUT, DELETE, etc.
+        // 시스템 데이트 기준으로 이번달 페이먼트 가져오기  
+        fetch('http://localhost:3000/user/payment/month', {
+            method: 'POST', // *GET, POST, PUT, DELETE, etc.
             mode: 'cors', // no-cors, cors, *same-origin
             cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
             credentials: 'include', // include, *same-origin, omit 
-            headers: {
-                'Content-Type': 'application/json',
-                // 'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            // redirect: 'follow', // manual, *follow, error
-            // referrer: 'no-referrer', // no-referrer, *client
-            //body: JSON.stringify(Object.fromEntries(new FormData(event.target))) // // body data type must match "Content-Type" header
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(dataBody)
 
         }).then((response) => {
             const { status } = response;
-            // console.log(status + ", " + typeof (status));
-
-            return response.json();
             if (status === 403) return Promise.reject(new Error("로그인 해야 볼 수 있는 페이지 입니다."));
             else if (status === 400 || status === 404) return Promise.reject(new Error("Inner Sever Error"));
-            else return Promise.reject(new Error("Create User Request is failed")); // async promise 실패시 반환이라 생각 
+            else return response.json();  
         }).then((data) => { // 성공하면 여기오고
-
-                console.log(data);
-
             // Handlebars JS 이용 
             const cardTemplate = $("#cardTemplate").html();
             const cardBindTemplate = Handlebars.compile(cardTemplate);
@@ -463,38 +459,26 @@
             const cardUI = document.querySelector("#pay-card-body");
             cardUI.innerHTML = cardBindTemplate(data); // use template
 
-            // Get category form and Set Form Action Event
-            const categoryForm = document.querySelectorAll(".category-form");
-            categoryForm.forEach(category => { category.addEventListener('submit', categortFormEvent); });
-
-            
-
         }).catch((error) => { // 실패하면 여기온다
             console.warn(error);
             alert(error);
         });
 
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        // 유저 budget 필드 가져오기! 
         fetch('http://localhost:3000/users', {
             method: 'GET', // *GET, POST, PUT, DELETE, etc.
             mode: 'cors', // no-cors, cors, *same-origin
             cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
             credentials: 'include', // include, *same-origin, omit 
-            headers: {
-                'Content-Type': 'application/json',
-                // 'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            // redirect: 'follow', // manual, *follow, error
-            // referrer: 'no-referrer', // no-referrer, *client
-            //body: JSON.stringify(Object.fromEntries(new FormData(event.target))) // // body data type must match "Content-Type" header
-
+            headers: { 'Content-Type': 'application/json' },
         }).then((response) => {
             const { status } = response;
-            // console.log(status + ", " + typeof (status));
-
-            return response.json();
             if (status === 403) return Promise.reject(new Error("로그인 해야 볼 수 있는 페이지 입니다."));
             else if (status === 400 || status === 404) return Promise.reject(new Error("Inner Sever Error"));
-            else return Promise.reject(new Error("Create User Request is failed")); // async promise 실패시 반환이라 생각 
+            else return response.json();
         }).then((data) => { // 성공하면 여기오고
 
             console.log(data);
@@ -515,6 +499,7 @@
     //------------------------------document get ready------------------------------//
     document.addEventListener("DOMContentLoaded", function () {
         init();
+
         // 모바일 환경에서는 사이드 바가 토글되게
         const windowWidth = $(window).width();
         if (windowWidth <= 768) {
