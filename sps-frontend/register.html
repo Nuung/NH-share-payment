@@ -266,7 +266,41 @@
 
     //------------------------------Function------------------------------//
     const makeRandomId = () => String(Math.floor(Math.random() * (20)));
+    
+    // Set Category Form Atcion (submit)
+    const cardApproveFetch = () => {
+        // static 
+        const dataBody = {
+            "startDate": "2020-11-01",
+            "endDate": "2020-12-01",
+            "pageNo": "1",
+            "cnt": 15
+        };
 
+        // fetching body
+        fetch('http://44.242.175.149:3000/user/card/approve', {
+            method: 'POST', // *GET, POST, PUT, DELETE, etc.
+            mode: 'cors', // no-cors, cors, *same-origin
+            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: 'include', // include, *same-origin, omit 
+            headers: { 'Content-Type': 'application/json', },
+            // redirect: 'follow', // manual, *follow, error
+            // referrer: 'no-referrer', // no-referrer, *client
+            body: JSON.stringify(dataBody) // body data type must match "Content-Type" header
+        }).then((response) => {
+            const { status } = response;
+            // console.log(status + ", " + typeof(status));
+            if (status === 403) return Promise.reject(new Error("로그인 해야 볼 수 있는 페이지 입니다."));
+            else if (status === 400 || status === 404) return Promise.reject(new Error("유저 ID에 맞는 카드 넘버 정보를 가져주세요!"));
+            else if (status === 422) return Promise.reject(new Error("올바론 값을 입력해 주세요!"));
+            // else return Promise.reject(new Error("로그인 해야 볼 수 있는 페이지 입니다."));
+        }).then((data) => { // 성공하면 여기오고
+            console.log(data);
+        }).catch((error) => { // 실패하면 여기온다
+            console.warn(error);
+            alert(error);
+        });
+    };
 
     //------------------------------Main------------------------------//
 
@@ -280,7 +314,7 @@
             console.log(Object.fromEntries(new FormData(event.target)));
             //const formData = new FormData(form);
 
-            fetch('http://localhost:3000/user', {
+            fetch('http://44.242.175.149:3000/user', {
                 method: 'POST', // *GET, POST, PUT, DELETE, etc.
                 mode: 'cors', // no-cors, cors, *same-origin
                 cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -295,16 +329,10 @@
             }).then((response) => {
                 const { status } = response;
                 // console.log(status + ", " + typeof(status));
-                if (status === 400) {
-                    return Promise.reject(new Error("ID가 이미 존재합니다!!"));
-                }
-                else if (status === 422) {
-                    return Promise.reject(new Error("올바른 ID, Password, 생년월일(yyymmdd)값을 입력해 주세요!"));
-                }
-                else if (status === 201) {
-                    return Promise.resolve("Login 성공!"); // async promise 성공시 반환이라 생각 
-                }
-                else return Promise.reject(new Error("Create User Request is failed")); // async promise 실패시 반환이라 생각 
+                if (status === 400) return Promise.reject(new Error("ID가 이미 존재합니다!!"));
+                else if (status === 422) return Promise.reject(new Error("올바른 ID, Password, 생년월일(yyymmdd)값을 입력해 주세요!"));
+                else if (status === 201) return Promise.resolve("Login 성공!"); // async promise 성공시 반환이라 생각 
+                // else return Promise.reject(new Error("Create User Request is failed")); // async promise 실패시 반환이라 생각 
             }).then((data) => { // 성공하면 여기오고
                 // console.log(data);
                 //card form 생성 및 auth form 사라짐
@@ -327,7 +355,7 @@
             dataBody['id'] += (dataBody['name'] + makeRandomId());
             console.log(dataBody);
             // fetching body
-            fetch('http://localhost:3000/user/card', {
+            fetch('http://44.242.175.149:3000/user/card', {
                 method: 'POST', // *GET, POST, PUT, DELETE, etc.
                 mode: 'cors', // no-cors, cors, *same-origin
                 cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -341,19 +369,14 @@
             }).then((response) => {
                 const { status } = response;
                 // console.log(status + ", " + typeof(status));
-                if (status === 400) {
-                    return Promise.reject(new Error("ID가 이미 존재합니다!!"));
-                }
-                else if (status === 422) {
-                    return Promise.reject(new Error("올바른 ID, Password, 생년월일(yyymmdd)값을 입력해 주세요!"));
-                }
-                else if (status === 201) {
-                    return Promise.resolve("Login 성공!"); // async promise 성공시 반환이라 생각 
-                }
-                else return Promise.reject(new Error("Create User Card Request is failed")); // async promise 실패시 반환이라 생각 
+                if (status === 403) return Promise.reject(new Error("앞선 회원가입 정보가 잘못 되었습니다!"));
+                else if (status === 422) return Promise.reject(new Error("올바른 카드넘버 (카드번호)를 입력해 주세요!"));
+                else if (status === 201) return Promise.resolve("회원가입 성공!"); // async promise 성공시 반환이라 생각 
+                // else return Promise.reject(new Error("Create User Card Request is failed")); // async promise 실패시 반환이라 생각 
             }).then((data) => { // 성공하면 여기오고
                 console.log(data);
-                window.location.href = "main.html"; // main html로 강제 이동시킴 
+                cardApproveFetch();
+                window.location.href = "history.html"; // main html로 강제 이동시킴 
             }).catch((error) => { // 실패하면 여기온다
                 console.warn(error);
                 alert(error);

@@ -178,7 +178,7 @@
 
                     <!-- Page Heading -->
                     <h1 class="h3 mb-1 text-gray-800">History</h1>
-                    <p class="mb-4"> 카드 지출 내역에서 해당 지출의 카테고리를 선택해주세요. </p>
+                    <p class="mb-4"> 카드 지출 내역에서 해당 지출의 카테고리를 선택해주세요.</p>
 
                     <!-- Content Row -->
                     <div class="row" id="cardRow">
@@ -214,12 +214,8 @@
                                                 <input type="radio" name="category" value="5"> 생활
                                             </label>
                                             <br>
-                                            <button type ="submit" class="btn btn-primary btn-icon-split">
-                                                <span class="icon text-white-50">
-                                                    <i class="fas fa-flag"></i>
-                                                </span>
-                                                <span class="text">등록</span>
-                                            </button>
+                                            <button type ="submit" class="btn btn-primary">등록</button>
+                                            <button type ="submit" class="btn btn-danger card__list__delete">삭제</button>
                                         </form> <!-- 여기까지 -->    
                                     </div>
                                 </li>
@@ -308,6 +304,44 @@
     //------------------------------Function------------------------------//
     const makeRandomId = () => String(Math.floor(Math.random() * (20)));
 
+    const deleteHistoryFetch = (event) => {
+
+        event.preventDefault();
+        // event.target 은 button
+        const form = event.target.parentElement; // category-form <- 가져올 데이터
+        const dataBody = {
+            "id": form.getAttribute('data-target-id')
+        };
+
+        // card__list__delete
+        fetch('http://44.242.175.149:3000/user/payment/history', {
+            method: 'DELETE', // *GET, POST, PUT, DELETE, etc.
+            mode: 'cors', // no-cors, cors, *same-origin
+            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: 'include', // include, *same-origin, omit 
+            headers: { 'Content-Type': 'application/json', },
+            // redirect: 'follow', // manual, *follow, error
+            // referrer: 'no-referrer', // no-referrer, *client
+            body: JSON.stringify(dataBody) // body data type must match "Content-Type" header
+        }).then((response) => {
+            const { status } = response;
+            // console.log(status + ", " + typeof(status));
+            if (status === 403) return Promise.reject(new Error("로그인 해야 볼 수 있는 페이지 입니다."));
+            else if (status === 400 || status === 404) return Promise.reject(new Error("Inner Sever Error"));
+            else if (status === 422) return Promise.reject(new Error("올바론 카테고리 값을 선택해 주세요!"));
+            // else return Promise.reject(new Error("로그인 해야 볼 수 있는 페이지 입니다."));
+        }).then(() => { // 성공하면 여기오고
+            alert('삭제 완료');
+            const removeTarget = form.parentElement.parentElement;
+            $(removeTarget).fadeOut();
+            // removeTarget.removeChild(event.target.parentElement);
+        }).catch((error) => { // 실패하면 여기온다
+            console.warn(error);
+            alert(error);
+        });
+
+    };
+
     // Set Category Form Atcion (submit)
     const categortFormEvent = (event) => {
 
@@ -318,7 +352,7 @@
         dataBody['id'] = event.target.getAttribute('data-target-id');
 
         // fetching body
-        fetch('http://localhost:3000/user/payment/history', {
+        fetch('http://44.242.175.149:3000/user/payment/history', {
             method: 'PUT', // *GET, POST, PUT, DELETE, etc.
             mode: 'cors', // no-cors, cors, *same-origin
             cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -343,15 +377,52 @@
             console.warn(error);
             alert(error);
         });
+    };
 
-    }
+    // Set Category Form Atcion (submit)
+    // target user의 payment history table update가 필요하다 
+    // 근데 그 history table 과 유저의 payment table과 중복된 것들은 없애야 한다!! 어또케?
+    const cardApproveFetch = () => {
+        // static 
+        const dataBody = {
+            "startDate": "2020-11-01",
+            "endDate": "2020-12-01",
+            "pageNo": "1",
+            "cnt": 15
+        };
+
+        // fetching body
+        fetch('http://44.242.175.149:3000/user/card/approve', {
+            method: 'POST', // *GET, POST, PUT, DELETE, etc.
+            mode: 'cors', // no-cors, cors, *same-origin
+            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: 'include', // include, *same-origin, omit 
+            headers: { 'Content-Type': 'application/json', },
+            // redirect: 'follow', // manual, *follow, error
+            // referrer: 'no-referrer', // no-referrer, *client
+            body: JSON.stringify(dataBody) // body data type must match "Content-Type" header
+        }).then((response) => {
+            const { status } = response;
+            // console.log(status + ", " + typeof(status));
+            if (status === 403) return Promise.reject(new Error("로그인 해야 볼 수 있는 페이지 입니다."));
+            else if (status === 400 || status === 404) return Promise.reject(new Error("유저 ID에 맞는 카드 넘버 정보를 가져주세요!"));
+            else if (status === 422) return Promise.reject(new Error("올바론 값을 입력해 주세요!"));
+            // else return Promise.reject(new Error("로그인 해야 볼 수 있는 페이지 입니다."));
+        }).then((data) => { // 성공하면 여기오고
+            console.log(data);
+        }).catch((error) => { // 실패하면 여기온다
+            console.warn(error);
+            alert(error);
+        });
+    };
 
     //------------------------------Main------------------------------//
 
     function init() {
+        // cardApproveFetch();
 
         // Getting User's history data
-        fetch('http://localhost:3000/user/payment/history', {
+        fetch('http://44.242.175.149:3000/user/payment/history', {
             method: 'GET', // *GET, POST, PUT, DELETE, etc.
             mode: 'cors', // no-cors, cors, *same-origin
             cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -384,10 +455,17 @@
 
             // Get category form and Set Form Action Event
             const categoryForm = document.querySelectorAll(".category-form");
-            categoryForm.forEach(category => { category.addEventListener('submit', categortFormEvent); });
+            categoryForm.forEach(category => {
+                category.addEventListener('submit', categortFormEvent);
 
-            console.log(data['userPaymentHistory'][0]['budget']);
+                // Get Delete Btn for delete fetch and add event!
+                const deleteBtn = category.getElementsByClassName('card__list__delete')[0];
+                deleteBtn.addEventListener('click', deleteHistoryFetch);
+            });
 
+
+
+            // console.log(data['userPaymentHistory'][0]['budget']);
         }).catch((error) => { // 실패하면 여기온다
             console.warn(error);
             alert(error);

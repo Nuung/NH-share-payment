@@ -56,7 +56,7 @@ const getAllPaymentsByMonth = async (req, res) => {
     try {
         const { userId, userName, userBirth } = jwt.decode(req.cookies['user-login']);
         const { month } = req.body;
-        
+
         await UserPayment.getAllPaymentsByMonth(userId, month, function (err, userPayment) {
             if (err) {
                 console.log(colors.bgGreen.black(`${msgLog}: ${err}`));
@@ -147,11 +147,37 @@ const updatePayHistory = async (req, res) => {
     }
 };
 
+// delete target pay history row
+const removeHistoryById = async (req, res) => {
+    const msgLog = "userPaymentController - removeHistoryById";
+    try {
+        const { id } = req.body;
+        // const { userId, userName, userBirth } = jwt.decode(headers['x-access-token']);
+        // const { userId, userName, userBirth } = jwt.decode(req.cookies['user-login']);
+
+        await UserPayment.removeHistoryById(id, function (err, result) {
+            if (err) {
+                console.log(colors.bgGreen.black(`${msgLog}: ${err}`));
+                throw new Error(`${msgLog} Error: ${err}`);
+            }
+            else return res.status(201).json({ result });
+        });
+    }
+    catch (error) {
+        console.log(colors.bold.bgRed.yellow(`${msgLog}: ${error}`));
+        return res.status(404).json({
+            position: msgLog,
+            message: error.message
+        });
+    }
+};
+
 
 module.exports = {
     getAllPayments,
     getAllPaymentsByMonth,
     getAllPayHistory,
     getSumOfAllPayments,
-    updatePayHistory
+    updatePayHistory,
+    removeHistoryById
 };
