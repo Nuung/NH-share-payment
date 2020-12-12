@@ -74,12 +74,11 @@ def category(num):
         category='생활'
     return category
 
-conn = pymysql.connect(host='ec2-44-242-175-149.us-west-2.compute.amazonaws.com', port=3306, user='root', password='45812Qlgks!',
-                       db='spsProject', charset='utf8')
+conn = pymysql.connect(host='localhost', user='root', password='45812Qlgks!', db='spsProject', charset='utf8')
 
 curs = conn.cursor()
 #sql1 = """insert into users(id,password,name,birthday, gender,login_type,fin_account,family,budget,created_at,updated_at) values ('abc1@nh.com','123456','abc1','1990-11-01',0,'None','None',1, 970000,'2019-02-06','2020-12-11')"""        
-df=pd.read_csv('C://Users//82108//Desktop//nh-hackerton//sps-machine-learning//user_dummy.csv', index_col=0, encoding='CP949')
+df=pd.read_csv('/home/ubuntu/projects/sps_project/sps-machine-learning/user_dummy.csv', index_col=0, encoding='CP949')
 #db명 user_payments  - id, user_id, card_id, CardAthzNo, Trdd, Txtm, Usam, AfsNoBrno, AfsNo, AfsNm, AmslKnd, Tris, category, created_at, 
 df=df[['fn','date','labeling','price','franchise']]
 df=df.reset_index()
