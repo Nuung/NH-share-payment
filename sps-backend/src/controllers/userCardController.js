@@ -89,7 +89,7 @@ const creatUserCardPayHistory = async (req, res) => {
                 if (err) throw new Error(`userCardController InquireCreditCardAuthorizationHistory Error: ${err}`);
                 else {
                     const { REC } = response; // cnt 만큼 per page Number 리스트업 
-                    console.log(REC);
+                    console.log(response);
                     // 중요한건 여기서 userCard payment (history) table update -> 유저가 카테고리 고를 수 있게 
                     UserCardPayment.creatUserCardPayHistory(userId, targetCard.id, REC, function (err, insertIdCounter) {
                         if (err) throw new Error(`userCardController creatUserCardPayHistory Error: ${err}`);
