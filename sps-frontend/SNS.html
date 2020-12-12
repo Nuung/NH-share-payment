@@ -22,8 +22,35 @@
 
 
     <style>
+        .sns__heading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        .sns__left {
+            font-weight: bold;
+        }
+
+        .sns__middle {
+            /* display: flex;
+            align-items: center;
+            justify-content: center;
+            align-content: center; */
+            margin-bottom: 0px;
+            text-align: center;
+            flex: 2;
+        }
         .card__list {
             text-align: left;
+        }
+
+        .sns__right {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
         }
 
         .card__list__boldtext {
@@ -141,9 +168,11 @@
                 <a class="btn btn-success btn-sm" href="https://startbootstrap.com/theme/sb-admin-pro">내 가계부 공유하기</a>
             </div>
 
-            <p></p>
-             <!-- Sidebar Toggler (Sidebar) 누르면 네비게이션 최소화-->
-             <div class="text-center d-none d-md-inline">
+            <!-- 구분선 -->
+            <hr class="sidebar-divider d-none d-md-block">
+
+            <!-- Sidebar Toggler (Sidebar) 누르면 네비게이션 최소화-->
+            <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
             </div>
 
@@ -181,9 +210,12 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-1 text-gray-800">SNS</h1>
-                    <p class="mb-4"> sns 페이지 </p>
-
+                    <div class="sns__heading">
+                        <h1 class="sns__left h3 text-gray-800">SNS</h1>
+                        <span class="sns__middle"></span>
+                        <button class="btn btn-primary sns__right" data-toggle="modal" data-target="#writeModal" >WRITE</button>
+                    </div>
+                    
                     <!-- Content Row -->
                     <div class="row" id="cardRow">
                         <!-- Border Left Utilities -->
@@ -191,24 +223,10 @@
                         <!-- CardAthzNo(카드 승인번호), Trdd(거래일자), Usam(거래금액) -->
                         <ul id="sns-card-body" class="col-lg">
                             <!-- 여기부터 TEMPLATE METHOD DATE BINDING  -->
-                            <script src="public/javascript/handlebars-v4.7.6.js"></script>
-                            <script type="text/x-handlebars-template" id="snsFeedTemplate">
-                            {{#boards}} 
-                                <li class="card mb-4 border-left-primary card__list" id="feedCard" data-target="#feedModal" data-target-id="{{id}}">
-                                    <div name="card-body" class="card-body">
-                                        <div>
-                                            <span class="card__list__boldtext">  {{title}}  </span> 
-                                            <span class="user__text"> {{user_id}} </span>
-                                        </div>
-                                        <!-- <div><span class="card__list__boldtext"> 카드 승인번호 </span><span> {{CardAthzNo}} </span></div> -->
-                                        <hr>
-                                        <div><span class="card__list__boldtext"> 그래프 </span> <br> <span> 그래프 뿌리기 </span></div>  
-                                    </div>
-                                </li>
-                            {{/boards}}    
-                            </script>
+                                <!-- 여기에 계속 추가됨.-->
                             <!-- 여기까지 TEMPLATE METHOD DATE BINDING -->
                         </ul>
+                        <!-- <p id="msg-loading"> ~ L O A D I N G ~ </p> -->
                     </div>
                     <!-- end Card -->
                 <!-- /.container-fluid -->
@@ -254,10 +272,11 @@
             </div>
         </div>
     </div>
+    <!-- END OF Logout MODAL -->
 
     <!-- SNS FEED Modal-->
     <div class="modal fade" id="feedModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true" board-target-id="">
+        aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <!-- MODAL HEADER : TITLE -->
@@ -280,7 +299,7 @@
                             <div class="col-md-12 text-center d-flex flex-column py-1 justify-content-center">
                                 <div class="auth-form-section">
                                     <label for="id" class="sr-only">id</label>
-                                    <input type="text" name="content" id="contentInput" class="form-control" placeholder="comment">
+                                    <input type="text" name="content" id="contentInput" class="form-control" placeholder="comment" required>
                                 </div>
                             </div>
                             <div class="col-md-12 text-center d-flex flex-column justify-content-center">
@@ -299,6 +318,68 @@
         </div>
     </div>
     <!-- END OF SNS FEED MODAL -->
+
+    <!-- write Modal-->
+    <div class="modal fade" id="writeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"> Upload your account book images. </h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <!-- END OF HEADING -->
+                <div class="modal-body">
+                    <!-- WRITE SECTION -->
+                    
+                    <!-- data-target-id="{{id}}"-->
+                    <div class="modaltest row">
+                        <div class="col-md-12 text-center d-flex flex-column py-1 justify-content-center">
+                            <form id="write-form" class="write-form" name="write-form">
+                                <div class="form-group">
+                                    <label for="title" class="sr-only">title</label>
+                                    <input type="text" name="title" id="titleInput" class="form-control" placeholder="TITLE" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="content" class="sr-only">content</label>
+                                    <input type="text" name="content" id="contentInput" class="form-control" placeholder="CONTENT" required>
+                                </div>
+                                <div class="form-group"> <!-- 라디오 버튼으로 바꿀 예정 !!!!!!!!  -->
+                                    <label for="tags" class="sr-only">tags</label>
+                                    <input type="text" name="tags" id="tagsInput" class="form-control" placeholder="TAGS">
+                                </div>
+
+                                <!-- UPLOAD INPUT FORM --> <!-- CHOOSE FILE 이상한 곳 고치기 -->
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+                                        </div>
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+                                            <label class="custom-file-label" for="inputGroupFile01" style="text-align : center;">Choose file</label>
+                                        </div>
+                                    </div>
+                                </div>     
+                                <button type="submit" class="btn btn-primary btn-block mb-3"> U P L O A D </button>
+                                
+                            </form>
+                        </div>
+                    
+
+                    </div>
+                    <!-- END OF WRITE SECTION -->
+
+                </div>
+                <div class="modal-footer">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END OF write MODAL -->
 
     <!-- Bootstrap core JavaScript-->
     <script src="./lib/bootstrap/js/jquery.min.js"></script>
@@ -327,6 +408,8 @@
 
     //------------------------------Get Dom------------------------------//
     const commentForm = document.querySelectorAll(".comment-form");
+    const writeForm = document.getElementById("write-form");
+    
 
     //------------------------------Function------------------------------//
     const makeRandomId = () => String(Math.floor(Math.random() * (20)));
@@ -385,17 +468,72 @@
 
     }
 
-    
-    
-    //------------------------------Main------------------------------//
+    // Event Listener for UPLOAD ACCOUNT BOOK IMAGE 
+    const writeEvent = (event) => {
+
+        event.preventDefault();
+
+        // getting Data From Form
+        const dataBody = Object.fromEntries(new FormData(event.target));
+        //dataBody['board_id'] = document.getElementById('feedCard').getAttribute('data-target-id');
+        
+        fetch('http://localhost:3000/snsboards', {
+            method: 'POST', // *GET, POST, PUT, DELETE, etc.
+            mode: 'cors', // no-cors, cors, *same-origin
+            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: 'include', // include, *same-origin, omit 
+            headers: {
+                'Content-Type': 'application/json',
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            // redirect: 'follow', // manual, *follow, error
+            // referrer: 'no-referrer', // no-referrer, *client
+            body: JSON.stringify(dataBody) // // body data type must match "Content-Type" header
+
+        }).then((response) => {
+            const { status } = response;
+            // console.log(status + ", " + typeof (status));
+            return response.json();
+            // 여기 고치기 !!! 
+            if (status === 403) return Promise.reject(new Error("로그인 해야 볼 수 있는 페이지 입니다."));
+            else if (status === 400 || status === 404) return Promise.reject(new Error("잘못된 페이지 접근입니다."));
+            else if (status === 422) return Promise.reject(new Error("입력이 잘못 되었습니다."));
+            // else return Promise.reject(new Error("Create User Request is failed")); // async promise 실패시 반환이라 생각 
+        }).then((data) => { // 성공하면 여기오고
+            console.log(data);
+            alert('등록완료');
+            //$("#contentInput").val("");
+        
+        }).catch((error) => { // 실패하면 여기온다
+            console.warn(error);
+            alert(error);
+        });
+ 
+
+    }
+
+    writeForm.addEventListener('submit', writeEvent);
+
+    // Get comments for correspoding to the board.
+    function getComments () {
+
+    }
 
     let currentPage = 1;
 
     const DATA_PER_PAGE = 10, lastPage = 5;
 
+    const msgLoading = document.getElementById("msg-loading");
+
+
+    
+    
+    //------------------------------Main------------------------------//
+
 
     function init() {
-
+        
+        
         // Getting User's history data
         fetch('http://localhost:3000/snsboards', {
             method: 'GET', // *GET, POST, PUT, DELETE, etc.
@@ -422,46 +560,102 @@
             else if (status === 422) return Promise.reject(new Error("입력이 잘못 되었습니다."));
             // else return Promise.reject(new Error("Create User Request is failed")); // async promise 실패시 반환이라 생각 
         }).then((data) => { // 성공하면 여기오고
-            console.log(data);
+            console.log(data);  
+            //addData(data, currentPage);
 
-            for(let i = (currentPage - 1) * DATA_PER_PAGE + 1; i<= currentPage * DATA_PER_PAGE; i++) {
-                // Handlebars JS 이용 
-                const snsFeedTemplate = $("#snsFeedTemplate").html();
-                const snsBindTemplate = Handlebars.compile(snsFeedTemplate);
+            //add Data
+            for (let i = (data['boards'].length-1); i >= 0 ; i--) {
+                // for(let i = (currentPage - 1 ) * DATA_PER_PAGE + 1; i <= currentPage * DATA_PER_PAGE; i++){
+                    const tagString = `
+                            <li class="card mb-4 border-left-primary card__list" id="feedCard" data-target="#feedModal" data-target-id="${data['boards'][i]['id']}">
+                                <div name="card-body" class="card-body">
+                                    <div>
+                                        <span class="card__list__boldtext">  ${data['boards'][i]['title']}  </span>
+                                        <span class="user__text"> ${data['boards'][i]['user_id']} </span>
+                                    </div>
+                                    <!-- <div><span class="card__list__boldtext"> 카드 승인번호 </span><span> ${data['boards'][i]['CardAthzNo']} </span></div> -->
+                                    <hr>
+                                    <div><span class="card__list__boldtext"> 그래프 </span> <br> <span> 그래프 뿌리기 </span></div>
+                                </div>
+                            </li>`;
+                    $('#sns-card-body').append(tagString);
 
-                // Get pay card body DOM
-                const snsUI = document.querySelector("#sns-card-body");
-                snsUI.innerHTML = snsBindTemplate(data); // use template
+                    // Get category form and Set Form Action Event
+                    const feedCard = document.querySelectorAll("#feedCard");
 
-                // Get category form and Set Form Action Event
-                const feedCard = document.querySelectorAll("#feedCard");
+                    // Set up eventListener on each of feed card tag
+                    feedCard.forEach(function (feedCard, element) {
+                        feedCard.addEventListener('click', feedCardEvent);
+                    });
+                            
+                 // refresh page end
 
-                // Set up eventListener on each of feed card tag
-                feedCard.forEach(function (feedCard, element) {
-                    feedCard.addEventListener('click', feedCardEvent);
-                });
-            }
+            }// data get end
 
 
-            
-            
+
         }).catch((error) => { // 실패하면 여기온다
             console.warn(error);
             alert(error);
         });
 
-
-    }
-
-    function observaLastChild(intersectionObserver){
         
     }
+
+    function addData(data, currentPage) {
+
+
+    }
+
+    // function observaLastChild(intersectionObserver){
+    //     const listChildren = document.querySelectorAll("");
+
+    //     listChildren.forEach(el => {
+    //         if (!el.nextSibling && currentPage < lastPage) {
+    //             intersectionObserver.observe(el);
+    //         }
+    //         else if (currentPage >= lastPage) {
+    //             intersectionObserver.disconnect();
+    //             msgLoading.textContent = " The end of pages ";
+    //         }
+
+    //     })
+    // }
+
+    // const observerOption ={
+    //     root : null,
+    //     rootMargin : "0px 0px 0px 0px",
+    //     threhold : 0.5
+    // }
+
+    // const io = new IntersectionObserver((entries, observer) => {
+    //     entries.forEach(entry => {
+
+    //         if (entry.isIntersecting) {
+    //             msgLoading.classList.add("fade-in");
+
+    //             setTimeout(() => {
+    //                 addData(++currentPage);
+    //                 observer.unobserve(entry.target);
+    //                 observaLastChild(observer);
+
+    //                 msgLoading.classList.remove("fade-in");
+
+    //             }, 1000)
+
+    //         }
+    //     })
+
+    // }, observerOption);
+
+    
 
 
 
     //------------------------------document get ready------------------------------//
     document.addEventListener("DOMContentLoaded", function () {
         init();
+    
         // 모바일 환경에서는 사이드 바가 토글되게
         const windowWidth = $(window).width();
         if (windowWidth <= 768) {
@@ -469,6 +663,8 @@
             $('#accordionSidebar').toggleClass('toggled');
         }
     });
+
+
 
     
 </script>
