@@ -201,7 +201,7 @@
                             <script src="public/javascript/handlebars-v4.7.6.js"></script>
                             <script type="text/x-handlebars-template" id="snsFeedTemplate">
                             {{#boards}} 
-                                <li class="card mb-4 border-left-primary card__list" id="feedCard">
+                                <li class="card mb-4 border-left-primary card__list" id="feedCard" data-target="feedModal">
                                     <div name="card-body" class="card-body">
                                         <div>
                                             <span class="card__list__boldtext">  {{title}}  </span> 
@@ -397,6 +397,7 @@
             // else return Promise.reject(new Error("Create User Request is failed")); // async promise 실패시 반환이라 생각 
         }).then((data) => { // 성공하면 여기오고
             console.log(data);
+
             // Handlebars JS 이용 
             const snsFeedTemplate = $("#snsFeedTemplate").html();
             const snsBindTemplate = Handlebars.compile(snsFeedTemplate);
