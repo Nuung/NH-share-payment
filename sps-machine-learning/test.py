@@ -12,7 +12,7 @@ from visualization import *
 from functions import *
 
 # 더미데이터 불러오기 -> SQL 구문으로 변경 예정
-users=pd.read_csv('user_dummy.csv',encoding='cp949')
+users=pd.read_csv('/home/ubuntu/projects/sps_project/sps-machine-learning/user_dummy.csv',encoding='cp949')
 
 # 데이터 포맷변경 -> 군집화에 필요한 요소만 남기기  
 ft=functions(users)
@@ -36,7 +36,7 @@ for _ in range(0,10):
     num=randint(1,1000)
     x_test=total_label.iloc[num]
 
-    similar=cluster.find_similar_user(x_test,'0.22.2')
+    similar=cluster.find_similar_user(x_test,'0.23.2')
 
     visual=visualization('user{num}'.format(num=num))
     visual.show(cluster.data,similar)

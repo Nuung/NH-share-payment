@@ -117,7 +117,7 @@ const updatePayHistory = async (req, res) => {
         }
         else {
             // Main 
-            targetPayHistory['id'] = id; // 얘를 고유하게 바꿔주는게 좋다! 
+            targetPayHistory['id'] = Number(id) + Number(70114); // 얘를 고유하게 바꿔주는게 좋다! 
             targetPayHistory['category'] = category // category value input for real payment DB
             let newUserPayment = new UserPayment(targetPayHistory, false); // not a history
 

@@ -19,7 +19,22 @@
 
     <!-- Custom styles for this template-->
     <link href="./lib/bootstrap/css/sb-admin-2.min.css" rel="stylesheet">
+    <style>
+        .graph__container {
+            /* 기본적으로 flex 들어가 있음 */
+            align-items: center;
+            justify-content: center;
+        }
 
+        .table__head {
+            text-align: center;
+        }
+
+
+        .card__payment__td {
+            text-align: center;
+        }
+    </style>
 </head>
 
 <body id="page-top">
@@ -58,29 +73,32 @@
             <!--히스토리, 마이페이지 메뉴-->
             <li class="nav-item">
                 <a class="nav-link" href="history.html">
-                <i class="fas fa-fw fa-history"></i>
-         
+                    <i class="fas fa-fw fa-history"></i>
+
                     <span>History</span>&nbsp;<span class="badge badge-pill badge-light ">9</span></a>
-                    <!--숫자에 처리해야 할 히스토리 개수-->
+                <!--숫자에 처리해야 할 히스토리 개수-->
             </li>
-    
-    
-                <li class="nav-item active">
-                    <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
-                        aria-controls="collapseTwo">
-                        <i class="fas fa-fw fa-wallet"></i>
-                        <span>Mypage</span>
-                    </a>
-                    <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo"
-                        data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item" href="mypage-today.html"><i class="fas fa-fw fa-check"></i>&nbsp;&nbsp;Today</a>
-                            <!--현재 페이지에 active 효과 넣어서 글씨 진하게-->
-                            <a class="collapse-item active" href="mypage-day.html"><i class="fas fa-fw fa-calendar"></i>&nbsp;&nbsp;날짜별</a>
-                            <a class="collapse-item" href="mypage-item.html"><i class="fas fa-fw fa-th-list"></i>&nbsp;&nbsp;항목별</a>
-                        </div>
+
+
+            <li class="nav-item active">
+                <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
+                    aria-controls="collapseTwo">
+                    <i class="fas fa-fw fa-wallet"></i>
+                    <span>Mypage</span>
+                </a>
+                <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="mypage-today.html"><i
+                                class="fas fa-fw fa-check"></i>&nbsp;&nbsp;Today</a>
+                        <!--현재 페이지에 active 효과 넣어서 글씨 진하게-->
+                        <a class="collapse-item active" href="mypage-day.html"><i
+                                class="fas fa-fw fa-calendar"></i>&nbsp;&nbsp;날짜별</a>
+                        <a class="collapse-item" href="mypage-item.html"><i
+                                class="fas fa-fw fa-th-list"></i>&nbsp;&nbsp;항목별</a>
                     </div>
-                </li>
+                </div>
+            </li>
 
 
 
@@ -110,20 +128,20 @@
                         <i class="fa fa-bars"></i>
                     </button>
 
-      
+
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
 
 
-                       
+
                         <!-- 로그아웃 !!쿠키 삭제 추가해야 함!! -->
-                   
-                            <a class="nav-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Logout &nbsp;&nbsp;&nbsp;
-                            </a>
-                                                    
+
+                        <a class="nav-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                            Logout &nbsp;&nbsp;&nbsp;
+                        </a>
+
 
                     </ul>
 
@@ -137,12 +155,12 @@
 
                     <!-- Page Heading -->
                     <h1 class="h3 mb-2 text-gray-800">Mypage</h1>
-                    <p class="mb-4">마이페이지 설명, chartjs-> <a
-                            target="_blank" href="https://www.chartjs.org/docs/latest/">official Chart.js
+                    <p class="mb-4">마이페이지 설명, chartjs-> <a target="_blank"
+                            href="https://www.chartjs.org/docs/latest/">official Chart.js
                             documentation</a>.</p>
 
                     <!-- Content Row -->
-                    <div class="row">
+                    <div class="row graph__container">
 
                         <!--이번 달 예산, 지출 현황, ... -->
 
@@ -154,7 +172,7 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                 이번 달 지출</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">50,000</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="payment-total"></div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -172,7 +190,7 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                 이번 달 예산</div>
-                                                <div id="budget__" class="h5 mb-0 font-weight-bold text-gray-800"></div>
+                                            <div id="budget__" class="h5 mb-0 font-weight-bold text-gray-800"></div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -188,7 +206,8 @@
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">예산 대비 지출?
+                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">예산 대비
+                                                지출?
                                             </div>
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col-auto">
@@ -210,95 +229,56 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
 
-                        <!-- 카드4 
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-warning shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                Pending Requests</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-comments fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
+                    <!-- 날짜별..? 무슨 그래프 쓸지 -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">??</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-bar">
+                                <canvas id="myBarChart"></canvas>
+                            </div>
+                            <hr>
+                            Styling for the bar chart can be found in the
+                            <code>./lib/bootstrap/js/chart-bar-demo.js</code> file.
+                        </div>
+                    </div>
+
+
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">카드 사용내역</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr class="table__head">
+                                            <th>DAY</th>
+                                            <th>카드 이름</th>
+                                            <th>사용처</th>
+                                            <th>사용날짜</th>
+                                            <th>사용시간</th>
+                                            <th>금액</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="pay-card-body">
+                                        <!-- <tr><td style="border: none;">gsdfgefsrg</td></tr>
+                                        <tr>
+                                            <td style="border: none;"></td>
+                                            <td>dfgshsgrdf</td>
+                                            <td>dfgshsgrdf</td>
+                                            <td>dfgshsgrdf</td>
+                                            <td>dfgshsgrdf</td>
+                                            <td>dfgshsgrdf</td>
+                                        </td> -->
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
-                -->                        
-                            
-
-                            <!-- 날짜별..? 무슨 그래프 쓸지 -->
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">??</h6>
-                                </div>
-                                <div class="card-body">
-                                    <div class="chart-bar">
-                                        <canvas id="myBarChart"></canvas>
-                                    </div>
-                                    <hr>
-                                    Styling for the bar chart can be found in the
-                                    <code>./lib/bootstrap/js/chart-bar-demo.js</code> file.
-                                </div>
-                            </div>
-
-                        </div>
-
-
-
-
-                        
-
-
-                        <div class="card shadow mb-4">
-                            <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-primary">카드 사용내역</h6>
-                            </div>
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                        <thead>
-                                            <tr>
-                                                <th>카드 이름</th>
-                                                <th>사용처</th>
-                                                <th>사용날짜</th>
-                                                <th>사용시간</th>
-                                                <th>금액</th>
-                                            </tr>
-                                        </thead>
-                                        <!-- <tfoot>
-                                            <tr>
-                                                <th>카드 이름</th>
-                                                <th>사용처</th>
-                                                <th>날짜</th>
-                                                <th>금액</th>
-                                            </tr>
-                                        </tfoot> -->
-                                        <tbody id="pay-card-body">
-                                            <script src="public/javascript/handlebars-v4.7.6.js"></script>
-                                            <script type="text/x-handlebars-template" id="cardTemplate">
-                                            {{#userPayment}}
-                                            <tr><td>{{Trdd}}</td></tr>
-                                            <tr>
-                                                <td>{{card_id}}</td>
-                                                <td>System Architect</td>
-                                                <td>{{Trdd}}</td>
-                                                <td>{{Txtm}}</td>
-                                                <td>{{Usam}}</td>
-                                            </tr>
-                                            {{/userPayment}}
-                                            </script>
-                                                                                        
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
 
                 </div>
                 <!-- /.container-fluid -->
@@ -387,77 +367,69 @@
     //------------------------------Function------------------------------//
     const makeRandomId = () => String(Math.floor(Math.random() * (20)));
 
-    // Set Category Form Atcion (submit)
-    const categortFormEvent = (event) => {
+    // Check every empty condtion
+    const isAllEmpty = (value) => {
+        if (value == "" || value == null || value == undefined ||
+            (value != null && typeof value == "object" && !Object.keys(value).length)) return true;
+        else return false;
+    };
 
-        event.preventDefault();
-
-        // getting Data From Form
-        const dataBody = Object.fromEntries(new FormData(event.target));
-        dataBody['id'] = event.target.getAttribute('data-target-id');
-
-        // fetching body
-        fetch('http://localhost:3000/user/payment', {
-            method: 'GET', // *GET, POST, PUT, DELETE, etc.
-            mode: 'cors', // no-cors, cors, *same-origin
-            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-            credentials: 'include', // include, *same-origin, omit 
-            headers: { 'Content-Type': 'application/json', },
-            // redirect: 'follow', // manual, *follow, error
-            // referrer: 'no-referrer', // no-referrer, *client
-            //body: JSON.stringify(dataBody) // body data type must match "Content-Type" header
-        }).then((response) => {
-            const { status } = response;
-            // console.log(status + ", " + typeof(status));
-            if (status === 403) return Promise.reject(new Error("로그인 해야 볼 수 있는 페이지 입니다."));
-            else if (status === 400 || status === 404) return Promise.reject(new Error("Inner Sever Error"));
-            else if (status === 422) return Promise.reject(new Error("올바론 카테고리 값을 선택해 주세요!"));
-            // else return Promise.reject(new Error("로그인 해야 볼 수 있는 페이지 입니다."));
-        }).then(() => { // 성공하면 여기오고
-            console.log(data);
-            alert('카테고리 선택 완료');
-            const removeTarget = event.target.parentElement.parentElement;
-            $(removeTarget).fadeOut();
-            // removeTarget.removeChild(event.target.parentElement);
-        }).catch((error) => { // 실패하면 여기온다
-            console.warn(error);
-            alert(error);
-        });
-
-    }
+    // number 3자리 마다 콤마찍어주기
+    const makeComma = (x) => x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    
 
     //------------------------------Main------------------------------//
 
     function init() {
-        const nowMonth = new Date().getDate();
+        // 원래는 아래와 같이 동적으로 갱신하며 받아와야 한다 하지만 농협API에는 12월이 없다! 
+        // const nowMonth = new Date().getMonth();
         const dataBody = {
-            "month":nowMonth
+            month: 11
         };
-        console.log(dataBody);
-        console.log(JSON.stringify(dataBody));
 
         // 시스템 데이트 기준으로 이번달 페이먼트 가져오기  
-        fetch('http://localhost:3000/user/payment/month', {
+        fetch('http://44.242.175.149:3000/user/payment/month', {
             method: 'POST', // *GET, POST, PUT, DELETE, etc.
             mode: 'cors', // no-cors, cors, *same-origin
             cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
             credentials: 'include', // include, *same-origin, omit 
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(dataBody)
-
         }).then((response) => {
             const { status } = response;
             if (status === 403) return Promise.reject(new Error("로그인 해야 볼 수 있는 페이지 입니다."));
             else if (status === 400 || status === 404) return Promise.reject(new Error("Inner Sever Error"));
-            else return response.json();  
+            else return response.json();
         }).then((data) => { // 성공하면 여기오고
-            // Handlebars JS 이용 
-            const cardTemplate = $("#cardTemplate").html();
-            const cardBindTemplate = Handlebars.compile(cardTemplate);
 
-            // Get pay card body DOM
-            const cardUI = document.querySelector("#pay-card-body");
-            cardUI.innerHTML = cardBindTemplate(data); // use template
+            // Day로 집합화 
+            const result = {};
+            for (let j = 0; j < 32; j++) {
+                let temp_array = [];
+                for (let i = 0; i < data['userPayment'].length; i++) {
+                    const getDay = (data['userPayment'][i].Trdd).substring(8, 10); // get-Day!
+                    if (j == getDay) temp_array.push(data['userPayment'][i]);
+                    else continue;
+                } // inner for
+                if (temp_array.length > 0) result[j] = temp_array;
+            } // for    
+
+            // result object 가지고 동적 랜더링 
+            for (const [key, value] of Object.entries(result)) {
+                const tagString = `<tr><td class="card__payment__td" style="border: none;">${dataBody['month']}.${key}</td></tr>`;
+                $('#pay-card-body').append(tagString);
+                for (let i = 0; i < value.length; i++) {
+                    const element = value[i]; // 세부 결제 내역 내용 
+                    const tagString = `<tr><td class="card__payment__td" style="border: none;"></td>
+                    <td class="card__payment__td">${element.card_id}</td>
+                    <td class="card__payment__td">${element.AfstNm}</td>
+                    <td class="card__payment__td">${element.Trdd}</td>
+                    <td class="card__payment__td">${element.Txtm}</td>
+                    <td class="card__payment__td">${element.Usam}</td><tr>
+                    `;
+                    $('#pay-card-body').append(tagString);
+                }
+            }
 
         }).catch((error) => { // 실패하면 여기온다
             console.warn(error);
@@ -468,7 +440,29 @@
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         // 유저 budget 필드 가져오기! 
-        fetch('http://localhost:3000/users', {
+        fetch('http://44.242.175.149:3000/user/check', {
+            method: 'POST', // *GET, POST, PUT, DELETE, etc.
+            mode: 'cors', // no-cors, cors, *same-origin
+            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: 'include', // include, *same-origin, omit 
+            headers: { 'Content-Type': 'application/json' },
+        }).then((response) => {
+            const { status } = response;
+            if (status === 403) return Promise.reject(new Error("로그인 해야 볼 수 있는 페이지 입니다."));
+            else if (status === 400 || status === 404) return Promise.reject(new Error("Inner Sever Error"));
+            else return response.json();
+        }).then((data) => { // 성공하면 여기오고
+            const targetDom = document.getElementById('budget__');
+            targetDom.innerHTML = `${makeComma(Number(data.budget))}`;
+        }).catch((error) => { // 실패하면 여기온다
+            console.warn(error);
+            alert(error);
+        });
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        // 유저 payment 합산 가져오기! 
+        fetch('http://44.242.175.149:3000/user/payment/sum', {
             method: 'GET', // *GET, POST, PUT, DELETE, etc.
             mode: 'cors', // no-cors, cors, *same-origin
             cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -480,15 +474,9 @@
             else if (status === 400 || status === 404) return Promise.reject(new Error("Inner Sever Error"));
             else return response.json();
         }).then((data) => { // 성공하면 여기오고
-
-            console.log(data);
-
-            let temp = data['user'][0]['budget'];
-            console.log(temp);
-            let insTag = "<div class=\"h5 mb-0 font-weight-bold text-gray-800\">"+ temp +"</div>";
-            $("#budget__").html(insTag);
-            
-
+            // console.log(data);
+            const targetDom = document.getElementById('payment-total');
+            targetDom.innerHTML = `${makeComma(Number(data))}`;
         }).catch((error) => { // 실패하면 여기온다
             console.warn(error);
             alert(error);
