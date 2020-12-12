@@ -38,7 +38,7 @@ visual=visualization(user_id)
 visual.show(cluster.data ,cluster.similar)
 print('{user} 그래프 저장'.format(user=user_id))
 
-total_label=total_label.reset_index()
+total_label=total_label.drop([user_id]).reset_index()
 
 result=total_label.loc[cluster.similar]['user_id'].tolist()
 
