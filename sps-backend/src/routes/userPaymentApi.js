@@ -17,6 +17,11 @@ module.exports = (app) => {
   app.route('/user/payment/sum')
     .get(user_payment_api.getSumOfAllPayments); // cookie user id 이용
 
+
+  app.use('/user/payment/category', authMiddleware);
+  app.route('/user/payment/category')
+    .post(user_payment_api.getCountOfAllPaymentsCategory); // cookie user id 이용
+
   // userPayment restfull API 
   app.use('/user/payment/history', authMiddleware);
   app.route('/user/payment/history')

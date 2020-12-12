@@ -95,6 +95,18 @@ UserPayment.getSumOfAllPayments = async function (userId, result) {
     });
 };
 
+// Get Sum of user's all payment [ Usam 필드 합계 ]
+UserPayment.getCountOfAllPaymentsCategory = async function (category, userId, result) {
+    const castingToString = ["", "식품", "의류", "교육", "교통", "생활"];
+    connection.query("Select count(*) as 'count' from user_payments WHERE category = ? OR category = ? AND user_id = ?", [category, castingToString[category], userId], function (err, res) {
+        if (err) {
+            console.log("getAllHistory service error: ", err);
+            result(null, err);
+        }
+        else result(null, res);
+    });
+};
+
 //////////////////////////////////////////////////// make history Task's methods
 
 // Create a userPaymnet history. [ await 를 이용하기! ]
