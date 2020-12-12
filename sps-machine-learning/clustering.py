@@ -17,7 +17,7 @@ class clustering():
 
     # knn 모델 생성
     def make_knn(self,data,user_id):
-        train_data=data.drop([user_id])
+        train_data=data.drop([user_id]).reset_index(drop=True)
 
         scaler=StandardScaler()
         scaler.fit(train_data)
