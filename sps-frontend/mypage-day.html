@@ -58,29 +58,32 @@
             <!--히스토리, 마이페이지 메뉴-->
             <li class="nav-item">
                 <a class="nav-link" href="history.html">
-                <i class="fas fa-fw fa-history"></i>
-         
+                    <i class="fas fa-fw fa-history"></i>
+
                     <span>History</span>&nbsp;<span class="badge badge-pill badge-light ">9</span></a>
-                    <!--숫자에 처리해야 할 히스토리 개수-->
+                <!--숫자에 처리해야 할 히스토리 개수-->
             </li>
-    
-    
-                <li class="nav-item active">
-                    <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
-                        aria-controls="collapseTwo">
-                        <i class="fas fa-fw fa-wallet"></i>
-                        <span>Mypage</span>
-                    </a>
-                    <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo"
-                        data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item" href="mypage-today.html"><i class="fas fa-fw fa-check"></i>&nbsp;&nbsp;Today</a>
-                            <!--현재 페이지에 active 효과 넣어서 글씨 진하게-->
-                            <a class="collapse-item active" href="mypage-day.html"><i class="fas fa-fw fa-calendar"></i>&nbsp;&nbsp;날짜별</a>
-                            <a class="collapse-item" href="mypage-item.html"><i class="fas fa-fw fa-th-list"></i>&nbsp;&nbsp;항목별</a>
-                        </div>
+
+
+            <li class="nav-item active">
+                <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
+                    aria-controls="collapseTwo">
+                    <i class="fas fa-fw fa-wallet"></i>
+                    <span>Mypage</span>
+                </a>
+                <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="mypage-today.html"><i
+                                class="fas fa-fw fa-check"></i>&nbsp;&nbsp;Today</a>
+                        <!--현재 페이지에 active 효과 넣어서 글씨 진하게-->
+                        <a class="collapse-item active" href="mypage-day.html"><i
+                                class="fas fa-fw fa-calendar"></i>&nbsp;&nbsp;날짜별</a>
+                        <a class="collapse-item" href="mypage-item.html"><i
+                                class="fas fa-fw fa-th-list"></i>&nbsp;&nbsp;항목별</a>
                     </div>
-                </li>
+                </div>
+            </li>
 
 
 
@@ -110,20 +113,20 @@
                         <i class="fa fa-bars"></i>
                     </button>
 
-      
+
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
 
 
-                       
+
                         <!-- 로그아웃 !!쿠키 삭제 추가해야 함!! -->
-                   
-                            <a class="nav-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Logout &nbsp;&nbsp;&nbsp;
-                            </a>
-                                                    
+
+                        <a class="nav-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                            Logout &nbsp;&nbsp;&nbsp;
+                        </a>
+
 
                     </ul>
 
@@ -137,8 +140,8 @@
 
                     <!-- Page Heading -->
                     <h1 class="h3 mb-2 text-gray-800">Mypage</h1>
-                    <p class="mb-4">마이페이지 설명, chartjs-> <a
-                            target="_blank" href="https://www.chartjs.org/docs/latest/">official Chart.js
+                    <p class="mb-4">마이페이지 설명, chartjs-> <a target="_blank"
+                            href="https://www.chartjs.org/docs/latest/">official Chart.js
                             documentation</a>.</p>
 
                     <!-- Content Row -->
@@ -172,7 +175,7 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                 이번 달 예산</div>
-                                                <div id="budget__" class="h5 mb-0 font-weight-bold text-gray-800"></div>
+                                            <div id="budget__" class="h5 mb-0 font-weight-bold text-gray-800"></div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -188,7 +191,8 @@
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">예산 대비 지출?
+                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">예산 대비
+                                                지출?
                                             </div>
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col-auto">
@@ -229,49 +233,49 @@
                             </div>
                         </div>
                     </div>
-                -->                        
-                            
-
-                            <!-- 날짜별..? 무슨 그래프 쓸지 -->
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">??</h6>
-                                </div>
-                                <div class="card-body">
-                                    <div class="chart-bar">
-                                        <canvas id="myBarChart"></canvas>
-                                    </div>
-                                    <hr>
-                                    Styling for the bar chart can be found in the
-                                    <code>./lib/bootstrap/js/chart-bar-demo.js</code> file.
-                                </div>
-                            </div>
-
-                        </div>
+                -->
 
 
-
-
-                        
-
-
+                        <!-- 날짜별..? 무슨 그래프 쓸지 -->
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-primary">카드 사용내역</h6>
+                                <h6 class="m-0 font-weight-bold text-primary">??</h6>
                             </div>
                             <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                        <thead>
-                                            <tr>
-                                                <th>카드 이름</th>
-                                                <th>사용처</th>
-                                                <th>사용날짜</th>
-                                                <th>사용시간</th>
-                                                <th>금액</th>
-                                            </tr>
-                                        </thead>
-                                        <!-- <tfoot>
+                                <div class="chart-bar">
+                                    <canvas id="myBarChart"></canvas>
+                                </div>
+                                <hr>
+                                Styling for the bar chart can be found in the
+                                <code>./lib/bootstrap/js/chart-bar-demo.js</code> file.
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+
+
+
+
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">카드 사용내역</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>카드 이름</th>
+                                            <th>사용처</th>
+                                            <th>사용날짜</th>
+                                            <th>사용시간</th>
+                                            <th>금액</th>
+                                        </tr>
+                                    </thead>
+                                    <!-- <tfoot>
                                             <tr>
                                                 <th>카드 이름</th>
                                                 <th>사용처</th>
@@ -279,9 +283,9 @@
                                                 <th>금액</th>
                                             </tr>
                                         </tfoot> -->
-                                        <tbody id="pay-card-body">
-                                            <script src="public/javascript/handlebars-v4.7.6.js"></script>
-                                            <script type="text/x-handlebars-template" id="cardTemplate">
+                                    <tbody id="pay-card-body">
+                                        <script src="public/javascript/handlebars-v4.7.6.js"></script>
+                                        <script type="text/x-handlebars-template" id="cardTemplate">
                                             {{#userPayment}}
                                             <tr><td>{{Trdd}}</td></tr>
                                             <tr>
@@ -293,12 +297,12 @@
                                             </tr>
                                             {{/userPayment}}
                                             </script>
-                                                                                        
-                                        </tbody>
-                                    </table>
-                                </div>
+
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
+                    </div>
 
                 </div>
                 <!-- /.container-fluid -->
@@ -414,7 +418,7 @@
             else if (status === 422) return Promise.reject(new Error("올바론 카테고리 값을 선택해 주세요!"));
             // else return Promise.reject(new Error("로그인 해야 볼 수 있는 페이지 입니다."));
         }).then(() => { // 성공하면 여기오고
-            console.log(data);
+            // console.log(data);
             alert('카테고리 선택 완료');
             const removeTarget = event.target.parentElement.parentElement;
             $(removeTarget).fadeOut();
@@ -431,10 +435,10 @@
     function init() {
         const nowMonth = new Date().getDate();
         const dataBody = {
-            "month":nowMonth
+            "month": nowMonth
         };
-        console.log(dataBody);
-        console.log(JSON.stringify(dataBody));
+        // console.log(dataBody);
+        // console.log(JSON.stringify(dataBody));
 
         // 시스템 데이트 기준으로 이번달 페이먼트 가져오기  
         fetch('http://localhost:3000/user/payment/month', {
@@ -449,7 +453,7 @@
             const { status } = response;
             if (status === 403) return Promise.reject(new Error("로그인 해야 볼 수 있는 페이지 입니다."));
             else if (status === 400 || status === 404) return Promise.reject(new Error("Inner Sever Error"));
-            else return response.json();  
+            else return response.json();
         }).then((data) => { // 성공하면 여기오고
             // Handlebars JS 이용 
             const cardTemplate = $("#cardTemplate").html();
@@ -468,8 +472,8 @@
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         // 유저 budget 필드 가져오기! 
-        fetch('http://localhost:3000/users', {
-            method: 'GET', // *GET, POST, PUT, DELETE, etc.
+        fetch('http://localhost:3000/user/check', {
+            method: 'POST', // *GET, POST, PUT, DELETE, etc.
             mode: 'cors', // no-cors, cors, *same-origin
             cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
             credentials: 'include', // include, *same-origin, omit 
@@ -480,15 +484,8 @@
             else if (status === 400 || status === 404) return Promise.reject(new Error("Inner Sever Error"));
             else return response.json();
         }).then((data) => { // 성공하면 여기오고
-
-            console.log(data);
-
-            let temp = data['user'][0]['budget'];
-            console.log(temp);
-            let insTag = "<div class=\"h5 mb-0 font-weight-bold text-gray-800\">"+ temp +"</div>";
-            $("#budget__").html(insTag);
-            
-
+            const targetDom = document.getElementById('budget__');
+            targetDom.innerHTML = `<div class=h5 mb-0 font-weight-bold text-gray-800> ${data.budget} </div>`;
         }).catch((error) => { // 실패하면 여기온다
             console.warn(error);
             alert(error);
