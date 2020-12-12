@@ -15,9 +15,11 @@ module.exports = (app) => {
   app.route('/user').post(validateUserCreate, user_api.creatUser)
   app.route('/user/id').post(user_api.getAUser);
   app.route('/user/login').post(validateUserLogin, user_api.logInUser);
-  
+
   /////////////////////////////////////////////
   // Auth Test
   app.use('/user/check', authMiddleware);
-  app.route('/user/check').get(user_api.userCheck);
+  app.route('/user/check')
+    .get(user_api.userCheck)
+    .post(user_api.getAUserByAuth);
 };
