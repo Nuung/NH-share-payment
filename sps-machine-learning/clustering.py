@@ -9,8 +9,6 @@ import pandas as pd
 from sklearn.preprocessing import StandardScaler
 from sklearn.neighbors import NearestNeighbors
 from sklearn.decomposition import PCA
-from sklearn import __version__ as vs
-import joblib
 
 class clustering():
     def __init__(self):
@@ -19,7 +17,7 @@ class clustering():
 
     # knn 모델 생성
     def make_knn(self,data,user_id):
-        train_data=data.drop([user_id]).reset_index(drop=True)
+        train_data=data.drop([user_id])
 
         scaler=StandardScaler()
         scaler.fit(train_data)

@@ -5,7 +5,6 @@ Created on Fri Dec 11 15:26:36 2020
 @author: river
 """
 
-from random import randint
 import pandas as pd
 from clustering import *
 from visualization import *
