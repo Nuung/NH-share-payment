@@ -57,13 +57,13 @@
 
             <!--히스토리, 마이페이지 메뉴-->
 
-        <li class="nav-item">
-            <a class="nav-link" href="history.html">
-            <i class="fas fa-fw fa-history"></i>
+            <li class="nav-item">
+                <a class="nav-link" href="history.html">
+                    <i class="fas fa-fw fa-history"></i>
 
-                <span>History</span>&nbsp;<span class="badge badge-pill badge-light ">9</span></a>
+                    <span>History</span>&nbsp;<span class="badge badge-pill badge-light ">9</span></a>
                 <!--숫자에 처리해야 할 히스토리 개수-->
-        </li>
+            </li>
 
 
             <li class="nav-item active">
@@ -75,10 +75,13 @@
                 <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="mypage-today.html"><i class="fas fa-fw fa-check"></i>&nbsp;&nbsp;Today</a>
+                        <a class="collapse-item" href="mypage-today.html"><i
+                                class="fas fa-fw fa-check"></i>&nbsp;&nbsp;Today</a>
                         <!--현재 페이지에 active 효과 넣어서 글씨 진하게-->
-                        <a class="collapse-item" href="mypage-day.html"><i class="fas fa-fw fa-calendar"></i>&nbsp;&nbsp;날짜별</a>
-                        <a class="collapse-item active" href="mypage-item.html"><i class="fas fa-fw fa-th-list"></i>&nbsp;&nbsp;항목별</a>
+                        <a class="collapse-item" href="mypage-day.html"><i
+                                class="fas fa-fw fa-calendar"></i>&nbsp;&nbsp;날짜별</a>
+                        <a class="collapse-item active" href="mypage-item.html"><i
+                                class="fas fa-fw fa-th-list"></i>&nbsp;&nbsp;항목별</a>
                     </div>
                 </div>
             </li>
@@ -114,17 +117,11 @@
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
-
-
-                       
                         <!-- 로그아웃 !!쿠키 삭제 추가해야 함!! -->
-                   
-                            <a class="nav-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Logout &nbsp;&nbsp;&nbsp;
-                            </a>
-                                                    
-
+                        <a class="nav-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                            Logout &nbsp;&nbsp;&nbsp;
+                        </a>
                     </ul>
 
                 </nav>
@@ -137,15 +134,11 @@
 
                     <!-- Page Heading -->
                     <h1 class="h3 mb-2 text-gray-800">Mypage</h1>
-                    <p class="mb-4">마이페이지 설명, chartjs-> <a
-                            target="_blank" href="https://www.chartjs.org/docs/latest/">official Chart.js
-                            documentation</a>.</p>
 
                     <!-- Content Row -->
                     <div class="row">
 
-
-                            <!-- 오늘의 지출 -->
+                        <!-- 오늘의 지출 -->
                         <div class="col-xl-4 col-lg-5">
                             <div class="card shadow mb-4">
                                 <!-- Card Header - Dropdown -->
@@ -162,28 +155,10 @@
                                 </div>
                             </div>
                         </div>
-                            
+                    </div>
 
-                            <!-- 이번 달 지출? -->
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">??</h6>
-                                </div>
-                                <div class="card-body">
-                                    <div class="chart-bar">
-                                        <canvas id="myBarChart"></canvas>
-                                    </div>
-                                    <hr>
-                                    Styling for the bar chart can be found in the
-                                    <code>./lib/bootstrap/js/chart-bar-demo.js</code> file.
-                                </div>
-                            </div>
-
-                        </div>
-
-                        
-                        <!-- Area Chart -->
-                        <div class="col-xl-8 col-lg-7">
+                    <!-- Area Chart -->
+                    <div class="col-xl-8 col-lg-7">
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
                                 <h6 class="m-0 font-weight-bold text-primary">Area Chart</h6>
@@ -210,12 +185,12 @@
 
 
             <!-- Footer -->
-            <!-- <footer class="sticky-footer bg-white">
+            <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
+                        <span>Copyright &copy; spsProject 2020</span>
                     </div>
-                </div> -->
+                </div>
             </footer>
             <!-- End of Footer -->
 

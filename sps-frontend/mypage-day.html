@@ -20,6 +20,19 @@
     <!-- Custom styles for this template-->
     <link href="./lib/bootstrap/css/sb-admin-2.min.css" rel="stylesheet">
     <style>
+        .history__heading {
+            display: flex;
+            /* align-items: center; */
+            /* justify-content: center; */
+            margin-bottom: 15px;
+        }
+
+        .history__heading__right {
+            flex: 2;
+            text-align: center;
+            margin-bottom: 0px;
+        }
+
         .graph__container {
             /* 기본적으로 flex 들어가 있음 */
             align-items: center;
@@ -30,6 +43,12 @@
             text-align: center;
         }
 
+        .card__paymentmonth {
+            font-weight: bold;
+            color: black;
+        }
+
+        .card__payment__tr {}
 
         .card__payment__td {
             text-align: center;
@@ -148,7 +167,10 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Mypage</h1>
+                    <div class="history__heading">
+                        <h1 class="h3 text-gray-800 history__heading__left">Mypage</h1>
+                        <span class="history__heading__right"> 등록된 모든 카드에 대한 한 달 지출 내역 </span>
+                    </div>
 
                     <!-- Content Row -->
                     <div class="row graph__container">
@@ -332,14 +354,9 @@
     <!-- Page level custom scripts -->
     <script src="./public/javascript/mypage-day-graph.js"></script>
 </body>
-
-
-
-
-
-
 <!-- JS SECTION -->
 <script>
+
     'use strict';
 
     //------------------------------Get Dom------------------------------//
@@ -400,15 +417,15 @@
 
             // result object 가지고 동적 랜더링 
             for (const [key, value] of Object.entries(result)) {
-                const tagString = `<tr><td class="card__payment__td" style="border: none;">${dataBody['month']}.${key}</td></tr>`;
+                const tagString = `<tr><td class="card__payment__td card__paymentmonth" style="border: none;">${dataBody['month']}.${key}</td></tr>`;
                 $('#pay-card-body').append(tagString);
                 for (let i = 0; i < value.length; i++) {
                     const element = value[i]; // 세부 결제 내역 내용 
-                    const tagString = `<tr><td class="card__payment__td" style="border: none;"></td>
+                    const tagString = `<tr class="card__payment__tr"><td class="card__payment__td" style="border: none;"></td>
                     <td class="card__payment__td">${element.card_id}</td>
                     <td class="card__payment__td">${element.AfstNm}</td>
                     <td class="card__payment__td">${element.Txtm}</td>
-                    <td class="card__payment__td">${element.Usam}</td><tr>
+                    <td class="card__payment__td">${makeComma(Number(element.Usam))} 원</td><tr>
                     `;
                     $('#pay-card-body').append(tagString);
                 }
