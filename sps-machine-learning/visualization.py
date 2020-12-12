@@ -25,9 +25,10 @@ class visualization():
 
         same=data_pca[data_pca['grouped']=='Same']
 
-        sns.scatterplot(x='x1',y='x2',data=data_pca,alpha=0.25,color='green')
-        sns.scatterplot(x='x1',y='x2',data=same,markers='x',color='mediumpurple')
+        sns.scatterplot(x='x1',y='x2',data=data_pca,alpha=0.25,color='green',label='Other')
+        sns.scatterplot(x='x1',y='x2',data=same,markers='x',color='mediumpurple',label='Same')
         plt.title('<Similar User Distribution> {user_id}'.format(user_id=self.user_id))
+        plt.legend()
         plt.xlabel('PCA_1')
         plt.ylabel('PCA_2')
         plt.savefig('./plot/cluster_{user_id}.png'.format(user_id=self.user_id))
