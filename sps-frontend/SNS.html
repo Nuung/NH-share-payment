@@ -20,6 +20,7 @@
     <!-- Custom styles for this template-->
     <link href="./lib/bootstrap/css/sb-admin-2.min.css" rel="stylesheet">
 
+
     <style>
         .card__list {
             text-align: left;
@@ -107,24 +108,23 @@
                     <!--숫자에 처리해야 할 히스토리 개수-->
             </li>
     
-    
-                <li class="nav-item">
-                    <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
-                        aria-controls="collapseTwo">
-                        <i class="fas fa-fw fa-wallet"></i>
-                        <span>Mypage</span>
-                    </a>
-                    <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo"
-                        data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item" href="mypage-today.html"><i class="fas fa-fw fa-check"></i>&nbsp;&nbsp;Today</a>
-                            <!--현재 페이지에 active 효과 넣어서 글씨 진하게-->
-                            <a class="collapse-item" href="mypage-day.html"><i class="fas fa-fw fa-calendar"></i>&nbsp;&nbsp;날짜별</a>
-                            <a class="collapse-item" href="mypage-item.html"><i class="fas fa-fw fa-th-list"></i>&nbsp;&nbsp;항목별</a>
-                        </div>
+            <!--마이페이지 토글-->
+            <li class="nav-item">
+                <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
+                    aria-controls="collapseTwo">
+                    <i class="fas fa-fw fa-wallet"></i>
+                    <span>Mypage</span>
+                </a>
+                <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="mypage-today.html"><i class="fas fa-fw fa-check"></i>&nbsp;&nbsp;Today</a>
+                        <!--현재 페이지에 active 효과 넣어서 글씨 진하게-->
+                        <a class="collapse-item" href="mypage-day.html"><i class="fas fa-fw fa-calendar"></i>&nbsp;&nbsp;날짜별</a>
+                        <a class="collapse-item" href="mypage-item.html"><i class="fas fa-fw fa-th-list"></i>&nbsp;&nbsp;항목별</a>
                     </div>
-                </li>
-
+                </div>
+            </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider">
@@ -156,7 +156,6 @@
             <!-- Main Content -->
             <div id="content">
                 
-
                 <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
@@ -165,19 +164,13 @@
                         <i class="fa fa-bars"></i>
                     </button>
 
-
                     <!-- Topbar Navbar -->
-                    <ul class="navbar-nav ml-auto">
-
-
-                       
+                    <ul class="navbar-nav ml-auto">     
                         <!-- 로그아웃 !!쿠키 삭제 추가해야 함!! -->
-                   
                             <a class="nav-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                 <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                 Logout &nbsp;&nbsp;&nbsp;
                             </a>
-                
                     </ul>
 
                 </nav>
@@ -197,11 +190,11 @@
                         <!-- value 값 : 식비(1), 의류(2), 교육(3), 교통(4), 생활(5) -->
                         <!-- CardAthzNo(카드 승인번호), Trdd(거래일자), Usam(거래금액) -->
                         <ul id="sns-card-body" class="col-lg">
-                            <!-- 여기부터 -->
+                            <!-- 여기부터 TEMPLATE METHOD DATE BINDING  -->
                             <script src="public/javascript/handlebars-v4.7.6.js"></script>
                             <script type="text/x-handlebars-template" id="snsFeedTemplate">
                             {{#boards}} 
-                                <li class="card mb-4 border-left-primary card__list" id="feedCard" data-target="feedModal">
+                                <li class="card mb-4 border-left-primary card__list" id="feedCard" data-target="#feedModal" data-target-id="{{id}}">
                                     <div name="card-body" class="card-body">
                                         <div>
                                             <span class="card__list__boldtext">  {{title}}  </span> 
@@ -214,7 +207,7 @@
                                 </li>
                             {{/boards}}    
                             </script>
-                            <!-- 여기까지 -->
+                            <!-- 여기까지 TEMPLATE METHOD DATE BINDING -->
                         </ul>
                     </div>
                     <!-- end Card -->
@@ -262,6 +255,51 @@
         </div>
     </div>
 
+    <!-- SNS FEED Modal-->
+    <div class="modal fade" id="feedModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true" board-target-id="">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <!-- MODAL HEADER : TITLE -->
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"> 그래프 뿌리기 !!!! </h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <!-- END OF MODAL HEADER -->
+
+                <!-- MODAL BODY -->
+                <div class="modal-body">
+                    
+                    SNS 게시글 <br><br><br><br><br><br><br>
+
+                    <!-- COMMENT SECTION -->
+                    <form id="comment-form" class="comment-form" name="comment-form"> <!-- data-target-id="{{id}}"-->
+                        <div class="modaltest row">
+                            <div class="col-md-12 text-center d-flex flex-column py-1 justify-content-center">
+                                <div class="auth-form-section">
+                                    <label for="id" class="sr-only">id</label>
+                                    <input type="text" name="content" id="contentInput" class="form-control" placeholder="comment">
+                                </div>
+                            </div>
+                            <div class="col-md-12 text-center d-flex flex-column justify-content-center">
+                                <button type="submit" class="btn btn-primary btn-block mb-3"> 등록 </button>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- END OF COMMENT SECTION -->
+
+                </div>
+                <!-- END OF MODAL BODY -->
+
+                <!-- <div class="modal-footer"> </div> -->
+            </div>
+            <!-- END OF MODAL CONTENT-->
+        </div>
+    </div>
+    <!-- END OF SNS FEED MODAL -->
+
     <!-- Bootstrap core JavaScript-->
     <script src="./lib/bootstrap/js/jquery.min.js"></script>
     <script src="./lib/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -288,28 +326,33 @@
     'use strict';
 
     //------------------------------Get Dom------------------------------//
-    //const categorySubmit = document.getElementById("category-submit")
-    //const categoryForm = document.getElementById("category-form");
-    //const temp = categoryForm.getAttribute('data-target-id');
-     
+    const commentForm = document.querySelectorAll(".comment-form");
 
     //------------------------------Function------------------------------//
     const makeRandomId = () => String(Math.floor(Math.random() * (20)));
 
+    
+    // Event Listener for FEED CARD 
     const feedCardEvent = (event) => {
+        $('#feedModal').css({transition: 'all 0.5s'}); 
+        $('#feedModal').modal("show");
 
-        var m = BootstrapModalWrapperFactory.createModal({
-            title: '<span>'+'</span>',
-            message: '<div class="text-center"> SNS 게시글'+'<div id="commentText"> </div></div>',
-            closable: true,
-            closeByBackdrop: true
+        commentForm.forEach(content => {
+            content.addEventListener('submit', commentsAddEvent);
         });
-        m.originalModal.find(".modal-dialog").css({transition: 'all 0.5s'});
-        m.show();
-        //alert('hh');
+    }
+
+    // Event Listener for ADD COMMENTS 
+    const commentsAddEvent = (event) => {
+
+        event.preventDefault();
+
+        // getting Data From Form
+        const dataBody = Object.fromEntries(new FormData(event.target));
+        dataBody['board_id'] = document.getElementById('feedCard').getAttribute('data-target-id');
         
-        fetch('http://localhost:3000/snsboard/:boardId', {
-            method: 'GET', // *GET, POST, PUT, DELETE, etc.
+        fetch('http://localhost:3000/snsboard/comments', {
+            method: 'POST', // *GET, POST, PUT, DELETE, etc.
             mode: 'cors', // no-cors, cors, *same-origin
             cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
             credentials: 'include', // include, *same-origin, omit 
@@ -319,7 +362,7 @@
             },
             // redirect: 'follow', // manual, *follow, error
             // referrer: 'no-referrer', // no-referrer, *client
-            //body: JSON.stringify(Object.fromEntries(new FormData(event.target))) // // body data type must match "Content-Type" header
+            body: JSON.stringify(dataBody) // // body data type must match "Content-Type" header
 
         }).then((response) => {
             const { status } = response;
@@ -327,46 +370,29 @@
             return response.json();
             // 여기 고치기 !!! 
             if (status === 403) return Promise.reject(new Error("로그인 해야 볼 수 있는 페이지 입니다."));
-            else if (status === 400 || status === 404) return Promise.reject(new Error("잘못된 페이지 접근입니다.")); // 이따 물어봐야지
+            else if (status === 400 || status === 404) return Promise.reject(new Error("잘못된 페이지 접근입니다."));
             else if (status === 422) return Promise.reject(new Error("입력이 잘못 되었습니다."));
             // else return Promise.reject(new Error("Create User Request is failed")); // async promise 실패시 반환이라 생각 
         }).then((data) => { // 성공하면 여기오고
             console.log(data);
-            console.log(10);
-            const commentText = document.querySelector("#commentText");
-            //commentText.innerHTML(data);
-
-            // Handlebars JS 이용 
-            // const snsFeedTemplate = $("#snsFeedTemplate").html();
-            // const snsBindTemplate = Handlebars.compile(snsFeedTemplate);
-
-            // // Get pay card body DOM
-            // const snsUI = document.querySelector("#sns-card-body");
-            // snsUI.innerHTML = snsBindTemplate(data); // use template
-
-            // // Get category form and Set Form Action Event
-            // const feedCard = document.querySelectorAll("#feedCard");
-            // feedCard.forEach( function(feedCard){
-            //     feedCard.addEventListener('click', feedCardEvent); 
-            // });
-
-                
-
-
+            alert('등록완료');
+            $("#contentInput").val("");
+        
         }).catch((error) => { // 실패하면 여기온다
             console.warn(error);
             alert(error);
         });
-        
 
+    }
 
-
-
-
-}
     
     
     //------------------------------Main------------------------------//
+
+    let currentPage = 1;
+
+    const DATA_PER_PAGE = 10, lastPage = 5;
+
 
     function init() {
 
@@ -389,7 +415,7 @@
             // console.log(status + ", " + typeof (status));
 
             return response.json();
-            temp = {month : mon};
+
             // 여기 고치기 !!! 
             if (status === 403) return Promise.reject(new Error("로그인 해야 볼 수 있는 페이지 입니다."));
             else if (status === 400 || status === 404) return Promise.reject(new Error("잘못된 페이지 접근입니다.")); // 이따 물어봐야지
@@ -398,26 +424,39 @@
         }).then((data) => { // 성공하면 여기오고
             console.log(data);
 
-            // Handlebars JS 이용 
-            const snsFeedTemplate = $("#snsFeedTemplate").html();
-            const snsBindTemplate = Handlebars.compile(snsFeedTemplate);
+            for(let i = (currentPage - 1) * DATA_PER_PAGE + 1; i<= currentPage * DATA_PER_PAGE; i++) {
+                // Handlebars JS 이용 
+                const snsFeedTemplate = $("#snsFeedTemplate").html();
+                const snsBindTemplate = Handlebars.compile(snsFeedTemplate);
 
-            // Get pay card body DOM
-            const snsUI = document.querySelector("#sns-card-body");
-            snsUI.innerHTML = snsBindTemplate(data); // use template
+                // Get pay card body DOM
+                const snsUI = document.querySelector("#sns-card-body");
+                snsUI.innerHTML = snsBindTemplate(data); // use template
 
-            // Get category form and Set Form Action Event
-            const feedCard = document.querySelectorAll("#feedCard");
-            feedCard.forEach( function(feedCard){
-                feedCard.addEventListener('click', feedCardEvent); 
-            });
+                // Get category form and Set Form Action Event
+                const feedCard = document.querySelectorAll("#feedCard");
+
+                // Set up eventListener on each of feed card tag
+                feedCard.forEach(function (feedCard, element) {
+                    feedCard.addEventListener('click', feedCardEvent);
+                });
+            }
 
 
+            
+            
         }).catch((error) => { // 실패하면 여기온다
             console.warn(error);
             alert(error);
         });
+
+
     }
+
+    function observaLastChild(intersectionObserver){
+        
+    }
+
 
 
     //------------------------------document get ready------------------------------//
@@ -431,5 +470,6 @@
         }
     });
 
+    
 </script>
 </html>
