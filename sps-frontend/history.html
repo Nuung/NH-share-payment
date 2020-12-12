@@ -38,13 +38,30 @@
             flex: 2;
         }
 
+        #pay-card-body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            align-content: center;
+            justify-content: center;
+        }
+
         .card__list {
-            text-align: center;
+            /* text-align: center; */
+            border-radius: 15px;
+            width: 30rem;
+            margin: 5px;
         }
 
         .card__list__boldtext {
             font-weight: 700;
-            font-size: 1.35rem;
+            font-size: 1.15rem;
+        }
+
+        .card__list__boldtext+span {
+            /* 인접 형제 선택자 */
+            float: right;
+            color: black;
         }
 
         .hide_history {
@@ -73,6 +90,13 @@
 
             to {
                 opacity: 0;
+            }
+        }
+
+        /* 모바일 환경 */
+        @media (max-width: 768px) {
+            .card__list {
+                width: 20rem;
             }
         }
     </style>
@@ -169,22 +193,14 @@
                         <i class="fa fa-bars"></i>
                     </button>
 
-
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
-
-
-
                         <!-- 로그아웃 !!쿠키 삭제 추가해야 함!! -->
-
                         <a class="nav-item" href="#" data-toggle="modal" data-target="#logoutModal">
                             <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                             Logout &nbsp;&nbsp;&nbsp;
                         </a>
-
-
                     </ul>
-
                 </nav>
                 <!-- End of Topbar -->
 
@@ -211,10 +227,11 @@
                             <script src="public/javascript/handlebars-v4.7.6.js"></script>
                             <script type="text/x-handlebars-template" id="cardTemplate">
                             {{#userPaymentHistory}} 
-                                <li class="card mb-4 border-left-primary card__list" id="target{{id}}">
+                                <li class="card card__list" id="target{{id}}">
                                     <div name="card-body" class="card-body">
-                                        <div><span class="card__list__boldtext"> 거래 금액 </span><span> {{Usam}} </span></div>
-                                        <div><span class="card__list__boldtext"> 거래 일자 </span><span> {{Trdd}} </span></div>
+                                        <div><span class="card__list__boldtext"> 거래 금액 </span><span> {{Usam}}￦ </span></div>
+                                        <div><span class="card__list__boldtext"> 거래 일자 </span><span> {{trimString Trdd 0 10}} </span></div>
+                                        <div><span class="card__list__boldtext"> 결제 가맹점명 </span><span> {{AfstNm}} </span></div>
                                         <div><span class="card__list__boldtext"> 카드 승인번호 </span><span> {{CardAthzNo}} </span></div>
                                         <hr>
                                         <form id="category-form" method="PUT" class="category-form" name="category-form" data-target-id="{{id}}"> <!-- 여기부터  data-target-id="{{id}}" -->
@@ -323,6 +340,13 @@
     const historyRefreshBtn = document.getElementById('history__refresh');
 
     //------------------------------Function------------------------------//
+
+    // Handlebar (템플렛 js) - substring 함수 만들기
+    Handlebars.registerHelper('trimString', function (passedString, startstring, endstring) {
+        const theString = passedString.substring(startstring, endstring);
+        return new Handlebars.SafeString(theString)
+    });
+
     const makeRandomId = () => String(Math.floor(Math.random() * (20)));
 
     const deleteHistoryFetch = (event) => {
