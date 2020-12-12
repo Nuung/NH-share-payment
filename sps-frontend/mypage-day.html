@@ -30,6 +30,13 @@
             text-align: center;
         }
 
+        .card__paymentmonth {
+            font-weight: bold;
+            color: black;
+        }
+
+        .card__payment__tr {
+        }
 
         .card__payment__td {
             text-align: center;
@@ -400,15 +407,15 @@
 
             // result object 가지고 동적 랜더링 
             for (const [key, value] of Object.entries(result)) {
-                const tagString = `<tr><td class="card__payment__td" style="border: none;">${dataBody['month']}.${key}</td></tr>`;
+                const tagString = `<tr><td class="card__payment__td card__paymentmonth" style="border: none;">${dataBody['month']}.${key}</td></tr>`;
                 $('#pay-card-body').append(tagString);
                 for (let i = 0; i < value.length; i++) {
                     const element = value[i]; // 세부 결제 내역 내용 
-                    const tagString = `<tr><td class="card__payment__td" style="border: none;"></td>
+                    const tagString = `<tr class="card__payment__tr"><td class="card__payment__td" style="border: none;"></td>
                     <td class="card__payment__td">${element.card_id}</td>
                     <td class="card__payment__td">${element.AfstNm}</td>
                     <td class="card__payment__td">${element.Txtm}</td>
-                    <td class="card__payment__td">${element.Usam}</td><tr>
+                    <td class="card__payment__td">${makeComma(Number(element.Usam))} 원</td><tr>
                     `;
                     $('#pay-card-body').append(tagString);
                 }

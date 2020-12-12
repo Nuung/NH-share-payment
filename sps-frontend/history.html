@@ -229,7 +229,7 @@
                             {{#userPaymentHistory}} 
                                 <li class="card card__list" id="target{{id}}">
                                     <div name="card-body" class="card-body">
-                                        <div><span class="card__list__boldtext"> 거래 금액 </span><span> {{Usam}}￦ </span></div>
+                                        <div><span class="card__list__boldtext"> 거래 금액 </span><span> {{makeComma Usam}} 원</span></div>
                                         <div><span class="card__list__boldtext"> 거래 일자 </span><span> {{trimString Trdd 0 10}} </span></div>
                                         <div><span class="card__list__boldtext"> 결제 가맹점명 </span><span> {{AfstNm}} </span></div>
                                         <div><span class="card__list__boldtext"> 카드 승인번호 </span><span> {{CardAthzNo}} </span></div>
@@ -344,6 +344,12 @@
     // Handlebar (템플렛 js) - substring 함수 만들기
     Handlebars.registerHelper('trimString', function (passedString, startstring, endstring) {
         const theString = passedString.substring(startstring, endstring);
+        return new Handlebars.SafeString(theString)
+    });
+
+    // make Comma
+    Handlebars.registerHelper('makeComma', function (passedString) {
+        const theString = passedString.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         return new Handlebars.SafeString(theString)
     });
 
