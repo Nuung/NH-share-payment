@@ -20,6 +20,19 @@
     <!-- Custom styles for this template-->
     <link href="./lib/bootstrap/css/sb-admin-2.min.css" rel="stylesheet">
     <style>
+        .history__heading {
+            display: flex;
+            /* align-items: center; */
+            /* justify-content: center; */
+            margin-bottom: 15px;
+        }
+
+        .history__heading__right {
+            flex: 2;
+            text-align: center;
+            margin-bottom: 0px;
+        }
+
         .graph__container {
             /* 기본적으로 flex 들어가 있음 */
             align-items: center;
@@ -35,8 +48,7 @@
             color: black;
         }
 
-        .card__payment__tr {
-        }
+        .card__payment__tr {}
 
         .card__payment__td {
             text-align: center;
@@ -155,7 +167,10 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Mypage</h1>
+                    <div class="history__heading">
+                        <h1 class="h3 text-gray-800 history__heading__left">Mypage</h1>
+                        <span class="history__heading__right"> 등록된 모든 카드에 대한 한 달 지출 내역 </span>
+                    </div>
 
                     <!-- Content Row -->
                     <div class="row graph__container">
@@ -339,14 +354,9 @@
     <!-- Page level custom scripts -->
     <script src="./public/javascript/mypage-day-graph.js"></script>
 </body>
-
-
-
-
-
-
 <!-- JS SECTION -->
 <script>
+
     'use strict';
 
     //------------------------------Get Dom------------------------------//
