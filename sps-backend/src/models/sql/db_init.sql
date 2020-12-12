@@ -90,6 +90,13 @@ CREATE TABLE  user_payments (
   ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE same_cluster_user(
+  user_id        VARCHAR(40) NOT NULL,
+  user_id_same        VARCHAR(40) NOT NULL,
+  FOREIGN KEY ( user_id ) REFERENCES users(id) 
+  ON DELETE CASCADE
+  ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT C
 
 CREATE TABLE  sns_boards (
   id      	    INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
