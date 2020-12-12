@@ -45,10 +45,11 @@
 
 
     <style>
-        /* .family__sliderLable {
-            margin-right: 17px;
-            padding-left: 30px;
-        } */
+        .family__sliderLable {
+            margin-top: 7px;
+            margin-right: 5px;
+            padding-left: 5px;
+        } 
 
         /* .family__sliderValue {
             margin-left: 15px;
@@ -56,7 +57,12 @@
 
         .gender__sliderLable {
             margin-top: 7px;
-            margin-right: 17px;
+            margin-right: 5px;
+            margin-left: 10px
+        }
+
+        .form__gender__budget{
+            text-align: center;
         }
 
         .hidden__value__logintype,
@@ -117,11 +123,12 @@
                                     <input type="text" name="birthday" id="birthday"
                                         class="form-control form-control-user" placeholder="Birthday (yyyymmdd) ">
                                 </div>
-                                <div class="form-group row">
-                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                <div class="form-group row form__gender__budget">
+                                    <div class="col-sm-4 mb-3 mb-sm-0">
+                                        <!-- <label for="formControlRange" class="gender__sliderLable">Gender :
+                                        </label> -->
+                                        &nbsp;&nbsp;&nbsp;
                                         <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                            <label for="formControlRange" class="gender__sliderLable">Gender :
-                                            </label><br />
                                             <label class="btn btn-primary button-class1">
                                                 <input type="radio" name="gender" id="gender" autocomplete="off"
                                                     value="1" checked> Female
@@ -132,11 +139,11 @@
                                             </label>
                                         </div>
                                     </div>
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-8 mb-3 mb-sm-0">
                                         <label for="formControlRange" class="family__sliderLable">Family : </label>
                                         <!-- <input type="range" class="form-control-range" id="formControlRange"> -->
                                         <input id="family" type="text" name="family" data-slider-min="1"
-                                            data-slider-max="5" data-slider-step="1" />
+                                            data-slider-max="5" data-slider-step="1" /> &nbsp;&nbsp;&nbsp;
                                         <span class="family__sliderValue"></span>
                                     </div>
                                 </div>
@@ -181,46 +188,46 @@
                                         <label class="btn btn-light">
                                             <!-- 하나은행 -->
                                             <input type="radio" name="id" value="081" hidden />
-                                            <img src="public/images/kebhana.png" width="150px" />
+                                            <img src="public/images/cardicons/kebhana.png" width="150px" />
                                         </label>
                                         <label class="btn btn-light">
                                             <!-- 국민은행 -->
                                             <input type="radio" name="id" value="004" hidden />
-                                            <img src="public/images/kb.png" width="150px" />
+                                            <img src="public/images/cardicons/kb.png" width="150px" />
                                         </label>
                                     </div>
                                     <div class="btn-group-vertical">
-                                        <label class="btn btn-light active">
+                                        <label class="btn btn-light">
                                             <!-- 농협상호금융 -->
                                             <input type="radio" name="id" value="012" hidden />
-                                            <img src="public/images/localnh.png" width="150px" />
+                                            <img src="public/images/cardicons/localnh.png" width="150px" />
                                         </label>
                                         <label class="btn btn-light">
                                             <!-- 우리은행 -->
                                             <input type="radio" name="id" value="020" hidden />
-                                            <img src="public/images/woori.png" width="150px" />
+                                            <img src="public/images/cardicons/woori.png" width="150px" />
                                         </label>
                                         <label class="btn btn-light">
                                             <!-- 신한은행 -->
                                             <input type="radio" name="id" value="088" hidden />
-                                            <img src="public/images/shinhan.png" width="150px" />
+                                            <img src="public/images/cardicons/shinhan.png" width="150px" />
                                         </label>
                                     </div>
                                     <div class="btn-group-vertical">
-                                        <label class="btn btn-light active">
+                                        <label class="btn btn-light">
                                             <!-- 카카오뱅크 -->
                                             <input type="radio" name="id" value="090" hidden />
-                                            <img src="public/images/kakao.png" width="150px" />
+                                            <img src="public/images/cardicons/kakao.png" width="150px" />
                                         </label>
                                         <label class="btn btn-light">
                                             <!-- 산업은행 -->
                                             <input type="radio" name="id" value="002" hidden />
-                                            <img src="public/images/kdb.png" width="150px" />
+                                            <img src="public/images/cardicons/kdb.png" width="150px" />
                                         </label>
                                         <label class="btn btn-light">
                                             <!-- 기업은행 -->
                                             <input type="radio" name="id" value="003" hidden />
-                                            <img src="public/images/ibk.png" width="150px" />
+                                            <img src="public/images/cardicons/ibk.png" width="150px" />
                                         </label>
                                     </div>
                                 </div>
