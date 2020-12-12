@@ -6,7 +6,7 @@ app=Flask(__name__)
 @app.route('/getUser',methods=['POST'])
 def getUser():
     user=request.get_json()
-    user_id=user['userID']
+    user_id=user['id']
 
     path=os.getcwd().rstrip('server')
 
@@ -16,5 +16,5 @@ def getUser():
 
 if __name__=="__main__":
     #app.run(debug=True)
-    app.run(host='44.242.175.149', port='3001',debug=True)
+    app.run(host='0.0.0.0', port='3001',debug=True)
 
