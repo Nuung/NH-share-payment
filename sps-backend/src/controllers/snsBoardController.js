@@ -63,6 +63,59 @@ const getAllBoardByUserId = async (req, res) => {
     }
 };
 
+// Get A Board by user id
+const getAllBoardByTargetUser = async (req, res) => {
+    try {
+        // req.body (id value) 값에 대한 값 보증 필요 and Vaildatation
+        // if (!req.body.userId) return res.status(400).send({ error: true, message: 'Please provide Board userId' });
+        // const { userId, userName, userBirth } = jwt.decode(req.cookies['user-login']);
+        const { user_id } = req.body;
+
+        await SnsBoard.getAllBoardByUserId(user_id, function (err, board) {
+            console.log('snsBoardController - getAllBoardByUserId');
+            if (err) {
+                console.log('snsBoardController - getAllBoardByUserId Error: ', err);
+                throw new Error(`snsBoardController - getAllBoardByUserId Error: ${err}`);
+            }
+            return res.status(201).json(board)
+        });
+    }
+    catch (error) {
+        console.log(`snsBoardController getAllBoardByUserId: ${error}`);
+        return res.status(404).json({
+            position: "snsBoardController getAllBoardByUserId",
+            message: error.message
+        });
+    }
+};
+
+
+// SNS에서 필터 랜더링이 필요하다! same_cluster_user 를 통해서 조회하면 된다 
+const getBoardByClusterData = async (req, res) => {
+    try {
+        // const { user_id } = req.body;
+        const { userId, userName, userBirth } = jwt.decode(req.cookies['user-login']);
+        const clusteredResult = await SnsBoard.getClusteredResult(userId);
+        // console.log(clusteredResult); // [ TextRow { user_id_same: 'abc887@nh.com' }, ] 의 array 형태
+
+        let resultOfAllBoard;
+        for (let i = 0; i < clusteredResult.length; i++) {
+            const element = (clusteredResult[i]);
+            resultOfAllBoard += await SnsBoard.findById(element.user_id_same); // target Board Infomation
+        }
+
+        console.log(resultOfAllBoard);
+    }
+    catch (error) {
+        console.log(`snsBoardController getAllBoardByUserId: ${error}`);
+        return res.status(404).json({
+            position: "snsBoardController getAllBoardByUserId",
+            message: error.message
+        });
+    }
+};
+
+
 // Get All Boards
 const getAllBoards = async (req, res) => {
     try {
@@ -83,28 +136,6 @@ const getAllBoards = async (req, res) => {
         });
     }
 };
-
-// Update A Board by Id
-// const updateById = async (req, res) => {
-
-//     const updatedBoard = new snsBoard(req.body, true);
-//     try {
-//         await SnsBoard.updateById(updatedBoard, function (err, result) {
-//             if (err) {
-//                 console.log('snsBoardController - updateById Error: ', err);
-//                 throw new Error(`snsBoardController - updateById Error: ${err}`);
-//             }
-//             return res.status(201).send(result);
-//         });
-//     }
-//     catch (error) {
-//         console.log(`snsBoardController updateById: ${error}`);
-//         return res.status(404).json({
-//             position: "snsBoardController updateById",
-//             message: error.message
-//         });
-//     }
-// };
 
 // Update A Board's Great by target Id
 const updateBoardGreat = async (req, res) => { // user id , board id 필요함 
@@ -197,6 +228,8 @@ module.exports = {
     creatBoard,
     updateBoardGreat,
     getAllBoardByUserId,
+    getAllBoardByTargetUser,
+    getBoardByClusterData,
     getAllBoards,
     // updateById,
     removeById

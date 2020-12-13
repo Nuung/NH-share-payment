@@ -14,6 +14,11 @@ module.exports = (app) => {
     .get(sns_board_api.getAllBoards) // 걍 다 가져오기 
     .post(validateSnsBoardCreate, sns_board_api.creatBoard); // create sns board 
 
+  app.use('/snsboards/user', authMiddleware);
+  app.route('/snsboards/user')
+    .get(sns_board_api.getBoardByClusterData)
+    .post(sns_board_api.getAllBoardByTargetUser); // create sns board 
+
   app.use('/snsboard/like', authMiddleware);
   app.route('/snsboard/like')
     .put(sns_board_api.updateBoardGreat);

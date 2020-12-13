@@ -87,7 +87,7 @@ SnsBoard.findById = async function (board_id) {
     try {
         const [rows] = await connection.query("Select * from sns_boards WHERE id = ?", [board_id]);
         if (isAllEmpty(rows)) return false;
-        else return rows[0];
+        else return rows;
     } catch (error) {
         console.log(`snsBoardServeice findUserLike Error: ${error}`);
         throw new Error(`snsBoardServeice findUserLike Error: ${error}`);
@@ -135,6 +135,19 @@ SnsBoard.getAllBoards = async function (result) {
         }
         else result(null, res);
     });
+};
+
+// Get clustered Result by cookies id!
+SnsBoard.getClusteredResult = async function (userId) {
+    const connection = await pool.getConnection(async conn => conn);
+    try {
+        const [rows] = await connection.query("Select user_id_same from same_cluster_user WHERE user_id = ?", [userId]);
+        if (isAllEmpty(rows)) return false;
+        else return rows;
+    } catch (error) {
+        console.log(`snsBoardServeice findUserLike Error: ${error}`);
+        throw new Error(`snsBoardServeice findUserLike Error: ${error}`);
+    }
 };
 
 // Update Target Board's information
