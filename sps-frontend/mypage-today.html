@@ -20,6 +20,30 @@
     <!-- Custom styles for this template-->
     <link href="./lib/bootstrap/css/sb-admin-2.min.css" rel="stylesheet">
 
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.4.0/main.min.css" rel="stylesheet">
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.4.0/main.min.js'></script>
+
+    <!-- Alert Plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <style>
+        #calendar-container {
+            /* position: fixed; */
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+
+        .fc-header-toolbar {
+            /*
+            the calendar will be butting up against the edges,
+            but let's scoot in the header's buttons
+            */
+            padding-top: 1em;
+            padding-left: 1em;
+            padding-right: 1em;
+        }
+    </style>
 </head>
 
 <body id="page-top">
@@ -131,35 +155,8 @@
                 </nav>
                 <!-- End of Topbar -->
 
-
-
-                <!-- 메인 페이지 Begin Page Content -->
-                <div class="container-fluid">
-
-                    <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Mypage</h1>
-
-                    <!-- Content Row -->
-                    <div class="row">
-                        <!-- 오늘의 지출 -->
-                        <div class="col-xl-4 col-lg-5">
-                            <div class="card shadow mb-4">
-                                <!-- Card Header - Dropdown -->
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">TODAY</h6>
-                                </div>
-                                <!-- Card Body -->
-                                <div class="card-body">
-                                    <div class="chart-pie pt-4">
-                                        <canvas id="myPieChart"></canvas>
-                                    </div>
-                                    <hr>
-                                    범례 작성
-                                </div>
-                            </div>
-                        </div>
-                </div>
-                <!-- /.container-fluid -->
+                <!-- 캘린더! -->
+                <div id="calendar"></div>
 
             </div>
             <!-- End of Main Content -->
@@ -214,15 +211,49 @@
 
     <!-- Custom scripts for all pages-->
     <script src="./lib/bootstrap/js/sb-admin-2.min.js"></script>
+    <script src="./public/javascript/mypage-today-calendar.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // 원래는 아래와 같이 동적으로 갱신하며 받아와야 한다 하지만 농협API에는 12월이 없다! 
+            // const nowMonth = new Date().getMonth();
+            const dataBody = {
+                month: 11
+            };
 
-    <!-- Page level plugins -->
-    <script src="./lib/bootstrap/js/Chart.min.js"></script>
+            // 시스템 데이트 기준으로 이번달 페이먼트 가져오기  
+            fetch('http://44.242.175.149:3000/user/payment/month', {
+                method: 'POST', // *GET, POST, PUT, DELETE, etc.
+                mode: 'cors', // no-cors, cors, *same-origin
+                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                credentials: 'include', // include, *same-origin, omit 
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(dataBody)
+            }).then((response) => {
+                const { status } = response;
+                if (status === 403) return Promise.reject(new Error("로그인 해야 볼 수 있는 페이지 입니다."));
+                else if (status === 400 || status === 404) return Promise.reject(new Error("Inner Sever Error"));
+                else return response.json();
+            }).then((data) => { // 성공하면 여기오고
 
-    <!-- Page level custom scripts -->
-    <!-- <script src="./lib/bootstrap/js/chart-area-demo.js"></script>
-    <script src="./lib/bootstrap/js//chart-pie-demo.js"></script>
-    <script src="./lib/bootstrap/js//chart-bar-demo.js"></script> -->
+                // Day로 집합화 
+                const result = {};
+                for (let j = 0; j < 32; j++) {
+                    let temp_array = [];
+                    for (let i = 0; i < data['userPayment'].length; i++) {
+                        const getDay = (data['userPayment'][i].Trdd).substring(8, 10); // get-Day!
+                        if (j == getDay) temp_array.push(data['userPayment'][i]);
+                        else continue;
+                    } // inner for
+                    if (temp_array.length > 0) result[j] = temp_array;
+                } // for    
+                calendarSetUp(result);
 
+            }).catch((error) => { // 실패하면 여기온다
+                console.warn(error);
+                alert(error);
+            });
+        });
+    </script>
 </body>
 
 </html>
