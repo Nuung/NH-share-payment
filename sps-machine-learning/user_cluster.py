@@ -7,7 +7,7 @@ Created on Fri Dec 11 15:26:36 2020
 
 import pandas as pd
 from clustering import *
-from visualization import *
+#from visualization import *
 from functions import *
 from database import *
 import numpy as np
@@ -33,10 +33,11 @@ user_id=sys.argv[1]
 cluster.make_knn(total_label,user_id) # 군집
 print('모델 생성')
 
-
+'''
 visual=visualization(user_id)
 visual.show(cluster.data ,cluster.similar)
 print('{user} 그래프 저장'.format(user=user_id))
+'''
 
 total_label=total_label.drop([user_id]).reset_index()
 
