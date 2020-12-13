@@ -19,7 +19,39 @@
 
     <!-- Custom styles for this template-->
     <link href="./lib/bootstrap/css/sb-admin-2.min.css" rel="stylesheet">
+    <style>
+        .topic__heading {
+            display: flex;
+            /* align-items: center; */
+            /* justify-content: center; */
+            margin-bottom: 15px;
+        }
 
+        .topic__heading__right {
+            flex: 2;
+            text-align: center;
+            margin-top: 6px;
+            margin-bottom: 0px;
+        }
+
+        .content__container {
+            align-items: center;
+            justify-items: center;
+            /* text-align: center; */
+            align-content: center;
+            justify-content: center;
+        }
+
+        .chart__pie__label {
+            /* text-align: center; */
+            margin-left: 37%;
+        }
+
+        .chart__pie__percent {
+            font-weight: bold;
+            color: black;
+        }
+    </style>
 </head>
 
 <body id="page-top">
@@ -57,13 +89,13 @@
 
             <!--히스토리, 마이페이지 메뉴-->
 
-        <li class="nav-item">
-            <a class="nav-link" href="history.html">
-            <i class="fas fa-fw fa-history"></i>
+            <li class="nav-item">
+                <a class="nav-link" href="history.html">
+                    <i class="fas fa-fw fa-history"></i>
 
-                <span>History</span>&nbsp;<span class="badge badge-pill badge-light ">9</span></a>
+                    <span>History</span>&nbsp;<span class="badge badge-pill badge-light ">9</span></a>
                 <!--숫자에 처리해야 할 히스토리 개수-->
-        </li>
+            </li>
 
 
             <li class="nav-item active">
@@ -75,10 +107,13 @@
                 <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="mypage-today.html"><i class="fas fa-fw fa-check"></i>&nbsp;&nbsp;Today</a>
+                        <a class="collapse-item" href="mypage-today.html"><i
+                                class="fas fa-fw fa-check"></i>&nbsp;&nbsp;Today</a>
                         <!--현재 페이지에 active 효과 넣어서 글씨 진하게-->
-                        <a class="collapse-item" href="mypage-day.html"><i class="fas fa-fw fa-calendar"></i>&nbsp;&nbsp;날짜별</a>
-                        <a class="collapse-item active" href="mypage-item.html"><i class="fas fa-fw fa-th-list"></i>&nbsp;&nbsp;항목별</a>
+                        <a class="collapse-item" href="mypage-day.html"><i
+                                class="fas fa-fw fa-calendar"></i>&nbsp;&nbsp;날짜별</a>
+                        <a class="collapse-item active" href="mypage-item.html"><i
+                                class="fas fa-fw fa-th-list"></i>&nbsp;&nbsp;항목별</a>
                     </div>
                 </div>
             </li>
@@ -114,17 +149,11 @@
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
-
-
-                       
                         <!-- 로그아웃 !!쿠키 삭제 추가해야 함!! -->
-                   
-                            <a class="nav-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Logout &nbsp;&nbsp;&nbsp;
-                            </a>
-                                                    
-
+                        <a class="nav-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                            Logout &nbsp;&nbsp;&nbsp;
+                        </a>
                     </ul>
 
                 </nav>
@@ -136,21 +165,21 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Mypage</h1>
-                    <p class="mb-4">마이페이지 설명, chartjs-> <a
-                            target="_blank" href="https://www.chartjs.org/docs/latest/">official Chart.js
-                            documentation</a>.</p>
+                    <div class="topic__heading">
+                        <h1 class="h3 text-gray-800 topic__heading__left">Mypage</h1>
+                        <span class="topic__heading__right"> 분야별 총 누적 지출 분석 </span>
+                    </div>
 
                     <!-- Content Row -->
-                    <div class="row">
+                    <div class="row content__container" width="100%">
 
-
-                            <!-- 오늘의 지출 -->
-                        <div class="col-xl-4 col-lg-5">
+                        <!-- 오늘의 지출 -->
+                        <div class="col-xl-5 col-lg-5">
                             <div class="card shadow mb-4">
                                 <!-- Card Header - Dropdown -->
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">TODAY</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary" style="text-align: center;">분야별 총 누적
+                                        지출</h6>
                                 </div>
                                 <!-- Card Body -->
                                 <div class="card-body">
@@ -158,64 +187,48 @@
                                         <canvas id="myPieChart"></canvas>
                                     </div>
                                     <hr>
-                                    범례 작성
-                                </div>
-                            </div>
-                        </div>
-                            
-
-                            <!-- 이번 달 지출? -->
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">??</h6>
-                                </div>
-                                <div class="card-body">
-                                    <div class="chart-bar">
-                                        <canvas id="myBarChart"></canvas>
+                                    <div class="chart__pie__label">
+                                        <span class="chart__pie__values">식품</span> <br />
+                                        <span class="chart__pie__values">의류</span> <br />
+                                        <span class="chart__pie__values">교육</span> <br />
+                                        <span class="chart__pie__values">교통</span> <br />
+                                        <span class="chart__pie__values">생활</span> <br />
                                     </div>
-                                    <hr>
-                                    Styling for the bar chart can be found in the
-                                    <code>./lib/bootstrap/js/chart-bar-demo.js</code> file.
                                 </div>
-                            </div>
-
-                        </div>
-
-                        
-                        <!-- Area Chart -->
-                        <div class="col-xl-8 col-lg-7">
-                        <div class="card shadow mb-4">
-                            <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-primary">Area Chart</h6>
-                            </div>
-                            <div class="card-body">
-                                <div class="chart-area">
-                                    <canvas id="myAreaChart"></canvas>
-                                </div>
-                                <hr>
-                                Styling for the area chart can be found in the
-                                <code>./lib/bootstrap/js/chart-area-demo.js</code> file.
                             </div>
                         </div>
 
+                        <!-- 누적 지출 카드별 분석 -->
+                        <div class="col-xl-5 col-lg-5">
+                            <div class="card shadow mb-4">
+                                <!-- Card Header - Dropdown -->
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary" style="text-align: center;">분야별 총 누적
+                                        지출 카드별 분석</h6>
+                                </div>
+                                <!-- Card Body -->
+                                <div class="card-body">
+                                    <span>테스트 텍스트</span>
+                                    <hr />
+                                    <span>하나카드</span>
+                                    <span>23546634 ￦</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-
                 </div>
                 <!-- /.container-fluid -->
 
             </div>
             <!-- End of Main Content -->
 
-
-
-
             <!-- Footer -->
-            <!-- <footer class="sticky-footer bg-white">
+            <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
+                        <span>Copyright &copy; spsProject 2020</span>
                     </div>
-                </div> -->
+                </div>
             </footer>
             <!-- End of Footer -->
 
@@ -262,12 +275,85 @@
 
     <!-- Page level plugins -->
     <script src="./lib/bootstrap/js/Chart.min.js"></script>
-
+    <script src="./lib/chartjs-plugin-doughnutlabel.min.js"></script>
     <!-- Page level custom scripts -->
-    <script src="./lib/bootstrap/js/chart-area-demo.js"></script>
-    <script src="./lib/bootstrap/js//chart-pie-demo.js"></script>
-    <script src="./lib/bootstrap/js//chart-bar-demo.js"></script>
-
+    <script src="./public/javascript/mypage-item-graph.js"></script>
 </body>
+<script>
+
+    'use strict';
+
+    //------------------------------Get Dom------------------------------//
+    //const categorySubmit = document.getElementById("category-submit")
+    //const categoryForm = document.getElementById("category-form");
+    //const temp = categoryForm.getAttribute('data-target-id'); 
+
+    //------------------------------Function------------------------------//
+    const makeRandomId = () => String(Math.floor(Math.random() * (20)));
+
+    // Check every empty condtion
+    const isAllEmpty = (value) => {
+        if (value == "" || value == null || value == undefined ||
+            (value != null && typeof value == "object" && !Object.keys(value).length)) return true;
+        else return false;
+    };
+
+    // number 3자리 마다 콤마찍어주기
+    const makeComma = (x) => x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    let categoryCountAll = []; // "식품", "의류", "교육", "교통", "생활"
+
+    //------------------------------Main------------------------------//
+
+    async function init() {
+
+        // 유저에 대해 모든 카테고리 값 가져오기
+        for (let i = 1; i <= 5; i++) {
+            await fetch('http://44.242.175.149:3000/user/payment/category', {
+                method: 'POST', // *GET, POST, PUT, DELETE, etc.
+                mode: 'cors', // no-cors, cors, *same-origin
+                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                credentials: 'include', // include, *same-origin, omit 
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ "category": i })
+            }).then((response) => {
+                const { status } = response;
+                if (status === 403) return Promise.reject(new Error("로그인 해야 볼 수 있는 페이지 입니다."));
+                else if (status === 400 || status === 404) return Promise.reject(new Error("Inner Sever Error"));
+                else return response.json();
+            }).then((data) => { // 성공하면 여기오고
+                categoryCountAll.push(data);
+            }).catch((error) => { // 실패하면 여기온다
+                console.warn(error);
+                alert(error);
+            });
+        }
+        // console.log(categoryCountAll);
+        setUpGraph(categoryCountAll);
+        const targetLabel = document.querySelectorAll('.chart__pie__values'); // "식품", "의류", "교육", "교통", "생활"
+        const total = categoryCountAll.reduce((acc, current) => acc + current);
+        for (let i = 0; i < categoryCountAll.length; i++) {
+            let element = (categoryCountAll[i] / total) * 100;
+            element = Math.floor(element * 10);
+            element /= 10;
+            targetLabel[i].innerHTML += `: <span class="chart__pie__percent">${element}</span> %`;
+        }
+    } // init()
+
+
+    //------------------------------document get ready------------------------------//
+    document.addEventListener("DOMContentLoaded", function () {
+        // 모바일 환경에서는 사이드 바가 토글되게
+        const windowWidth = $(window).width();
+        if (windowWidth <= 768) {
+            $('body').toggleClass('sidebar-toggled');
+            $('#accordionSidebar').toggleClass('toggled');
+        }
+
+        // init everything 
+        init();
+    });
+
+
+</script>
 
 </html>

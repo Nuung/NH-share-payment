@@ -38,13 +38,52 @@
             flex: 2;
         }
 
+        .category-form {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .category-form>img {
+            cursor: pointer;
+            width: 15%;
+            margin: 5px;
+            opacity: 0.6;
+            transition: 0.3s;
+        }
+
+        .category-form>img:hover {
+            opacity: 1
+        }
+
+        .card__list__delete {
+            cursor: pointer;
+        }
+
+        #pay-card-body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            align-content: center;
+            justify-content: center;
+        }
+
         .card__list {
-            text-align: center;
+            /* text-align: center; */
+            border-radius: 15px;
+            width: 30rem;
+            margin: 5px;
         }
 
         .card__list__boldtext {
             font-weight: 700;
-            font-size: 1.35rem;
+            font-size: 1.15rem;
+        }
+
+        .card__list__boldtext+span {
+            /* 인접 형제 선택자 */
+            float: right;
+            color: black;
         }
 
         .hide_history {
@@ -73,6 +112,18 @@
 
             to {
                 opacity: 0;
+            }
+        }
+
+        /* 모바일 환경 */
+        @media (max-width: 768px) {
+            .card__list {
+                width: 20rem;
+            }
+
+            .category-form>img {
+                width: 17%;
+                margin: 0px;
             }
         }
     </style>
@@ -169,22 +220,14 @@
                         <i class="fa fa-bars"></i>
                     </button>
 
-
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
-
-
-
                         <!-- 로그아웃 !!쿠키 삭제 추가해야 함!! -->
-
                         <a class="nav-item" href="#" data-toggle="modal" data-target="#logoutModal">
                             <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                             Logout &nbsp;&nbsp;&nbsp;
                         </a>
-
-
                     </ul>
-
                 </nav>
                 <!-- End of Topbar -->
 
@@ -211,31 +254,20 @@
                             <script src="public/javascript/handlebars-v4.7.6.js"></script>
                             <script type="text/x-handlebars-template" id="cardTemplate">
                             {{#userPaymentHistory}} 
-                                <li class="card mb-4 border-left-primary card__list" id="target{{id}}">
+                                <li class="card card__list" id="target{{id}}">
                                     <div name="card-body" class="card-body">
-                                        <div><span class="card__list__boldtext"> 거래 금액 </span><span> {{Usam}} </span></div>
-                                        <div><span class="card__list__boldtext"> 거래 일자 </span><span> {{Trdd}} </span></div>
+                                        <div><span class="card__list__boldtext"> 거래 금액 </span><span> {{makeComma Usam}} 원</span></div>
+                                        <div><span class="card__list__boldtext"> 거래 일자 </span><span> {{trimString Trdd 0 10}} </span></div>
+                                        <div><span class="card__list__boldtext"> 결제 가맹점명 </span><span> {{AfstNm}} </span></div>
                                         <div><span class="card__list__boldtext"> 카드 승인번호 </span><span> {{CardAthzNo}} </span></div>
                                         <hr>
-                                        <form id="category-form" method="PUT" class="category-form" name="category-form" data-target-id="{{id}}"> <!-- 여기부터  data-target-id="{{id}}" -->
-                                            <label class="radio-inline">
-                                                <input type="radio" name="category" value="1"> 식비
-                                            </label>
-                                            <label class="radio-inline">
-                                                <input type="radio" name="category" value="2"> 의류
-                                            </label>
-                                            <label class="radio-inline">
-                                                <input type="radio" name="category" value="3"> 교육
-                                            </label>
-                                            <label class="radio-inline">
-                                                <input type="radio" name="category" value="4"> 교통
-                                            </label>
-                                            <label class="radio-inline">
-                                                <input type="radio" name="category" value="5"> 생활
-                                            </label>
-                                            <br>
-                                            <button type ="submit" class="btn btn-primary">등록</button>
-                                            <button type ="submit" class="btn btn-danger card__list__delete">삭제</button>
+                                        <form method="PUT" class="category-form" name="category-form" data-target-id="{{id}}"> <!-- 여기부터  data-target-id="{{id}}" -->
+                                            <img class="card__list__active" src="./public/images/food.png" data-value="1"/>
+                                            <img class="card__list__active" src="./public/images/cloth.png" data-value="2"/>
+                                            <img class="card__list__active" src="./public/images/edu.png" data-value="3"/>
+                                            <img class="card__list__active" src="./public/images/transp.png" data-value="4"/>
+                                            <img class="card__list__active" src="./public/images/liv.png" data-value="5"/>
+                                            <img class="card__list__delete" src="./public/images/del.png"/>
                                         </form> <!-- 여기까지 -->    
                                     </div>
                                 </li>
@@ -253,15 +285,14 @@
             </div>
 
             <!-- Footer -->
-            <!-- <footer class="sticky-footer bg-white">
+            <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
+                        <span>Copyright &copy; spsProject 2020</span>
                     </div>
                 </div>
-            </footer> -->
+            </footer>
             <!-- End of Footer -->
-
         </div>
         <!-- End of Content Wrapper -->
 
@@ -306,10 +337,8 @@
     <!-- Page level plugins -->
     <script src="./lib/bootstrap/js/Chart.min.js"></script>
 
-    <!-- Page level custom scripts -->
-    <!-- <script src="./lib/bootstrap/js/chart-area-demo.js"></script> -->
-    <!-- <script src="./lib/bootstrap/js//chart-pie-demo.js"></script> -->
-    <!-- <script src="./lib/bootstrap/js//chart-bar-demo.js"></script> -->
+    <!-- Alert Plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 </body>
 
 <!-- JS SECTION -->
@@ -323,6 +352,19 @@
     const historyRefreshBtn = document.getElementById('history__refresh');
 
     //------------------------------Function------------------------------//
+
+    // Handlebar (템플렛 js) - substring 함수 만들기
+    Handlebars.registerHelper('trimString', function (passedString, startstring, endstring) {
+        const theString = passedString.substring(startstring, endstring);
+        return new Handlebars.SafeString(theString)
+    });
+
+    // make Comma
+    Handlebars.registerHelper('makeComma', function (passedString) {
+        const theString = passedString.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        return new Handlebars.SafeString(theString)
+    });
+
     const makeRandomId = () => String(Math.floor(Math.random() * (20)));
 
     const deleteHistoryFetch = (event) => {
@@ -352,10 +394,13 @@
             else if (status === 422) return Promise.reject(new Error("올바론 카테고리 값을 선택해 주세요!"));
             // else return Promise.reject(new Error("로그인 해야 볼 수 있는 페이지 입니다."));
         }).then(() => { // 성공하면 여기오고
-            alert('삭제 완료');
             const removeTarget = form.parentElement.parentElement;
             $(removeTarget).fadeOut();
-            // removeTarget.removeChild(event.target.parentElement);
+            Swal.fire({
+                text: "결제 내역 삭제 완료",
+                confirmButtonColor: '#4E73DF',
+                confirmButtonText: 'OK',
+            });
         }).catch((error) => { // 실패하면 여기온다
             console.warn(error);
             alert(error);
@@ -369,8 +414,11 @@
         event.preventDefault();
 
         // getting Data From Form
-        const dataBody = Object.fromEntries(new FormData(event.target));
-        dataBody['id'] = event.target.getAttribute('data-target-id');
+        // const dataBody = Object.fromEntries(new FormData(event.target));
+        const dataBody = {
+            id: event.target.parentElement.getAttribute('data-target-id'),
+            category: event.target.getAttribute('data-value')
+        }
 
         // fetching body
         fetch('http://44.242.175.149:3000/user/payment/history', {
@@ -390,10 +438,17 @@
             else if (status === 422) return Promise.reject(new Error("올바론 카테고리 값을 선택해 주세요!"));
             // else return Promise.reject(new Error("로그인 해야 볼 수 있는 페이지 입니다."));
         }).then(() => { // 성공하면 여기오고
-            alert('카테고리 선택 완료');
-            const removeTarget = event.target.parentElement.parentElement;
+            const removeTarget = event.target.parentElement.parentElement.parentElement;
             $(removeTarget).fadeOut();
-            // removeTarget.removeChild(event.target.parentElement);
+            // Swal.fire({
+            //     text: "카테고리 선택 완료",
+            //     confirmButtonColor: '#4E73DF',
+            //     confirmButtonText: 'OK',
+            // }).then((result) => {
+            //     if (result.isConfirmed) {
+            //         window.location.href = "history.html"
+            //     }
+            // });
         }).catch((error) => { // 실패하면 여기온다
             console.warn(error);
             alert(error);
@@ -413,7 +468,7 @@
             "cnt": 15
         };
 
-
+        // loading action 
         const loadingImg = document.createElement('img');
         loadingImg.setAttribute('id', 'hoopcity-ajax-loading');
         loadingImg.setAttribute('src', './public/images/loading.gif');
@@ -478,7 +533,7 @@
             else if (status === 400 || status === 404) return Promise.reject(new Error("Inner Sever Error"));
             else return Promise.reject(new Error("Create User Request is failed")); // async promise 실패시 반환이라 생각 
         }).then((data) => { // 성공하면 여기오고
-            console.log(data);
+            // console.log(data);
             // Handlebars JS 이용 
             const cardTemplate = $("#cardTemplate").html();
             const cardBindTemplate = Handlebars.compile(cardTemplate);
@@ -488,12 +543,13 @@
             cardUI.innerHTML = cardBindTemplate(data); // use template
 
             // Get category form and Set Form Action Event
-            const categoryForm = document.querySelectorAll(".category-form");
+            const categoryForm = document.querySelectorAll(".card__list__active");
+            // console.log(categoryForm);
             categoryForm.forEach(category => {
-                category.addEventListener('submit', categortFormEvent);
+                category.addEventListener('click', categortFormEvent);
 
                 // Get Delete Btn for delete fetch and add event!
-                const deleteBtn = category.getElementsByClassName('card__list__delete')[0];
+                const deleteBtn = category.parentElement.getElementsByClassName('card__list__delete')[0];
                 deleteBtn.addEventListener('click', deleteHistoryFetch);
             });
 

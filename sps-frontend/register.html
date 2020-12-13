@@ -65,6 +65,7 @@
             text-align: center;
         }
 
+
         .hidden__value__logintype,
         .hidden__value__finaccount {
             display: none;
@@ -92,6 +93,8 @@
 </head>
 
 <body class="bg-gradient-primary">
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 
     <div class="container">
 
@@ -150,9 +153,7 @@
                                 <div class="form-group">
                                     <label for="budget" class="sr-only">budget</label>
                                     <input type="number" name="budget" id="budget"
-                                        class="form-control form-control-user" placeholder="Monthly Budget"
-                                        data-toggle="tooltip" data-placement="bottom" data-html="true"
-                                        title="1인 : 805,900 <br/> 2인 : 1,274,100 <br/> 3인 : 1,641,700 <br/> 4인 : 2,153,300 <br/> 5인 : 2,593,100">
+                                        class="form-control form-control-user" placeholder="Monthly Budget">
                                 </div>
                                 <div class="form-group">
                                     <input type="text" name="login_type" id="login_type"
@@ -180,51 +181,51 @@
                                 <!--은행 선택 3*3 추후 이미지 리사이징 해서 넣어야 함-->
                                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
                                     <div class="btn-group-vertical">
-                                        <label class="btn btn-light active">
+                                        <label class="btn btn-light btn-sm active">
                                             <!-- 농협은행 -->
                                             <input type="radio" name="id" value="011" hidden />
-                                            <img src="public/images/cardicons/nh.png" width="150px" />
+                                            <img src="public/images/cardicons/nh.png" width="150px"/>
                                         </label>
-                                        <label class="btn btn-light">
+                                        <label class="btn btn-light btn-sm">
                                             <!-- 하나은행 -->
                                             <input type="radio" name="id" value="081" hidden />
-                                            <img src="public/images/cardicons/kebhana.png" width="150px" />
+                                            <img src="public/images/cardicons/kebhana.png"  width="150px"/>
                                         </label>
-                                        <label class="btn btn-light">
+                                        <label class="btn btn-light btn-sm">
                                             <!-- 국민은행 -->
                                             <input type="radio" name="id" value="004" hidden />
                                             <img src="public/images/cardicons/kb.png" width="150px" />
                                         </label>
                                     </div>
-                                    <div class="btn-group-vertical">
-                                        <label class="btn btn-light">
+                                    <div class="btn-group-vertical" >
+                                        <label class="btn btn-light btn-sm">
                                             <!-- 농협상호금융 -->
                                             <input type="radio" name="id" value="012" hidden />
                                             <img src="public/images/cardicons/localnh.png" width="150px" />
                                         </label>
-                                        <label class="btn btn-light">
+                                        <label class="btn btn-light btn-sm">
                                             <!-- 우리은행 -->
                                             <input type="radio" name="id" value="020" hidden />
                                             <img src="public/images/cardicons/woori.png" width="150px" />
                                         </label>
-                                        <label class="btn btn-light">
+                                        <label class="btn btn-light btn-sm">
                                             <!-- 신한은행 -->
                                             <input type="radio" name="id" value="088" hidden />
-                                            <img src="public/images/cardicons/shinhan.png" width="150px" />
+                                            <img src="public/images/cardicons/shinhan.png"width="150px" />
                                         </label>
-                                    </div>
-                                    <div class="btn-group-vertical">
-                                        <label class="btn btn-light">
+                                    </div> 
+                                    <div class="btn-group-vertical" width="150px" >
+                                        <label class="btn btn-light btn-sm">
                                             <!-- 카카오뱅크 -->
                                             <input type="radio" name="id" value="090" hidden />
-                                            <img src="public/images/cardicons/kakao.png" width="150px" />
+                                            <img src="public/images/cardicons/kakao.png"width="150px" />
                                         </label>
-                                        <label class="btn btn-light">
+                                        <label class="btn btn-light btn-sm">
                                             <!-- 산업은행 -->
                                             <input type="radio" name="id" value="002" hidden />
                                             <img src="public/images/cardicons/kdb.png" width="150px" />
                                         </label>
-                                        <label class="btn btn-light">
+                                        <label class="btn btn-light btn-sm">
                                             <!-- 기업은행 -->
                                             <input type="radio" name="id" value="003" hidden />
                                             <img src="public/images/cardicons/ibk.png" width="150px" />
@@ -305,7 +306,10 @@
             console.log(data);
         }).catch((error) => { // 실패하면 여기온다
             console.warn(error);
-            alert(error);
+            Swal.fire({
+                    text: error,
+                    confirmButtonText: 'OK'
+                    })
         });
     };
 
@@ -349,7 +353,10 @@
                 }
             }).catch((error) => { // 실패하면 여기온다
                 console.warn(error);
-                alert(error);
+                Swal.fire({
+                    text: error,
+                    confirmButtonText: 'OK'
+                    })
             });
         });
 
@@ -381,12 +388,24 @@
                 else if (status === 201) return Promise.resolve("회원가입 성공!"); // async promise 성공시 반환이라 생각 
                 // else return Promise.reject(new Error("Create User Card Request is failed")); // async promise 실패시 반환이라 생각 
             }).then((data) => { // 성공하면 여기오고
-                console.log(data);
-                cardApproveFetch();
-                window.location.href = "history.html"; // main html로 강제 이동시킴 
+				console.log(data);
+				Swal.fire({
+                    title: ' ',
+                    text: data,
+                    confirmButtonText: 'OK'
+                    }).then((result) => {
+                    if (result.isConfirmed) {
+                        cardApproveFetch();
+                        window.location.href = "history.html"; // main html로 강제 이동시킴 
+                    }
+                    })
+                
             }).catch((error) => { // 실패하면 여기온다
                 console.warn(error);
-                alert(error);
+                Swal.fire({
+                    text: error,
+                    confirmButtonText: 'OK'
+                    })
             });
         });
 
@@ -491,7 +510,10 @@
         onfocusout:false,
         showErrors:function(errorMap, errorList){
             if(this.numberOfInvalids()) {
-                alert(errorList[0].message);
+                Swal.fire({
+                    text: errorList[0].message,
+                    confirmButtonText: 'OK'
+                    })
             }
         }
     });

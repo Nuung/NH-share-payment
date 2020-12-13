@@ -75,7 +75,6 @@ const getAllPaymentsByMonth = async (req, res) => {
 };
 
 
-
 // Target User id's sum of total payments [ Usam 필드 합계 ]
 const getSumOfAllPayments = async (req, res) => {
     const msgLog = "userPaymentController - getSumOfAllPayments";
@@ -88,6 +87,30 @@ const getSumOfAllPayments = async (req, res) => {
             else {
                 const resultSum = { sum };
                 return res.status(200).json(resultSum['sum'][0]['sum']);
+            }
+        });
+    }
+    catch (error) {
+        console.log(`${msgLog}: ${error}`);
+        return res.status(404).json({
+            position: msgLog,
+            message: error.message
+        });
+    }
+}
+
+// Target User id's sum of total payments [ Usam 필드 합계 ]
+const getCountOfAllPaymentsCategory = async (req, res) => {
+    const msgLog = "userPaymentController - getCountOfAllPaymentsCategory";
+    try {
+        const { userId, userName, userBirth } = jwt.decode(req.cookies['user-login']);
+        const { category } = req.body;
+        await UserPayment.getCountOfAllPaymentsCategory(category, userId, function (err, count) {
+            console.log(colors.bgGreen.black(`${msgLog} Successfully`));
+            if (err) throw new Error(`${msgLog} Error: ${err}`);
+            else {
+                const resultCount = { count };
+                return res.status(200).json(resultCount['count'][0]['count']);
             }
         });
     }
@@ -178,6 +201,7 @@ module.exports = {
     getAllPaymentsByMonth,
     getAllPayHistory,
     getSumOfAllPayments,
+    getCountOfAllPaymentsCategory,
     updatePayHistory,
     removeHistoryById
 };
