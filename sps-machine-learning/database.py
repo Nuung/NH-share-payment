@@ -16,8 +16,8 @@ class database():
         today="'"+datetime.datetime.today().strftime('%Y-%m-%d')+"'"
         before30days="'"+(datetime.datetime.today()-datetime.timedelta(days=30)).strftime('%Y-%m-%d')+"'"
 
-        sql = "SELECT user_id, Trdd, Txtm, Usam, category FROM user_payments WHERE Trdd <="+today+"and Trdd >="+before30days+";"
-        #sql = "SELECT user_id, Trdd, Txtm, Usam, category FROM user_payments WHERE Trdd <="+"'2020-12-05'"+"and Trdd >="+"'2020-11-05'"+";"
+        #sql = "SELECT user_id, Trdd, Txtm, Usam, category FROM user_payments WHERE Trdd <="+today+"and Trdd >="+before30days+";"
+        sql = "SELECT user_id, Trdd, Txtm, Usam, category FROM user_payments WHERE Trdd <="+"'2020-12-01'"+"and Trdd >="+"'2020-11-01'"+";"
         self.cursor.execute(sql)
         self.conn.commit()
 
