@@ -23,10 +23,6 @@
     <!-- Page level plugins -->
     <script src="./lib/bootstrap/js/Chart.min.js"></script>
 
-    <!-- Page level custom scripts -->
-    <script src="./lib/bootstrap/js/chart-area-demo.js"></script>
-    <script src="./lib/bootstrap/js//chart-pie-demo.js"></script>
-    <script src="./lib/bootstrap/js//chart-bar-demo.js"></script>
 
 
     <style>
@@ -50,9 +46,6 @@
             text-align: center;
             flex: 2;
         }
-        .card__list {
-            text-align: left;
-        }
 
         .sns__right {
             display: flex;
@@ -61,10 +54,36 @@
             margin-bottom: 15px;
         }
 
+        .card__list {
+            text-align: left;
+        }
+
+        .sns__feed__td {
+            border-right: 0px;
+            border-left: 0px;
+            border-top: 0px;
+            border-bottom: 0px; 
+        }
+
+        .sns__feed__tr {
+            border-right: 0px;
+            border-left: 0px;
+            border-top: 0px;
+            border-bottom: 0px; 
+        }
+
+        .comment__td {
+            border-right: 0px;
+            border-left: 0px;
+            border-top: 0px;
+            border-bottom: 0px; 
+        }
+
         .card__list__boldtext {
             font-weight: 700;
             font-size: 1.35rem;
         }
+
         .user__text {
             text-align: right;
         }
@@ -87,7 +106,57 @@
             animation-fill-mode: forwards;
         }
 
-        @keyframes fade-out {
+        /* #container {
+            margin: 0px auto;
+        }
+ 
+
+        #sns-card-body {
+            padding : 0px;
+        } */
+
+        #msg-loading {
+            background-color: skyblue;
+            color : grey;
+            text-align: center;
+            border-radius: 5px;
+        }
+
+        .fade_in {
+            opacity: 1;
+            animation-name : fadeInOpacity;
+            animation-iteration-count: 1;
+            animation-timing-function: ease-in;
+            animation-duration: 0.5s;
+        }
+
+        .fade_out {
+            opacity: 0;
+            animation-name : fadeOutOpacity;
+            animation-iteration-count: 1;
+            animation-timing-function: ease-in;
+            animation-duration: 0.5s;
+        }
+
+        @keyframes fadeInOpacity {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeOutOpacity {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        /* @keyframes fade-out {
             from {
                 opacity: 1;
 
@@ -96,7 +165,7 @@
             to {
                 opacity: 0;
             }
-        }
+        } */
     </style>
 
 </head>
@@ -225,7 +294,7 @@
                     </div>
                     
                     <!-- Content Row -->
-                    <div class="row" id="cardRow">
+                    <div class="row" id="container">
                         <!-- Border Left Utilities -->
                         <!-- value 값 : 식비(1), 의류(2), 교육(3), 교통(4), 생활(5) -->
                         <!-- CardAthzNo(카드 승인번호), Trdd(거래일자), Usam(거래금액) -->
@@ -234,21 +303,22 @@
                                 <!-- 여기에 계속 추가됨.-->
                             <!-- 여기까지 TEMPLATE METHOD DATE BINDING -->
                         </ul>
-                        <!-- <p id="msg-loading"> ~ L O A D I N G ~ </p> -->
+                        
                     </div>
+                    <!-- <p id="msg-loading"> ~ L O A D I N G ~ </p> -->
                     <!-- end Card -->
                 <!-- /.container-fluid -->
                 </div>
             <!-- End of Main Content -->
 
             <!-- Footer -->
-            <!-- <footer class="sticky-footer bg-white">
+            <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
                         <span> Copyright Share Payment SNS - SPS 2020 </span>
                     </div>
                 </div>
-            </footer> -->
+            </footer>
             <!-- End of Footer -->
 
         </div>
@@ -301,6 +371,14 @@
                     
                     SNS 게시글 <br><br><br><br><br><br><br>
 
+                    <div class="table-responsive">
+                        <table class="table" id="dataTable" width="100%" cellspacing="0">
+                            <tbody id="comment__td">
+
+                            </tbody>
+                        </table>
+                    </div>
+
                     <!-- COMMENT SECTION -->
                     <form id="comment-form" class="comment-form" name="comment-form"> <!-- data-target-id="{{id}}"-->
                         <div class="modaltest row">
@@ -344,7 +422,7 @@
                     
                     <!-- data-target-id="{{id}}"-->
                     <div class="modaltest row">
-                        <div class="col-md-12 text-center d-flex flex-column py-1 justify-content-center">
+                        <div class="col-lg-12 text-center d-flex flex-column py-1 justify-content-center">
                             <form id="write-form" class="write-form" name="write-form">
                                 <div class="form-group">
                                     <label for="title" class="sr-only">title</label>
@@ -352,25 +430,12 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="content" class="sr-only">content</label>
-                                    <input type="text" name="content" id="contentInput" class="form-control" placeholder="CONTENT" required>
+                                    <textarea class="form-control" name="content" id="contentInput" placeholder="CONTENT" style="height: 200px;" required></textarea>
                                 </div>
                                 <div class="form-group"> <!-- 라디오 버튼으로 바꿀 예정 !!!!!!!!  -->
                                     <label for="tags" class="sr-only">tags</label>
                                     <input type="text" name="tags" id="tagsInput" class="form-control" placeholder="TAGS">
-                                </div>
-
-                                <!-- UPLOAD INPUT FORM --> <!-- CHOOSE FILE 이상한 곳 고치기 -->
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
-                                        </div>
-                                        <div class="custom-file">
-                                            <input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
-                                            <label class="custom-file-label" for="inputGroupFile01" style="text-align : center;">Choose file</label>
-                                        </div>
-                                    </div>
-                                </div>     
+                                </div>    
                                 <button type="submit" class="btn btn-primary btn-block mb-3"> U P L O A D </button>
                                 
                             </form>
@@ -381,9 +446,9 @@
                     <!-- END OF WRITE SECTION -->
 
                 </div>
-                <div class="modal-footer">
+                <!-- <div class="modal-footer">
 
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
@@ -404,15 +469,23 @@
     <script src="./lib/bootstrap/js/Chart.min.js"></script>
 
     <!-- Page level custom scripts -->
+        <!-- Page level custom scripts -->
     <script src="./lib/bootstrap/js/chart-area-demo.js"></script>
-    <script src="./lib/bootstrap/js/chart-pie-demo.js"></script>
-    <script src="./lib/bootstrap/js/chart-bar-demo.js"></script>
+    <!-- <script src="./lib/bootstrap/js//chart-pie-demo.js"></script> -->
+    <!-- <script src="./lib/bootstrap/js//chart-bar-demo.js"></script> -->
 
 </body>
 
 <!-- JS SECTION -->
 <script>
     'use strict';
+
+
+    //------------------------------Variables------------------------------//    
+    const DATA_PER_PAGE = 5;
+    const lastPage = 10;
+    let currentPage = 1;
+    const msgLoading = document.getElementById("msg-loading");
 
     //------------------------------Get Dom------------------------------//
     const commentForm = document.querySelectorAll(".comment-form");
@@ -424,15 +497,27 @@
 
     
     // Event Listener for FEED CARD 
-    const feedCardEvent = (event) => {
+    // const feedCardEvent = (event) => {
+    //     $('#feedModal').css({transition: 'all 0.5s'}); 
+    //     $('#feedModal').modal("show");
+    //     //console.log(document.getElementById)
+    //     console.log($('#feedCard').attr('data-target-id'));
+        
+    //     commentForm.forEach(content => {
+    //         content.addEventListener('submit', commentsAddEvent);
+    //     });
+    // }
+
+    function feedCardEvent() {
         $('#feedModal').css({transition: 'all 0.5s'}); 
         $('#feedModal').modal("show");
-
+        let boardID = $(this).attr('data-target-id');
+        getComments(boardID);
+        
         commentForm.forEach(content => {
             content.addEventListener('submit', commentsAddEvent);
         });
     }
-
     // Event Listener for ADD COMMENTS 
     const commentsAddEvent = (event) => {
 
@@ -440,7 +525,7 @@
 
         // getting Data From Form
         const dataBody = Object.fromEntries(new FormData(event.target));
-        dataBody['board_id'] = document.getElementById('feedCard').getAttribute('data-target-id');
+        dataBody['board_id'] = event.target.getAttribute('data-target-id');
         
         fetch('http://localhost:3000/snsboard/comments', {
             method: 'POST', // *GET, POST, PUT, DELETE, etc.
@@ -483,7 +568,6 @@
 
         // getting Data From Form
         const dataBody = Object.fromEntries(new FormData(event.target));
-        //dataBody['board_id'] = document.getElementById('feedCard').getAttribute('data-target-id');
         
         fetch('http://localhost:3000/snsboards', {
             method: 'POST', // *GET, POST, PUT, DELETE, etc.
@@ -524,25 +608,109 @@
     writeForm.addEventListener('submit', writeEvent);
 
     // Get comments for correspoding to the board.
-    function getComments () {
+    function getComments (boardID) {
+ 
+        console.log(boardID);
+        let url = 'http://localhost:3000/snsboard/comment/'+boardID;
+        //console.log(url);
+        // Getting User's history data
+        fetch(url, {
+            method: 'GET', // *GET, POST, PUT, DELETE, etc.
+            mode: 'cors', // no-cors, cors, *same-origin
+            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: 'include', // include, *same-origin, omit 
+            headers: {
+                'Content-Type': 'application/json',
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            // redirect: 'follow', // manual, *follow, error
+            // referrer: 'no-referrer', // no-referrer, *client
+            //body: JSON.stringify(Object.fromEntries(new FormData(event.target))) // // body data type must match "Content-Type" header
 
+        }).then((response) => {
+            const { status } = response;
+            // console.log(status + ", " + typeof (status));
+
+            return response.json();
+
+            // 여기 고치기 !!! 
+            if (status === 403) return Promise.reject(new Error("로그인 해야 볼 수 있는 페이지 입니다."));
+            else if (status === 400 || status === 404) return Promise.reject(new Error("잘못된 페이지 접근입니다.")); // 이따 물어봐야지
+            else if (status === 422) return Promise.reject(new Error("입력이 잘못 되었습니다."));
+            // else return Promise.reject(new Error("Create User Request is failed")); // async promise 실패시 반환이라 생각 
+        }).then((data) => { // 성공하면 여기오고
+            console.log(data);
+            let length = data.length;
+            
+            //add Data
+            let tagString = "";
+            for (let i = 0; i < length; i++) {
+                //const tagString = `<tr><td class="card__comment__td" style="border: none;"> </td></tr>`;
+                //$('#comment__td').append(tagString);
+                tagString = tagString + `
+                <div>
+                    <span class="card__list__boldtext"> ${data[i].user_id} </span> 
+                    <br> 
+                    <span> ${data[i].content} </span>    
+                </div>
+                `;
+            }// data get end
+            $('#comment__td').html(tagString);
+
+        }).catch((error) => { // 실패하면 여기온다
+            console.warn(error);
+            alert(error);
+        });
     }
 
-    let currentPage = 1;
-
-    const DATA_PER_PAGE = 10, lastPage = 5;
-
-    const msgLoading = document.getElementById("msg-loading");
 
 
-    
+
     
     //------------------------------Main------------------------------//
+    function observeLastChild(intersectionObserver){
+        const listChildren = document.querySelectorAll('.sns-body-card');
 
+        listChildren.forEach(el => {
+            if (!el.nextSibling && currentPage < lastPage) {
+                intersectionObserver.observe(el);
+            }
+            else if (currentPage >= lastPage) {
+                intersectionObserver.disconnect();
+                msgLoading.textContent = "페이지 끝입니다.";
+            }
+
+        })
+    }
+
+    const observerOption ={
+        root : null,
+        rootMargin : "0px 0px 0px 0px",
+        threhold : 0.5
+    }
+
+    const io = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+
+            if (entry.isIntersecting) {
+                msgLoading.classList.add("fade-in");
+
+                setTimeout(() => {
+                    addData(++currentPage);
+                    observer.unobserve(entry.target);
+                    observeLastChild(observer);
+
+                    msgLoading.classList.remove("fade-in");
+
+                }, 1000)
+
+            }
+        })
+
+    }, observerOption);
 
     function init() {
-        
-        
+
         // Getting User's history data
         fetch('http://localhost:3000/snsboards', {
             method: 'GET', // *GET, POST, PUT, DELETE, etc.
@@ -571,9 +739,13 @@
         }).then((data) => { // 성공하면 여기오고
             console.log(data);  
             //addData(data, currentPage);
-
+            let size = 5;
+            let length = data['boards'].length;
+            //console.log(data['boards'][0]['id']);
+            
             //add Data
-            for (let i = (data['boards'].length-1); i >= 0 ; i--) {
+            for (let i = length - 1; i >= 0; i--) {
+                //console.log(data['boards'][i]['id']);
                 // for(let i = (currentPage - 1 ) * DATA_PER_PAGE + 1; i <= currentPage * DATA_PER_PAGE; i++){
                     const tagString = `
                             <li class="card mb-4 border-left-primary card__list" id="feedCard" data-target="#feedModal" data-target-id="${data['boards'][i]['id']}">
@@ -599,7 +771,7 @@
                         feedCard.addEventListener('click', feedCardEvent);
                     });
                             
-                 // refresh page end
+                
 
             }// data get end
 
@@ -613,59 +785,33 @@
         
     }
 
-    function addData(data, currentPage) {
 
-
-    }
-
-    // function observaLastChild(intersectionObserver){
-    //     const listChildren = document.querySelectorAll("");
-
-    //     listChildren.forEach(el => {
-    //         if (!el.nextSibling && currentPage < lastPage) {
-    //             intersectionObserver.observe(el);
-    //         }
-    //         else if (currentPage >= lastPage) {
-    //             intersectionObserver.disconnect();
-    //             msgLoading.textContent = " The end of pages ";
-    //         }
-
-    //     })
-    // }
-
-    // const observerOption ={
-    //     root : null,
-    //     rootMargin : "0px 0px 0px 0px",
-    //     threhold : 0.5
-    // }
-
-    // const io = new IntersectionObserver((entries, observer) => {
-    //     entries.forEach(entry => {
-
-    //         if (entry.isIntersecting) {
-    //             msgLoading.classList.add("fade-in");
-
-    //             setTimeout(() => {
-    //                 addData(++currentPage);
-    //                 observer.unobserve(entry.target);
-    //                 observaLastChild(observer);
-
-    //                 msgLoading.classList.remove("fade-in");
-
-    //             }, 1000)
-
-    //         }
-    //     })
-
-    // }, observerOption);
-
-    
-
+    // addData(currentPage);
+    // observeLastChild(io);
 
 
     //------------------------------document get ready------------------------------//
-    document.addEventListener("DOMContentLoaded", function () {
-        init();
+    document.addEventListener("DOMContentLoaded", function () { 
+        
+        $(function () {
+            $(window).scroll(function () {
+                let $window = $(this);
+                let scrollTop = $window.scrollTop();
+                let windowHeight = $window.height();
+                let documentHeight = $(document).height();
+                
+                console.log("documentHeight:" + documentHeight + " | scrollTop:" + scrollTop + " | windowHeight: " + windowHeight);
+
+                // scrollbar의 thumb가 바닥 전 30px까지 도달 하면 리스트를 가져온다.
+                if (scrollTop + windowHeight + 30 > documentHeight) {
+                    //_index += 5;
+                    init();
+                }
+            })
+            init();
+        })
+
+        
     
         // 모바일 환경에서는 사이드 바가 토글되게
         const windowWidth = $(window).width();
