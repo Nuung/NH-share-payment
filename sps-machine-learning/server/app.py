@@ -10,7 +10,7 @@ def getUser():
 
     path=os.getcwd().rstrip('server')
 
-    os.system('python {path}user_cluster.py {user_id}'.format(path=path, user_id=user_id))
+    os.system('python3 {path}user_cluster.py {user_id}'.format(path=path, user_id=user_id))
 
     return 'OK'
 
