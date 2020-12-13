@@ -19,18 +19,18 @@ class visualization():
         pca=PCA(n_components=2)
         data_pca=pd.DataFrame(pca.fit_transform(data))
         
-        data_pca['grouped']='Other'
-        data_pca.at[similar,'grouped']='Same'
+        data_pca['grouped']='Different'
+        data_pca.at[similar,'grouped']='Similar'
         data_pca.columns=['x1','x2','grouped']
+        same=data_pca[data_pca['grouped']=='Similar']
 
-        same=data_pca[data_pca['grouped']=='Same']
-
-        sns.scatterplot(x='x1',y='x2',data=data_pca,alpha=0.25,color='green',label='Other')
-        sns.scatterplot(x='x1',y='x2',data=same,markers='x',color='mediumpurple',label='Same')
-        plt.title('<Similar User Distribution> {user_id}'.format(user_id=self.user_id))
+        sns.scatterplot(x='x1',y='x2',data=data_pca,alpha=0.25,color='green',label='Different')
+        sns.scatterplot(x='x1',y='x2',data=same,markers='x',color='mediumpurple',label='Similar')
+        plt.title('<Similar User Distribution>')
         plt.legend()
         plt.xlabel('PCA_1')
         plt.ylabel('PCA_2')
+        
         plt.savefig('./plot/cluster_{user_id}.png'.format(user_id=self.user_id))
         
         return

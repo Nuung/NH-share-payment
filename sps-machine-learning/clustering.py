@@ -25,7 +25,7 @@ class clustering():
         pca=PCA(n_components=0.95)
         pca.fit(x_train)
         x_train_pca=pca.transform(x_train)
-        knn=NearestNeighbors(n_neighbors=30).fit(x_train_pca)
+        knn=NearestNeighbors(n_neighbors=50,n_jobs=-1).fit(x_train_pca)
         self.data=x_train_pca
         
         x_test=scaler.transform(data.loc[user_id].values.reshape(1,-1))
