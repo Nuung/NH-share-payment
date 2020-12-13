@@ -63,8 +63,7 @@ def gm_num(num):
         return math.floor(random.random()*(40000000000000000000))+10000000000000000000
 
 
-conn = pymysql.connect(host='ec2-44-242-175-149.us-west-2.compute.amazonaws.com', port=3306, user='root', password='45812Qlgks!',
-                       db='spsProject', charset='utf8')
+conn = pymysql.connect(host='localhost', user='root', password='45812Qlgks!', db='spsProject', charset='utf8')
 
 curs = conn.cursor()
 #sql1 = """insert into users(id,password,name,birthday, gender,login_type,fin_account,family,budget,created_at,updated_at) values ('abc1@nh.com','123456','abc1','1990-11-01',0,'None','None',1, 970000,'2019-02-06','2020-12-11')"""        
