@@ -1,5 +1,5 @@
 import pymysql
-import datetime
+#import datetime
 
 class database():
     def __init__(self):
@@ -13,11 +13,11 @@ class database():
 
     # 유저 카드승인 내역 정보 받아오기
     def get_userpayment(self):
-        today="'"+datetime.datetime.today().strftime('%Y-%m-%d')+"'"
-        before30days="'"+(datetime.datetime.today()-datetime.timedelta(days=30)).strftime('%Y-%m-%d')+"'"
+        #today="'"+datetime.datetime.today().strftime('%Y-%m-%d')+"'"
+        #before30days="'"+(datetime.datetime.today()-datetime.timedelta(days=30)).strftime('%Y-%m-%d')+"'"
 
         #sql = "SELECT user_id, Trdd, Txtm, Usam, category FROM user_payments WHERE Trdd <="+today+"and Trdd >="+before30days+";"
-        sql = "SELECT user_id, Trdd, Txtm, Usam, category FROM user_payments WHERE Trdd <="+"'2020-12-01'"+"and Trdd >="+"'2020-11-01'"+";"
+        sql = "SELECT user_id, Trdd, Txtm, Usam, category FROM user_payments WHERE Trdd BETWEEN '2019-11-01' and '2019-12-01' ;"
         self.cursor.execute(sql)
         self.conn.commit()
 

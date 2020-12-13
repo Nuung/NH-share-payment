@@ -22,7 +22,6 @@ class visualization():
         data_pca['grouped']='Other'
         data_pca.at[similar,'grouped']='Same'
         data_pca.columns=['x1','x2','grouped']
-
         same=data_pca[data_pca['grouped']=='Same']
 
         sns.scatterplot(x='x1',y='x2',data=data_pca,alpha=0.25,color='green',label='Other')
@@ -31,6 +30,7 @@ class visualization():
         plt.legend()
         plt.xlabel('PCA_1')
         plt.ylabel('PCA_2')
+        
         plt.savefig('./plot/cluster_{user_id}.png'.format(user_id=self.user_id))
         
         return
