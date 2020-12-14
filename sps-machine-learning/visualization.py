@@ -1,9 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Fri Dec 11 12:02:46 2020
-
-@author: river
-"""
 
 import pandas as pd
 import seaborn as sns
@@ -34,4 +28,3 @@ class visualization():
         plt.savefig('./plot/cluster_{user_id}.png'.format(user_id=self.user_id))
         
         return
-

@@ -1,9 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Fri Dec 11 15:26:36 2020
-
-@author: river
-"""
 
 import pandas as pd
 from clustering import *

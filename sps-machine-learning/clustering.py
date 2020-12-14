@@ -4,7 +4,6 @@ Created on Thu Dec 10 21:47:03 2020
 
 @author: river
 """
-
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
 from sklearn.neighbors import NearestNeighbors
