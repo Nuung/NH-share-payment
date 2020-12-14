@@ -101,8 +101,7 @@ const logInUser = async (req, res) => {
 
         // respond the token 
         const respond = (token) => {
-            res.cookie("user-login", token);
-            res.status(201).json({
+            res.cookie("user-login", token).status(201).json({
                 message: 'logged in successfully',
                 token
             })
@@ -113,6 +112,8 @@ const logInUser = async (req, res) => {
             .then(check)
             .then(respond)
             .catch((err) => { throw new Error(err) });
+
+        // throw new Error('Logged in Fail, wrong password cant be verified!');
 
     } catch (error) {
         // console.log(`userController logInUser: ${error}`);

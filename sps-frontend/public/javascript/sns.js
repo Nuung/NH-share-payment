@@ -35,7 +35,7 @@ const checkClustered = () => {
     }).then((data) => { // 성공하면 여기오고
 
         // 여기서 나온 유저 결과 값 기반으로 /snsboards/user 에 for로 때려야함 ;; 
-        
+
         $("#comment__value").val("");
         Swal.fire({
             text: "댓글 등록 완료",
@@ -113,13 +113,19 @@ const getAllBoards = () => {
 
         // add Data -> 최근 글 기준으로 피드 랜더링 
         for (let i = length - 1; i >= 0; i--) {
+            const randomImg = Math.floor(Math.random() * (9 - 1)) + 1;
+            const randomLike = Math.floor(Math.random() * (6334 - 1)) + 1;
+
             const tagString = `
                 <li class="card mb-4 card__list feedCard" data-target="#feedModal" data-target-id="${data['boards'][i]['id']}">
                     <div name="card-body" class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
-                                <div class="text-lg font-weight-bold text-primary text-uppercase mb-1">
-                                    ${data['boards'][i]['title']} </div>
+                                <div class="card__body__title">
+                                    <div class="text-lg font-weight-bold text-primary text-uppercase mb-1">
+                                        ${data['boards'][i]['title']} </div>
+                                    <div class="card__body__title__date"> ${data['boards'][i]['created_at']}</div>
+                                </div>
                                 <div class="text-sm mb-0 font-weight-bold text-gray-800">${data['boards'][i]['user_id']}</div>
                             </div>
                             <div class="col-auto">
@@ -128,24 +134,23 @@ const getAllBoards = () => {
                         </div>
                         
                         <hr>
-                        <div><span class="card__list__boldtext"> 그래프 </span> 
-                    
-                        <div class="chart-pie pt-4 pb-2">
-                            <canvas id="myPieChart"></canvas>
+                        <div style="text-align: center;">
+                            <img class="sidebar-card-illustration mb-2" src="public/images/sns_img${randomImg}.png" alt="pie-graph" />
                         </div>
 
                         <div class="mt-4 text-center small">
-                            <span class="mr-2">
-                                <i class="fas fa-circle text-primary"></i> Direct
-                            </span>
-                            <span class="mr-2">
-                                <i class="fas fa-circle text-success"></i> Social
-                            </span>
-                            <span class="mr-2">
-                                <i class="fas fa-circle text-info"></i> Referral
-                            </span>
+                            <span class="mr-2" style="color: #4e73df;">식품</span>
+                            <span class="mr-2" style="color: #1cc88a;">의류</span>
+                            <span class="mr-2" style="color: #36b9cc;">교육</span>
+                            <span class="mr-2" style="color: #a4dd4a;">교통</span>
+                            <span class="mr-2" style="color: #9c6be8;">생활</span>
                         </div>
-                
+                    </div>
+
+                    <div class="card-footer">
+                        <div style="text-align: center;">
+                            <img class="like__image mb-2" src="public/images/like_png.png" alt="like image" /> ${randomLike}
+                        </div>
                     </div>
                 </li>`;
             $('#sns-card-body').append(tagString);
@@ -165,9 +170,11 @@ const getAllBoards = () => {
 function feedCardEvent() {
     const boardID = this.getAttribute('data-target-id'); // this -> arrow function X
 
+    const randomImg = Math.floor(Math.random() * (9 - 1)) + 1;
+
     // setUp madal's content data (text)
     document.getElementById('feedModal__header').innerText = globalFeedData[boardID - 1].title;
-    document.getElementById('feedModal__content').innerText = globalFeedData[boardID - 1].content;
+    document.getElementById('feedModal__content').innerHTML = `<img class="sidebar-card-illustration mb-2" src="public/images/sns_img${randomImg}.png" alt="pie-graph" /><br/>${globalFeedData[boardID - 1].content}`;
     document.getElementById('comment__boardId_value').value = boardID;
     document.getElementById('comment__td').innerHTML = "";
 
@@ -257,11 +264,6 @@ const commentsAddEvent = (event) => {
         return response.json();
     }).then((data) => { // 성공하면 여기오고
         $("#comment__value").val("");
-        Swal.fire({
-            text: "댓글 등록 완료",
-            confirmButtonColor: '#4E73DF',
-            confirmButtonText: 'OK',
-        });
         getComments(dataBody['board_id']);
     }).catch((error) => { // 실패하면 여기온다
         console.warn(error);

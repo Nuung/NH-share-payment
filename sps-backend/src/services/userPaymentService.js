@@ -98,7 +98,7 @@ UserPayment.getSumOfAllPayments = async function (userId, result) {
 // Get Sum of user's all payment [ Usam 필드 합계 ]
 UserPayment.getCountOfAllPaymentsCategory = async function (category, userId, result) {
     const castingToString = ["", "식품", "의류", "교육", "교통", "생활"];
-    connection.query("Select count(*) as 'count' from user_payments WHERE category = ? OR category = ? AND user_id = ?", [category, castingToString[category], userId], function (err, res) {
+    connection.query("Select sum(Usam) as 'sum' from user_payments WHERE (category = ? OR category = ?) AND user_id = ?", [category, castingToString[category], userId], function (err, res) {
         if (err) {
             console.log("getAllHistory service error: ", err);
             result(null, err);
@@ -159,11 +159,16 @@ UserPayment.findHistoryById = async function (id) {
 };
 
 // UserPayment remove - paymentHistory data By id
-UserPayment.removeHistoryById = async function (id, result) {
-    connection.query("DELETE FROM user_payment_history WHERE id = ?", [id], function (err, res) {
-        if (err) result(null, err);
-        else result(null, res);
-    });
+UserPayment.removeHistoryById = async function (id) {
+    const connection = await pool.getConnection(async conn => conn);
+    try {
+        const result = await connection.query("DELETE FROM user_payment_history WHERE id = ?", [id]);
+        if (isAllEmpty(result)) return false;
+        else return result;
+    } catch (error) {
+        console.log(`userServeice findByFinCard Error: ${error}`);
+        throw new Error(`userServeice findByFinCard Error: ${error}`);
+    }
 };
 
 

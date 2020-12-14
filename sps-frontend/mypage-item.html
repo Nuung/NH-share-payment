@@ -44,7 +44,7 @@
 
         .chart__pie__label {
             /* text-align: center; */
-            margin-left: 37%;
+            margin-left: 26%;
         }
 
         .chart__pie__percent {
@@ -72,7 +72,7 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/SNS.html">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
@@ -101,9 +101,8 @@
             <li class="nav-item">
                 <a class="nav-link" href="history.html">
                     <i class="fas fa-fw fa-history"></i>
-
-                    <span>History</span>&nbsp;<span class="badge badge-pill badge-light ">9</span></a>
-                <!--숫자에 처리해야 할 히스토리 개수-->
+                    <span>History</span>
+                </a>
             </li>
 
 
@@ -131,12 +130,12 @@
 
             <!-- 구분선 -->
             <hr class="sidebar-divider d-none d-md-block">
-            
+
             <!-- Sidebar Message -->
             <div class="sidebar-card">
                 <img class="sidebar-card-illustration mb-2" src="public/images/cardImg.png" alt="">
                 <p class="text-center mb-2"><strong></strong></p>
-                <a class="btn btn-success btn-sm" href="http://localhost:8080/cardForm.html"> Register <br /> your own cards.</a>
+                <a class="btn btn-success btn-sm" href="/cardForm.html"> Register <br /> your own cards.</a>
             </div>
 
             <!-- Sidebar Toggler (Sidebar) 누르면 네비게이션 최소화-->
@@ -184,7 +183,7 @@
                     <!-- Page Heading -->
                     <div class="topic__heading">
                         <h1 class="h3 text-gray-800 topic__heading__left">Mypage</h1>
-                        <span class="topic__heading__right"> 분야별 총 누적 지출 분석 </span>
+                        <span class="topic__heading__right"> 항목별 총 누적 지출 분석 </span>
                     </div>
 
                     <!-- Content Row -->
@@ -195,7 +194,7 @@
                             <div class="card shadow mb-4">
                                 <!-- Card Header - Dropdown -->
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary" style="text-align: center;">분야별 총 누적
+                                    <h6 class="m-0 font-weight-bold text-primary" style="text-align: center;">항목별 총 누적
                                         지출</h6>
                                 </div>
                                 <!-- Card Body -->
@@ -220,7 +219,7 @@
                             <div class="card shadow mb-4">
                                 <!-- Card Header - Dropdown -->
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary" style="text-align: center;">분야별 총 누적
+                                    <h6 class="m-0 font-weight-bold text-primary" style="text-align: center;">항목별 총 누적
                                         지출 카드별 분석</h6>
                                 </div>
                                 <!-- Card Body -->
@@ -359,13 +358,15 @@
         }
         // console.log(categoryCountAll);
         setUpGraph(categoryCountAll);
+
         const targetLabel = document.querySelectorAll('.chart__pie__values'); // "식품", "의류", "교육", "교통", "생활"
         const total = categoryCountAll.reduce((acc, current) => acc + current);
         for (let i = 0; i < categoryCountAll.length; i++) {
             let element = (categoryCountAll[i] / total) * 100;
             element = Math.floor(element * 10);
             element /= 10;
-            targetLabel[i].innerHTML += `: <span class="chart__pie__percent">${element}</span> %`;
+            if(categoryCountAll[i]) targetLabel[i].innerHTML += `: <span class="chart__pie__percent">${element}</span> %, ${makeComma(categoryCountAll[i])} 원`;
+            else targetLabel[i].innerHTML += `: <span class="chart__pie__percent">${element}</span> %, 0 원`;
         }
     } // init()
 

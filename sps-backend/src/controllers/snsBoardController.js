@@ -96,15 +96,8 @@ const getBoardByClusterData = async (req, res) => {
         // const { user_id } = req.body;
         const { userId, userName, userBirth } = jwt.decode(req.cookies['user-login']);
         const clusteredResult = await SnsBoard.getClusteredResult(userId);
-        // console.log(clusteredResult); // [ TextRow { user_id_same: 'abc887@nh.com' }, ] 의 array 형태
-
-        let resultOfAllBoard;
-        for (let i = 0; i < clusteredResult.length; i++) {
-            const element = (clusteredResult[i]);
-            resultOfAllBoard += await SnsBoard.findById(element.user_id_same); // target Board Infomation
-        }
-
-        console.log(resultOfAllBoard);
+        if(!clusteredResult) throw new Error(`snsBoardController - getBoardByClusterData Error`);
+        else return res.status(200).json(clusteredResult);
     }
     catch (error) {
         console.log(`snsBoardController getAllBoardByUserId: ${error}`);

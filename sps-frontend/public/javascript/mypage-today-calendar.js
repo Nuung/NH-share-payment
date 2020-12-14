@@ -3,7 +3,7 @@
 // '#4e73df', '#1cc88a', '#36b9cc', '#a4dd4a', '#9c6be8'
 // ['#2e59d9', '#17a673', '#2c9faf', '#8ac430', '#7d59d3']
 
-const initDate = '2020-11-01'; // new Date();
+const initDate = '2019-11-01'; // new Date();
 
 function calendarSetUp(data) {
 
@@ -16,15 +16,31 @@ function calendarSetUp(data) {
 
             // setting up color // 식비(1), 의류(2), 교육(3), 교통(4), 생활(5)
             let targetColor = "";
-            if (value[i].category == "식비" || value[i].category == 1) targetColor = '#2e59d9';
-            if (value[i].category == "의류" || value[i].category == 2) targetColor = '#17a673';
-            if (value[i].category == "교육" || value[i].category == 3) targetColor = '#2c9faf';
-            if (value[i].category == "교통" || value[i].category == 4) targetColor = '#8ac430';
-            if (value[i].category == "생활" || value[i].category == 5) targetColor = '#7d59d3';
+            let renderText = "";
+            if (value[i].category == "식비" || value[i].category == 1) {
+                targetColor = '#2e59d9';
+                renderText = "식비";
+            }
+            if (value[i].category == "의류" || value[i].category == 2) {
+                targetColor = '#17a673';
+                renderText = "의류";
+            }
+            if (value[i].category == "교육" || value[i].category == 3) {
+                targetColor = '#2c9faf';
+                renderText = "교육";
+            }
+            if (value[i].category == "교통" || value[i].category == 4) {
+                targetColor = '#8ac430';
+                renderText = "교통";
+            }
+            if (value[i].category == "생활" || value[i].category == 5) {
+                targetColor = '#7d59d3';
+                renderText = "생활";
+            }
 
             // set up calendar color
             const calendarDateEvent = {
-                title: value[i].Usam + "￦, " + value[i].category,
+                title: "￦ " + value[i].Usam + ", " + renderText,
                 start: value[i].Trdd.substring(0, 10), // + "T" + value[i].Txtm,
                 // extendedProps: {
                 //     department: value[i].AfstNm
@@ -114,16 +130,16 @@ function calendarSetUp(data) {
             }
         ]
         */
-       dateClick: function(info) {
-            console.log(info.resource);
-            console.log(info.dateStr);
-            Swal.fire({
-                text: info.description,
-                confirmButtonColor: '#4E73DF',
-                confirmButtonText: 'OK',
-            });
-        }
-        
+        // dateClick: function (info) {
+        //     console.log(info.title);
+        //     console.log(info.view.type);
+        //     Swal.fire({
+        //         text: info.description,
+        //         confirmButtonColor: '#4E73DF',
+        //         confirmButtonText: 'OK',
+        //     });
+        // }
+
     });
     calendar.render();
 }

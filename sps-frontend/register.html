@@ -49,7 +49,7 @@
             margin-top: 7px;
             margin-right: 5px;
             padding-left: 5px;
-        } 
+        }
 
         /* .family__sliderValue {
             margin-left: 15px;
@@ -61,7 +61,7 @@
             margin-left: 10px
         }
 
-        .form__gender__budget{
+        .form__gender__budget {
             text-align: center;
         }
 
@@ -114,8 +114,8 @@
                                         placeholder="Email Address">
                                 </div>
                                 <div class="form-group">
-                                    <input id="password" name="password" type="password" class="form-control form-control-user"
-                                        placeholder="Password">
+                                    <input id="password" name="password" type="password"
+                                        class="form-control form-control-user" placeholder="Password">
                                 </div>
                                 <div class="form-group">
                                     <input id="name" name="name" type="text" class="form-control form-control-user"
@@ -177,19 +177,19 @@
                                             <label for="id" class="sr-only">id</label>
                                             <input type="text" name="id" id="id" class="form-control" placeholder="ID">
                                         </div> -->
-    
+
                                 <!--은행 선택 3*3 추후 이미지 리사이징 해서 넣어야 함-->
                                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
                                     <div class="btn-group-vertical">
                                         <label class="btn btn-light btn-sm active">
                                             <!-- 농협은행 -->
                                             <input type="radio" name="id" value="011" hidden />
-                                            <img src="public/images/cardicons/nh.png" width="150px"/>
+                                            <img src="public/images/cardicons/nh.png" width="150px" />
                                         </label>
                                         <label class="btn btn-light btn-sm">
                                             <!-- 하나은행 -->
                                             <input type="radio" name="id" value="081" hidden />
-                                            <img src="public/images/cardicons/kebhana.png"  width="150px"/>
+                                            <img src="public/images/cardicons/kebhana.png" width="150px" />
                                         </label>
                                         <label class="btn btn-light btn-sm">
                                             <!-- 국민은행 -->
@@ -197,7 +197,7 @@
                                             <img src="public/images/cardicons/kb.png" width="150px" />
                                         </label>
                                     </div>
-                                    <div class="btn-group-vertical" >
+                                    <div class="btn-group-vertical">
                                         <label class="btn btn-light btn-sm">
                                             <!-- 농협상호금융 -->
                                             <input type="radio" name="id" value="012" hidden />
@@ -211,14 +211,14 @@
                                         <label class="btn btn-light btn-sm">
                                             <!-- 신한은행 -->
                                             <input type="radio" name="id" value="088" hidden />
-                                            <img src="public/images/cardicons/shinhan.png"width="150px" />
+                                            <img src="public/images/cardicons/shinhan.png" width="150px" />
                                         </label>
-                                    </div> 
-                                    <div class="btn-group-vertical" width="150px" >
+                                    </div>
+                                    <div class="btn-group-vertical" width="150px">
                                         <label class="btn btn-light btn-sm">
                                             <!-- 카카오뱅크 -->
                                             <input type="radio" name="id" value="090" hidden />
-                                            <img src="public/images/cardicons/kakao.png"width="150px" />
+                                            <img src="public/images/cardicons/kakao.png" width="150px" />
                                         </label>
                                         <label class="btn btn-light btn-sm">
                                             <!-- 산업은행 -->
@@ -232,10 +232,11 @@
                                         </label>
                                     </div>
                                 </div>
-    
+
                                 <div class="form-group">
                                     <label for="name" class="sr-only">name</label>
-                                    <input type="text" name="name" id="name" class="form-control" placeholder="Card Name" minlength="3">
+                                    <input type="text" name="name" id="name" class="form-control"
+                                        placeholder="Card Name" minlength="3">
                                 </div>
                                 <div class="form-group">
                                     <label for="cardno" class="sr-only">cardno</label>
@@ -246,7 +247,7 @@
                             </form>
 
 
-                            
+
                             <!-- 잃어버린 비밀번호 찾기 ***  
                             <div class="text-center">
                                 <a class="small" href="forgot-password.html">Forgot Password?</a>
@@ -274,7 +275,7 @@
 
     //------------------------------Function------------------------------//
     const makeRandomId = () => String(Math.floor(Math.random() * (20)));
-    
+
     // Set Category Form Atcion (submit)
     const cardApproveFetch = () => {
         // static 
@@ -301,22 +302,22 @@
             if (status === 403) return Promise.reject(new Error("로그인 해야 볼 수 있는 페이지 입니다."));
             else if (status === 400 || status === 404) return Promise.reject(new Error("유저 ID에 맞는 카드 넘버 정보를 가져주세요!"));
             else if (status === 422) return Promise.reject(new Error("올바론 값을 입력해 주세요!"));
-            // else return Promise.reject(new Error("로그인 해야 볼 수 있는 페이지 입니다."));
+            return Promise.resolve("회원 가입 및 카드 등록 성공!"); // async promise 성공시 반환이라 생각 
         }).then((data) => { // 성공하면 여기오고
-            console.log(data);
+            // console.log(data);
         }).catch((error) => { // 실패하면 여기온다
             console.warn(error);
             Swal.fire({
-                    text: error,
-                    confirmButtonText: 'OK'
-                    })
+                text: error,
+                confirmButtonText: 'OK'
+            })
         });
     };
 
     //------------------------------Main------------------------------//
 
     function init() {
-        
+
         // Add SignUp Fetching
         signForm.addEventListener('submit', function (event) {
             event.preventDefault();
@@ -341,9 +342,8 @@
                 const { status } = response;
                 // console.log(status + ", " + typeof(status));
                 if (status === 400) return Promise.reject(new Error("ID가 이미 존재합니다!!"));
-                else if (status === 422) return Promise.reject(new Error("올바른 ID, Password, 생년월일(yyymmdd)값을 입력해 주세요!"));
-                else if (status === 201) return Promise.resolve("Login 성공!"); // async promise 성공시 반환이라 생각 
-                // else return Promise.reject(new Error("Create User Request is failed")); // async promise 실패시 반환이라 생각 
+                else if (status === 422 || status === 404) return Promise.reject(new Error("올바른 ID, Password, 생년월일(yyymmdd)값을 입력해 주세요!"));
+                return Promise.resolve("회원가입 성공, 카드 등록을 바로 해주셔야 원활한 서비스 이용이 가능합니다!");
             }).then((data) => { // 성공하면 여기오고
                 // console.log(data);
                 //card form 생성 및 auth form 사라짐
@@ -356,7 +356,7 @@
                 Swal.fire({
                     text: error,
                     confirmButtonText: 'OK'
-                    })
+                })
             });
         });
 
@@ -383,29 +383,28 @@
             }).then((response) => {
                 const { status } = response;
                 // console.log(status + ", " + typeof(status));
-                if (status === 403) return Promise.reject(new Error("앞선 회원가입 정보가 잘못 되었습니다!"));
-                else if (status === 422) return Promise.reject(new Error("올바른 카드넘버 (카드번호)를 입력해 주세요!"));
-                else if (status === 201) return Promise.resolve("회원가입 성공!"); // async promise 성공시 반환이라 생각 
-                // else return Promise.reject(new Error("Create User Card Request is failed")); // async promise 실패시 반환이라 생각 
+                if (status === 400) return Promise.reject(new Error("앞선 회원가입 정보가 잘못 되었습니다!"));
+                else if (status === 422 || 404) return Promise.reject(new Error("올바른 카드넘버 (카드번호)를 입력해 주세요!"));
+                return Promise.resolve("회원 가입 및 카드 등록 성공!"); // async promise 성공시 반환이라 생각 
             }).then((data) => { // 성공하면 여기오고
-				console.log(data);
-				Swal.fire({
+                // console.log(data);
+                Swal.fire({
                     title: ' ',
                     text: data,
                     confirmButtonText: 'OK'
-                    }).then((result) => {
+                }).then((result) => {
                     if (result.isConfirmed) {
                         cardApproveFetch();
                         window.location.href = "history.html"; // main html로 강제 이동시킴 
                     }
-                    })
-                
+                })
+
             }).catch((error) => { // 실패하면 여기온다
                 console.warn(error);
                 Swal.fire({
                     text: error,
                     confirmButtonText: 'OK'
-                    })
+                })
             });
         });
 
@@ -419,7 +418,7 @@
 
         // jQuery
         $('[data-toggle="tooltip"]').tooltip();
-        
+
         // With JQuery for slider
         $("#family").slider(); // setting up jquery slider
         const defaultSliderValue = $("#family").val();
@@ -435,87 +434,23 @@
 </script>
 
 <!-- gender button exchange event JS -->
-<script type = "text/javascript">
-    $(function() {
+<script type="text/javascript">
+    $(function () {
 
-        $('.button-class1').click(function(){
-          if( $(this).hasClass('btn-default') ) $(this).removeClass('btn-default');
-          if( !$(this).hasClass('btn-primary') ) $(this).addClass('btn-primary');
-          if( $('.button-class2').hasClass('btn-primary') ) $('.button-class2').removeClass('btn-primary');
-          if( !$('.button-class2').hasClass('btn-default') ) $('.button-class2').addClass('btn-default');
-        });
-        
-        $('.button-class2').click(function(){
-          if( $(this).hasClass('btn-default') ) $(this).removeClass('btn-default');
-          if( !$(this).hasClass('btn-primary') ) $(this).addClass('btn-primary');
-          if( $('.button-class1').hasClass('btn-primary') ) $('.button-class1').removeClass('btn-primary');
-          if( !$('.button-class1').hasClass('btn-default') ) $('.button-class1').addClass('btn-default');
-        });
-      
-      });
-</script>
-
-<script>
-
-</script>
-
-<!-- FORM VALIDATION CHECK JS -->
-<script type = "text/javascript">
-    $(function() {
-
-        $.validator.addMethod("birthdayCheck", function(birthday, element) {
-            return this.optional(element) || birthday.match(/([12]\d{3}(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01]))/);
-        }, "생년월일을 올바르게 입력해주세요. (yyyymmdd) ");
-
-        $.validator.addMethod("cardNumberCheck", function(cardno, element) {
-            return this.optional(element) || cardno.match(/(5[1-5]\d{14})|(4\d{12})(\d{3}?)|3[47]\d{13}|(6011\d{12})/);
-        }, "카드번호를 올바르게 입력해주세요.");
-
-        $("#auth-form").validate({
-            rules : {
-                birthday : { birthdayCheck : true }
-             }
+        $('.button-class1').click(function () {
+            if ($(this).hasClass('btn-default')) $(this).removeClass('btn-default');
+            if (!$(this).hasClass('btn-primary')) $(this).addClass('btn-primary');
+            if ($('.button-class2').hasClass('btn-primary')) $('.button-class2').removeClass('btn-primary');
+            if (!$('.button-class2').hasClass('btn-default')) $('.button-class2').addClass('btn-default');
         });
 
-        $("#card-form").validate({
-            rules : {
-                cardno : { cardNumberCheck : true }
-             }
+        $('.button-class2').click(function () {
+            if ($(this).hasClass('btn-default')) $(this).removeClass('btn-default');
+            if (!$(this).hasClass('btn-primary')) $(this).addClass('btn-primary');
+            if ($('.button-class1').hasClass('btn-primary')) $('.button-class1').removeClass('btn-primary');
+            if (!$('.button-class1').hasClass('btn-default')) $('.button-class1').addClass('btn-default');
         });
-    
-        $.extend($.validator.messages, {
-            required: "필수 항목입니다.",
-            remote: "항목을 수정하세요.",
-            email: "유효하지 않은 E-Mail주소입니다.",
-            url: "유효하지 않은 URL입니다.",
-            date: "올바른 날짜를 입력하세요.",
-            dateISO: "올바른 날짜(ISO)를 입력하세요.",
-            number: "Budget 입력을 확인해주세요. 유효한 숫자가 아닙니다.",
-            digits: "숫자만 입력 가능합니다.",
-            creditcard: "신용카드 번호가 바르지 않습니다.",
-            equalTo: "같은 값을 다시 입력하세요.",
-            extension: "올바른 확장자가 아닙니다.",
-            maxlength: $.validator.format("{0}자를 넘을 수 없습니다. "),
-            minlength: $.validator.format("{0}자 이상 입력하세요."),
-            rangelength: $.validator.format("문자 길이가 {0} 에서 {1} 사이의 값을 입력하세요."),
-            range: $.validator.format("{0} 에서 {1} 사이의 값을 입력하세요."),
-            max: $.validator.format("{0} 이하의 값을 입력하세요."),
-            min: $.validator.format("{0} 이상의 값을 입력하세요.")
-        });
-    });
 
-    $.validator.setDefaults({
-        onkeyup:false,
-        onclick:false,
-        onfocusout:false,
-        showErrors:function(errorMap, errorList){
-            if(this.numberOfInvalids()) {
-                Swal.fire({
-                    text: errorList[0].message,
-                    confirmButtonText: 'OK'
-                    })
-            }
-        }
     });
 </script>
 

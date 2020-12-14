@@ -138,7 +138,7 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/SNS.html">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
@@ -166,9 +166,8 @@
             <li class="nav-item active">
                 <a class="nav-link" href="history.html">
                     <i class="fas fa-fw fa-history"></i>
-
-                    <span>History</span>&nbsp;<span class="badge badge-pill badge-light ">9</span></a>
-                <!--숫자에 처리해야 할 히스토리 개수-->
+                    <span>History</span>
+                </a>
             </li>
 
 
@@ -201,7 +200,7 @@
             <div class="sidebar-card">
                 <img class="sidebar-card-illustration mb-2" src="public/images/cardImg.png" alt="">
                 <p class="text-center mb-2"><strong></strong></p>
-                <a class="btn btn-success btn-sm" href="http://localhost:8080/cardForm.html"> Register <br /> your own cards.</a>
+                <a class="btn btn-success btn-sm" href="/cardForm.html"> Register <br /> your own cards.</a>
             </div>
 
             <!-- Sidebar Toggler (Sidebar) 누르면 네비게이션 최소화-->
@@ -374,7 +373,7 @@
 
     const makeRandomId = () => String(Math.floor(Math.random() * (20)));
 
-    const deleteHistoryFetch = (event) => {
+    const deleteHistoryFetch = async (event) => {
 
         event.preventDefault();
         // event.target 은 button
@@ -384,7 +383,7 @@
         };
 
         // card__list__delete
-        fetch('http://44.242.175.149:3000/user/payment/history', {
+        await fetch('http://44.242.175.149:3000/user/payment/history', {
             method: 'DELETE', // *GET, POST, PUT, DELETE, etc.
             mode: 'cors', // no-cors, cors, *same-origin
             cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -399,14 +398,21 @@
             if (status === 403) return Promise.reject(new Error("로그인 해야 볼 수 있는 페이지 입니다."));
             else if (status === 400 || status === 404) return Promise.reject(new Error("Inner Sever Error"));
             else if (status === 422) return Promise.reject(new Error("올바론 카테고리 값을 선택해 주세요!"));
-            // else return Promise.reject(new Error("로그인 해야 볼 수 있는 페이지 입니다."));
-        }).then(() => { // 성공하면 여기오고
-            const removeTarget = form.parentElement.parentElement;
-            $(removeTarget).fadeOut();
+            return Promise.resolve("결제 내역 삭제 완료"); // async promise 성공시 반환이라 생각 
+        }).then((data) => { // 성공하면 여기오고
             Swal.fire({
-                text: "결제 내역 삭제 완료",
+                text: data,
                 confirmButtonColor: '#4E73DF',
                 confirmButtonText: 'OK',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const removeTarget = form.parentElement.parentElement;
+                    $(removeTarget).fadeOut();
+                }
+                else {
+                    const removeTarget = form.parentElement.parentElement;
+                    $(removeTarget).fadeOut();
+                }
             });
         }).catch((error) => { // 실패하면 여기온다
             console.warn(error);
@@ -416,7 +422,7 @@
     };
 
     // Set Category Form Atcion (submit)
-    const categortFormEvent = (event) => {
+    const categortFormEvent = async (event) => {
 
         event.preventDefault();
 
@@ -428,7 +434,7 @@
         }
 
         // fetching body
-        fetch('http://44.242.175.149:3000/user/payment/history', {
+        await fetch('http://44.242.175.149:3000/user/payment/history', {
             method: 'PUT', // *GET, POST, PUT, DELETE, etc.
             mode: 'cors', // no-cors, cors, *same-origin
             cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -443,19 +449,10 @@
             if (status === 403) return Promise.reject(new Error("로그인 해야 볼 수 있는 페이지 입니다."));
             else if (status === 400 || status === 404) return Promise.reject(new Error("Inner Sever Error"));
             else if (status === 422) return Promise.reject(new Error("올바론 카테고리 값을 선택해 주세요!"));
-            // else return Promise.reject(new Error("로그인 해야 볼 수 있는 페이지 입니다."));
+            return Promise.resolve(); // async promise 성공시 반환이라 생각 
         }).then(() => { // 성공하면 여기오고
             const removeTarget = event.target.parentElement.parentElement.parentElement;
             $(removeTarget).fadeOut();
-            // Swal.fire({
-            //     text: "카테고리 선택 완료",
-            //     confirmButtonColor: '#4E73DF',
-            //     confirmButtonText: 'OK',
-            // }).then((result) => {
-            //     if (result.isConfirmed) {
-            //         window.location.href = "history.html"
-            //     }
-            // });
         }).catch((error) => { // 실패하면 여기온다
             console.warn(error);
             alert(error);
@@ -465,7 +462,7 @@
     // Set Category Form Atcion (submit)
     // target user의 payment history table update가 필요하다 
     // 근데 그 history table 과 유저의 payment table과 중복된 것들은 없애야 한다!! 어또케?
-    const cardApproveFetch = (event) => {
+    const cardApproveFetch = async (event) => {
         event.preventDefault();
         // static 
         const dataBody = {
@@ -485,7 +482,7 @@
         event.target.appendChild(loadingImg);
 
         // fetching body
-        fetch('http://44.242.175.149:3000/user/card/approve', {
+        await fetch('http://44.242.175.149:3000/user/card/approve', {
             method: 'POST', // *GET, POST, PUT, DELETE, etc.
             mode: 'cors', // no-cors, cors, *same-origin
             cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -500,9 +497,8 @@
             if (status === 403) return Promise.reject(new Error("로그인 해야 볼 수 있는 페이지 입니다."));
             else if (status === 400 || status === 404) return Promise.reject(new Error("유저 ID에 맞는 카드 넘버 정보를 가져주세요!"));
             else if (status === 422) return Promise.reject(new Error("올바론 값을 입력해 주세요!"));
-            // else return Promise.reject(new Error("로그인 해야 볼 수 있는 페이지 입니다."));
+            return Promise.resolve(); // async promise 성공시 반환이라 생각 
         }).then((data) => { // 성공하면 여기오고
-            // console.log(data);
             window.location.reload(); // 새로고침 
         }).catch((error) => { // 실패하면 여기온다
             event.target.innerHTML = "";
@@ -514,11 +510,11 @@
 
     //------------------------------Main------------------------------//
 
-    function init() {
+    async function init() {
         historyRefreshBtn.addEventListener('click', cardApproveFetch);
 
         // Getting User's history data
-        fetch('http://44.242.175.149:3000/user/payment/history', {
+        await fetch('http://44.242.175.149:3000/user/payment/history', {
             method: 'GET', // *GET, POST, PUT, DELETE, etc.
             mode: 'cors', // no-cors, cors, *same-origin
             cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -533,12 +529,9 @@
 
         }).then((response) => {
             const { status } = response;
-            // console.log(status + ", " + typeof (status));
-
-            return response.json();
             if (status === 403) return Promise.reject(new Error("로그인 해야 볼 수 있는 페이지 입니다."));
             else if (status === 400 || status === 404) return Promise.reject(new Error("Inner Sever Error"));
-            else return Promise.reject(new Error("Create User Request is failed")); // async promise 실패시 반환이라 생각 
+            return response.json();
         }).then((data) => { // 성공하면 여기오고
             // console.log(data);
             // Handlebars JS 이용 
@@ -559,11 +552,6 @@
                 const deleteBtn = category.parentElement.getElementsByClassName('card__list__delete')[0];
                 deleteBtn.addEventListener('click', deleteHistoryFetch);
             });
-
-
-
-            // console.log(data['userPaymentHistory'][0]['budget']);
-
         }).catch((error) => { // 실패하면 여기온다
             console.warn(error);
             alert(error);

@@ -55,7 +55,7 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/SNS.html">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
@@ -83,9 +83,8 @@
             <li class="nav-item">
                 <a class="nav-link" href="history.html">
                     <i class="fas fa-fw fa-history"></i>
-
-                    <span>History</span>&nbsp;<span class="badge badge-pill badge-light ">9</span></a>
-                <!--숫자에 처리해야 할 히스토리 개수-->
+                    <span>History</span>
+                </a>
             </li>
 
 
@@ -113,12 +112,12 @@
 
             <!-- 구분선 -->
             <hr class="sidebar-divider d-none d-md-block">
-            
+
             <!-- Sidebar Message -->
             <div class="sidebar-card">
                 <img class="sidebar-card-illustration mb-2" src="public/images/cardImg.png" alt="">
                 <p class="text-center mb-2"><strong></strong></p>
-                <a class="btn btn-success btn-sm" href="http://localhost:8080/cardForm.html"> Register <br/> your own cards.</a>
+                <a class="btn btn-success btn-sm" href="/cardForm.html"> Register <br /> your own cards.</a>
             </div>
 
             <!-- Sidebar Toggler (Sidebar) 누르면 네비게이션 최소화-->
@@ -223,6 +222,13 @@
     <script src="./public/javascript/mypage-today-calendar.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            // 모바일 환경에서는 사이드 바가 토글되게
+            const windowWidth = $(window).width();
+            if (windowWidth <= 768) {
+                $('body').toggleClass('sidebar-toggled');
+                $('#accordionSidebar').toggleClass('toggled');
+            }
+
             // 원래는 아래와 같이 동적으로 갱신하며 받아와야 한다 하지만 농협API에는 12월이 없다! 
             // const nowMonth = new Date().getMonth();
             const dataBody = {

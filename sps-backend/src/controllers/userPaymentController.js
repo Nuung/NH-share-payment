@@ -105,12 +105,12 @@ const getCountOfAllPaymentsCategory = async (req, res) => {
     try {
         const { userId, userName, userBirth } = jwt.decode(req.cookies['user-login']);
         const { category } = req.body;
-        await UserPayment.getCountOfAllPaymentsCategory(category, userId, function (err, count) {
+        await UserPayment.getCountOfAllPaymentsCategory(category, userId, function (err, sum) {
             console.log(colors.bgGreen.black(`${msgLog} Successfully`));
             if (err) throw new Error(`${msgLog} Error: ${err}`);
             else {
-                const resultCount = { count };
-                return res.status(200).json(resultCount['count'][0]['count']);
+                const resultCount = { sum };
+                return res.status(200).json(resultCount['sum'][0]['sum']);
             }
         });
     }
@@ -145,21 +145,18 @@ const updatePayHistory = async (req, res) => {
             let newUserPayment = new UserPayment(targetPayHistory, false); // not a history
 
             await UserPayment.creatUserPayment(newUserPayment, function (err, userPayment) {
-                // console.log('userPaymentController - creatUserPayment in updatePayHistory');
                 if (err) throw new Error(`userPaymentController creatUserPayment Error: ${err}`);
                 else {
                     console.log(userPayment);
-                    UserPayment.removeHistoryById(id, function (err, result) {
-                        if (err) throw new Error(`userPaymentController removeHistoryById Error: ${err}`);
-                        console.log(colors.bgGreen.black("userPaymentController removeHistoryById and Update payment Success!!"));
-                        return res.status(201).json({ result });
-                    });
+                    const result = UserPayment.removeHistoryById(id);
+                    if (result) return res.status(201).json({ result });
+                    else throw new Error(`userPaymentController creatUserPayment Error: ${err}`);
                 }
             });
         }
 
         // end of await, 아래 영역 진입! 
-        console.log('\u001b[1m', "End of userPaymentController updatePayHistory API");
+        // console.log('\u001b[1m', "End of userPaymentController updatePayHistory API");
     }
     catch (error) {
         console.log(colors.bold.bgRed.yellow(`userPaymentController updatePayHistory: ${error}`));
@@ -178,13 +175,12 @@ const removeHistoryById = async (req, res) => {
         // const { userId, userName, userBirth } = jwt.decode(headers['x-access-token']);
         // const { userId, userName, userBirth } = jwt.decode(req.cookies['user-login']);
 
-        await UserPayment.removeHistoryById(id, function (err, result) {
-            if (err) {
-                console.log(colors.bgGreen.black(`${msgLog}: ${err}`));
-                throw new Error(`${msgLog} Error: ${err}`);
-            }
-            else return res.status(201).json({ result });
-        });
+        const result = UserPayment.removeHistoryById(id);
+        if (result) return res.status(201).json({ result });
+        else {
+            console.log(colors.bgGreen.black(`${msgLog}: ${err}`));
+            throw new Error(`${msgLog} Error: ${err}`);
+        }
     }
     catch (error) {
         console.log(colors.bold.bgRed.yellow(`${msgLog}: ${error}`));

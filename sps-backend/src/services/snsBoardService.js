@@ -141,7 +141,7 @@ SnsBoard.getAllBoards = async function (result) {
 SnsBoard.getClusteredResult = async function (userId) {
     const connection = await pool.getConnection(async conn => conn);
     try {
-        const [rows] = await connection.query("Select user_id_same from same_cluster_user WHERE user_id = ?", [userId]);
+        const [rows] = await connection.query("select * from sns_boards as sns JOIN same_cluster_user as cluster ON sns.user_id = cluster.user_id_same where cluster.user_id = ?", [userId]);
         if (isAllEmpty(rows)) return false;
         else return rows;
     } catch (error) {

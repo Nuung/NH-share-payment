@@ -147,16 +147,10 @@
 			}).then((response) => {
 				const { status } = response;
 				// console.log(status + ", " + typeof(status));
-				if (status === 404) {
-					return Promise.reject(new Error("ID or Password가 틀립니다!"));
-				}
-				else if (status === 422) {
-					return Promise.reject(new Error("올바른 ID, Password값을 입력해 주세요!"));
-				}
-				else if (status === 201) {
-					return Promise.resolve("Login 성공!"); // async promise 성공시 반환이라 생각 
-				}
-				else return Promise.reject(new Error("Login Request is failed")); // async promise 실패시 반환이라 생각 
+				if (status === 404) return Promise.reject(new Error("ID or Password가 틀립니다!"));
+				else if (status === 422) return Promise.reject(new Error("올바른 ID, Password값을 입력해 주세요!"));
+                else if (status === 400) return Promise.reject(new Error("Login Request is failed")); // async promise 실패시 반환이라 생각 
+                return Promise.resolve("Login 성공!"); // async promise 성공시 반환이라 생각 
 			}).then((data) => { // 성공하면 여기오고
 				console.log(data);
 				Swal.fire({

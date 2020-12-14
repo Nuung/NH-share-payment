@@ -21,38 +21,69 @@
     <link href="./lib/bootstrap/css/sb-admin-2.min.css" rel="stylesheet">
 
     <style>
+        .history__heading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        .history__heading__middle {
+            /* display: flex;
+            align-items: center;
+            justify-content: center;
+            align-content: center; */
+            margin-bottom: 0px;
+            text-align: center;
+            flex: 2;
+        }
+
         .card__list {
             position: absolute;
             top: 50%;
-            left : 50%;
+            left: 50%;
             text-align: center;
             border-radius: 15px;
             width: 30rem;
             margin: 5px;
         }
 
-        [type=radio] { 
+        .card__form {
+            justify-content: center;
+        }
+
+        .card__form__cardImg {
+            display: flex;
+        }
+
+        .card__form__cardImg__inner {
+            display: flex;
+            justify-content: center;
+            margin: 0;
+        }
+
+        [type=radio] {
             position: absolute;
             opacity: 0;
             width: 0;
             height: 0;
         }
 
-        [type=radio] + div {
+        [type=radio]+img {
             cursor: pointer;
         }
-        
-        [type=radio]:checked + div {
+
+        [type=radio]:checked+img {
             outline: 5px solid indigo;
         }
 
         .card-body {
             /* display: flex; */
-            align-items: center;
-            justify-content: center;
+            /* align-items: center; */
+            /* justify-content: center; */
         }
 
-        .card-body>input {
+        .card-body>button {
             cursor: pointer;
             width: 100%;
             margin: 5px;
@@ -60,7 +91,7 @@
             transition: 0.3s;
         }
 
-        .card-body>input:hover {
+        .card-body>button:hover {
             opacity: 1
         }
 
@@ -73,12 +104,10 @@
 
             .card-body>img {
                 width: 60%;
-                margin-left : 40px;
+                margin-left: 40px;
 
             }
         }
-
-
     </style>
 
 </head>
@@ -92,7 +121,7 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/SNS.html">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
@@ -119,10 +148,10 @@
             <!--히스토리, 마이페이지 메뉴-->
             <li class="nav-item">
                 <a class="nav-link" href="history.html">
-                <i class="fas fa-fw fa-history"></i>
-
-                    <span>History</span>&nbsp;<span class="badge badge-pill badge-light ">9</span></a>
-                    <!--숫자에 처리해야 할 히스토리 개수-->
+                    <i class="fas fa-fw fa-history"></i>
+                    <span>History</span>
+                </a>
+                <!--숫자에 처리해야 할 히스토리 개수-->
             </li>
 
             <!-- 날짜, 투데이, 항목별 -->
@@ -135,10 +164,13 @@
                 <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="mypage-today.html"><i class="fas fa-fw fa-check"></i>&nbsp;&nbsp;Today</a>
+                        <a class="collapse-item" href="mypage-today.html"><i
+                                class="fas fa-fw fa-check"></i>&nbsp;&nbsp;Today</a>
                         <!--현재 페이지에 active 효과 넣어서 글씨 진하게-->
-                        <a class="collapse-item" href="mypage-day.html"><i class="fas fa-fw fa-calendar"></i>&nbsp;&nbsp;날짜별</a>
-                        <a class="collapse-item active" href="mypage-item.html"><i class="fas fa-fw fa-th-list"></i>&nbsp;&nbsp;항목별</a>
+                        <a class="collapse-item" href="mypage-day.html"><i
+                                class="fas fa-fw fa-calendar"></i>&nbsp;&nbsp;날짜별</a>
+                        <a class="collapse-item active" href="mypage-item.html"><i
+                                class="fas fa-fw fa-th-list"></i>&nbsp;&nbsp;항목별</a>
                     </div>
                 </div>
             </li>
@@ -152,7 +184,7 @@
             <div class="sidebar-card">
                 <img class="sidebar-card-illustration mb-2" src="public/images/cardImg.png" alt="">
                 <p class="text-center mb-2"><strong></strong></p>
-                <a class="btn btn-success btn-sm" href="http://localhost:8080/cardForm.html"> Register <br /> your own cards.</a>
+                <a class="btn btn-success btn-sm" href="/cardForm.html"> Register <br /> your own cards.</a>
             </div>
 
             <!-- Sidebar Toggler (Sidebar) 누르면 네비게이션 최소화-->
@@ -181,10 +213,10 @@
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- 로그아웃 !!쿠키 삭제 추가해야 함!! -->
-                            <a class="nav-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Logout &nbsp;&nbsp;&nbsp;
-                            </a>
+                        <a class="nav-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                            Logout &nbsp;&nbsp;&nbsp;
+                        </a>
                     </ul>
                 </nav>
                 <!-- End of Topbar -->
@@ -194,12 +226,15 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Card Management</h1>
-                    <p class="mb-4">자신의 카드등록 파악 및 신규 카드 등록</p>
+                    <div class="history__heading">
+                        <h1 class="history__heading__left h3 text-gray-800">Card Management</h1>
+                        <p class="history__heading__middle"> 자신의 카드등록 파악 및 신규 카드 등록 </p>
+                        <p class="history__heading__right" id="history__refresh"></p>
+                    </div>
 
                     <!-- Content Row -->
                     <div class="row">
-                        
+
                         <!-- REGISTERED CARDS -->
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-primary shadow h-100 py-2">
@@ -208,7 +243,8 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                 농협신용카드</div>
-                                            <div class="text-md mb-0 font-weight-bold text-gray-800">4523-4623-1234-0098</div>
+                                            <div class="text-md mb-0 font-weight-bold text-gray-800">4523-4623-1234-0098
+                                            </div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -217,7 +253,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-primary shadow h-100 py-2">
                                 <div class="card-body">
@@ -225,7 +261,8 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                 농협체크카드</div>
-                                            <div class="text-md mb-0 font-weight-bold text-gray-800">4523-4623-1234-1010</div>
+                                            <div class="text-md mb-0 font-weight-bold text-gray-800">4523-4623-1234-1010
+                                            </div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -234,10 +271,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="row">
-                    
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-primary shadow h-100 py-2">
                                 <div class="card-body">
@@ -247,7 +281,8 @@
                                             </div>
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col-auto">
-                                                    <div class="text-md mb-0 mr-3 font-weight-bold text-gray-800">4523-1243-6879-1011</div>
+                                                    <div class="text-md mb-0 mr-3 font-weight-bold text-gray-800">
+                                                        4523-1243-6879-1011</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -266,7 +301,8 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                                 우리카드</div>
-                                            <div class="text-md mb-0 font-weight-bold text-gray-800">3345-1234-7865-3489</div>
+                                            <div class="text-md mb-0 font-weight-bold text-gray-800">3345-1234-7865-3489
+                                            </div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -277,121 +313,100 @@
                         </div>
                     </div>
                     <!-- END OF REGISTERED CARDS -->
-                    
-                       
-                    <!-- REGISTER CARD FORM -->        
-                    <div class="row">    
+
+
+                    <!-- REGISTER CARD FORM -->
+                    <div class="row card__form">
 
                         <div class="col-xl-5 col-lg-5">
                             <div class="card shadow mb-4">
-                                
+
                                 <div class="card-header py-3">
                                     <h6 class="m-0 font-weight-bold text-primary">신규 카드 등록</h6>
                                 </div>
-                            
+
                                 <form id="card-form" class="card-form" name="card-form">
                                     <div class="card-body" id="card__list">
                                         <div class="form-group">
-                                        <div class="row">
-                                            <div class="col-lg-3 mb-3">
-                                                <div class="card bg-light text-white shadow">
-                                                    <div class="card-body">
-                                                        <input type="radio" name="id" value="011" active>
-                                                            <img src="public/images/cardicons/nh.png" width="100%"/>
-                                                        </input>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            <div class="row card__form__cardImg">
 
-                                            <div class="col-lg-3 mb-3">
-                                                <div class="card bg-light text-white shadow">
-                                                    <div class="card-body">
-                                                        <input type="radio" name="id" value="012">
-                                                            <img src="public/images/cardicons/localnh.png" width="100%"/>
-                                                        </input>
+                                                <div class="card__form__cardImg__inner">
+                                                    <div class="col-lg-3 mb-3">
+                                                        <div class="card bg-light text-white shadow">
+                                                            <img src="public/images/cardicons/nh.png" width="100%" />
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </div>
 
-                                            <div class="col-lg-3 mb-3">
-                                                <div class="card bg-light text-white shadow">
-                                                    <div class="card-body">
-                                                        <input type="radio" name="id" value="081">
-                                                            <img src="public/images/cardicons/kebhana.png" width="100%" height="auto"/>
-                                                        </input>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
 
-                                        <div class="row">
-                                            <div class="col-lg-3 mb-3">
-                                                <div class="card bg-light text-white shadow">
-                                                    <div class="card-body">
-                                                        <input type="radio" name="id" value="004">
-                                                            <img src="public/images/cardicons/kb.png" width="100%" height="auto"/>
-                                                        </input>
+                                                    <div class="col-lg-3 mb-3">
+                                                        <div class="card bg-light text-white shadow">
+                                                            <img src="public/images/cardicons/localnh.png"
+                                                                width="100%" />
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-3 mb-3">
-                                                <div class="card bg-light text-white shadow">
-                                                    <div class="card-body">
-                                                        <input type="radio" name="id" value="020">
-                                                            <img src="public/images/cardicons/woori.png" width="100%" height="auto"/>
-                                                        </input>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-3 mb-3">
-                                                <div class="card bg-light text-white shadow">
-                                                    <div class="card-body">
-                                                        <input type="radio" name="id" value="088">
-                                                            <img src="public/images/cardicons/shinhan.png" width="100%" height="auto"/>
-                                                        </input>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
 
-                                        <div class="row">
-                                            <div class="col-lg-3 mb-3">
-                                                <div class="card bg-light text-black shadow">
-                                                    <div class="card-body">
-                                                        <input type="radio" name="id" value="090">
-                                                            <img src="public/images/cardicons/kakao.png" width="100%" height="auto"/>
-                                                        </input>
+                                                    <div class="col-lg-3 mb-3">
+                                                        <div class="card bg-light text-white shadow">
+                                                            <img src="public/images/cardicons/kebhana.png" width="100%"
+                                                                height="auto" />
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-lg-3 mb-3">
-                                                <div class="card bg-light text-white shadow">
-                                                    <div class="card-body">
-                                                        <input type="radio" name="id" value="002">
-                                                            <img src="public/images/cardicons/kdb.png" width="100%" height="auto"/>
-                                                        </input>
+
+                                                <div class="card__form__cardImg__inner">
+                                                    <div class="col-lg-3 mb-3">
+                                                        <div class="card bg-light text-white shadow">
+                                                            <img src="public/images/cardicons/kb.png" width="100%"
+                                                                height="auto" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3 mb-3">
+                                                        <div class="card bg-light text-white shadow">
+                                                            <img src="public/images/cardicons/woori.png" width="100%"
+                                                                height="auto" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3 mb-3">
+                                                        <div class="card bg-light text-white shadow">
+                                                            <img src="public/images/cardicons/shinhan.png" width="100%"
+                                                                height="auto" />
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-lg-3 mb-3">
-                                                <div class="card bg-light text-white shadow">
-                                                    <div class="card-body">
-                                                        <input type="radio" name="id" value="003">
-                                                            <img src="public/images/cardicons/ibk.png" width="100%" height="auto"/>
-                                                        </input>
+
+                                                <div class="card__form__cardImg__inner">
+                                                    <div class="col-lg-3 mb-3">
+                                                        <div class="card bg-light text-black shadow">
+                                                            <img src="public/images/cardicons/kakao.png" width="100%"
+                                                                height="auto" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3 mb-3">
+                                                        <div class="card bg-light text-white shadow">
+                                                            <img src="public/images/cardicons/kdb.png" width="100%"
+                                                                height="auto" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3 mb-3">
+                                                        <div class="card bg-light text-white shadow">
+                                                            <img src="public/images/cardicons/ibk.png" width="100%"
+                                                                height="auto" />
+                                                        </div>
                                                     </div>
                                                 </div>
+
                                             </div>
-                                        </div>
                                         </div>
 
                                         <div class="form-group">
                                             <label for="name" class="sr-only">name</label>
-                                            <input type="text" name="name" id="name" class="form-control" placeholder="Card Name" minlength="3">
+                                            <input type="text" name="name" id="name" class="form-control"
+                                                placeholder="Card Name" minlength="3">
                                         </div>
                                         <div class="form-group">
                                             <label for="cardno" class="sr-only">cardno</label>
-                                            <input type="text" name="cardno" id="cardno" class="form-control" placeholder="Card Number">
+                                            <input type="text" name="cardno" id="cardno" class="form-control"
+                                                placeholder="Card Number">
                                         </div>
                                         <button type="submit" class="btn btn-primary btn-block mb-3">Register</button>
                                 </form>
@@ -399,7 +414,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- END OF REGISTER CARDS -->    
+                    <!-- END OF REGISTER CARDS -->
 
                 </div>
                 <!-- END OF CONTAINER FLUID -->
@@ -461,101 +476,101 @@
 
 <!-- JS FILE -->
 <script>
-        //------------------------------Get Dom------------------------------//
-        const cardForm = document.getElementById("card-form");
+    //------------------------------Get Dom------------------------------//
+    const cardForm = document.getElementById("card-form");
 
-        //------------------------------Function------------------------------//
-        const makeRandomId = () => String(Math.floor(Math.random() * (20)));
-        
-        //------------------------------Main------------------------------//
-        
-        // Set Category Form Atcion (submit)
-        // const cardApproveFetch = () => {
-        //         // static 
-        //         const dataBody = {
-        //             "startDate": "2020-11-01",
-        //             "endDate": "2020-12-01",
-        //             "pageNo": "1",
-        //             "cnt": 15
-        //         };
+    //------------------------------Function------------------------------//
+    const makeRandomId = () => String(Math.floor(Math.random() * (20)));
 
-        //         // fetching body
-        //         fetch('http://44.242.175.149:3000/user/card/approve', {
-        //             method: 'POST', // *GET, POST, PUT, DELETE, etc.
-        //             mode: 'cors', // no-cors, cors, *same-origin
-        //             cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-        //             credentials: 'include', // include, *same-origin, omit 
-        //             headers: { 'Content-Type': 'application/json', },
-        //             // redirect: 'follow', // manual, *follow, error
-        //             // referrer: 'no-referrer', // no-referrer, *client
-        //             body: JSON.stringify(dataBody) // body data type must match "Content-Type" header
-        //         }).then((response) => {
-        //             const { status } = response;
-        //             // console.log(status + ", " + typeof(status));
-        //             if (status === 403) return Promise.reject(new Error("로그인 해야 볼 수 있는 페이지 입니다."));
-        //             else if (status === 400 || status === 404) return Promise.reject(new Error("유저 ID에 맞는 카드 넘버 정보를 가져주세요!"));
-        //             else if (status === 422) return Promise.reject(new Error("올바론 값을 입력해 주세요!"));
-        //             // else return Promise.reject(new Error("로그인 해야 볼 수 있는 페이지 입니다."));
-        //         }).then((data) => { // 성공하면 여기오고
-        //             console.log(data);
-        //         }).catch((error) => { // 실패하면 여기온다
-        //             console.warn(error);
-        //             Swal.fire({
-        //                 text: error,
-        //                 confirmButtonText: 'OK'
-        //             })
-        //         });
-        //     };
+    //------------------------------Main------------------------------//
+
+    // Set Category Form Atcion (submit)
+    // const cardApproveFetch = () => {
+    //         // static 
+    //         const dataBody = {
+    //             "startDate": "2020-11-01",
+    //             "endDate": "2020-12-01",
+    //             "pageNo": "1",
+    //             "cnt": 15
+    //         };
+
+    //         // fetching body
+    //         fetch('http://44.242.175.149:3000/user/card/approve', {
+    //             method: 'POST', // *GET, POST, PUT, DELETE, etc.
+    //             mode: 'cors', // no-cors, cors, *same-origin
+    //             cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+    //             credentials: 'include', // include, *same-origin, omit 
+    //             headers: { 'Content-Type': 'application/json', },
+    //             // redirect: 'follow', // manual, *follow, error
+    //             // referrer: 'no-referrer', // no-referrer, *client
+    //             body: JSON.stringify(dataBody) // body data type must match "Content-Type" header
+    //         }).then((response) => {
+    //             const { status } = response;
+    //             // console.log(status + ", " + typeof(status));
+    //             if (status === 403) return Promise.reject(new Error("로그인 해야 볼 수 있는 페이지 입니다."));
+    //             else if (status === 400 || status === 404) return Promise.reject(new Error("유저 ID에 맞는 카드 넘버 정보를 가져주세요!"));
+    //             else if (status === 422) return Promise.reject(new Error("올바론 값을 입력해 주세요!"));
+    //             // else return Promise.reject(new Error("로그인 해야 볼 수 있는 페이지 입니다."));
+    //         }).then((data) => { // 성공하면 여기오고
+    //             console.log(data);
+    //         }).catch((error) => { // 실패하면 여기온다
+    //             console.warn(error);
+    //             Swal.fire({
+    //                 text: error,
+    //                 confirmButtonText: 'OK'
+    //             })
+    //         });
+    //     };
 
 
-        function init() {
-            // Add Card Fetching
-            cardForm.addEventListener('submit', function (event) {
-                event.preventDefault();
+    function init() {
+        // Add Card Fetching
+        cardForm.addEventListener('submit', function (event) {
+            event.preventDefault();
 
-                // set id value to Unique
-                let dataBody = Object.fromEntries(new FormData(event.target));
-                dataBody['id'] += (dataBody['name'] + makeRandomId());
-                console.log(dataBody);
-                // fetching body
-                fetch('http://localhost:3000/user/card', {
-                    method: 'POST', // *GET, POST, PUT, DELETE, etc.
-                    mode: 'cors', // no-cors, cors, *same-origin
-                    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-                    credentials: 'include', // include, *same-origin, omit 
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    // redirect: 'follow', // manual, *follow, error
-                    // referrer: 'no-referrer', // no-referrer, *client
-                    body: JSON.stringify(dataBody) // body data type must match "Content-Type" header
-                }).then((response) => {
-                    const { status } = response;
-                    // console.log(status + ", " + typeof(status));
-                    if (status === 403) return Promise.reject(new Error("앞선 회원가입 정보가 잘못 되었습니다!"));
-                    else if (status === 422) return Promise.reject(new Error("올바른 카드넘버 (카드번호)를 입력해 주세요!"));
-                    else if (status === 201) return Promise.resolve("회원가입 성공!"); // async promise 성공시 반환이라 생각 
-                    // else return Promise.reject(new Error("Create User Card Request is failed")); // async promise 실패시 반환이라 생각 
-                }).then((data) => { // 성공하면 여기오고
-                    console.log(data);
-                    alert('등록 완료');
-                    // Swal.fire({
-                    //     text: "등록 완료",
-                    //     confirmButtonColor: '#4E73DF',
-                    //     confirmButtonText: 'OK',
-                    // });
-                    
-                }).catch((error) => { // 실패하면 여기온다
-                    console.warn(error);
-                    // Swal.fire({
-                    //     text: error,
-                    //     confirmButtonText: 'OK'
-                    //     })
-                    alert('오류 발생');
-                });
+            // set id value to Unique
+            let dataBody = Object.fromEntries(new FormData(event.target));
+            dataBody['id'] += (dataBody['name'] + makeRandomId());
+            console.log(dataBody);
+            // fetching body
+            fetch('http://44.242.175.149:3000/user/card', {
+                method: 'POST', // *GET, POST, PUT, DELETE, etc.
+                mode: 'cors', // no-cors, cors, *same-origin
+                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                credentials: 'include', // include, *same-origin, omit 
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                // redirect: 'follow', // manual, *follow, error
+                // referrer: 'no-referrer', // no-referrer, *client
+                body: JSON.stringify(dataBody) // body data type must match "Content-Type" header
+            }).then((response) => {
+                const { status } = response;
+                // console.log(status + ", " + typeof(status));
+                if (status === 403) return Promise.reject(new Error("앞선 회원가입 정보가 잘못 되었습니다!"));
+                else if (status === 422) return Promise.reject(new Error("올바른 카드넘버 (카드번호)를 입력해 주세요!"));
+                else if (status === 201) return Promise.resolve("회원가입 성공!"); // async promise 성공시 반환이라 생각 
+                // else return Promise.reject(new Error("Create User Card Request is failed")); // async promise 실패시 반환이라 생각 
+            }).then((data) => { // 성공하면 여기오고
+                console.log(data);
+                alert('등록 완료');
+                // Swal.fire({
+                //     text: "등록 완료",
+                //     confirmButtonColor: '#4E73DF',
+                //     confirmButtonText: 'OK',
+                // });
+
+            }).catch((error) => { // 실패하면 여기온다
+                console.warn(error);
+                // Swal.fire({
+                //     text: error,
+                //     confirmButtonText: 'OK'
+                //     })
+                alert('오류 발생');
             });
-            // about slider
-        }
+        });
+        // about slider
+    }
 
     //------------------------------document get ready------------------------------//
     document.addEventListener("DOMContentLoaded", function () {
