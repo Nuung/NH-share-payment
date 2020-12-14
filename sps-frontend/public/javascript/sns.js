@@ -135,7 +135,7 @@ const getAllBoards = () => {
                         
                         <hr>
                         <div style="text-align: center;">
-                            <img class="sidebar-card-illustration mb-2" src="public/images/sns_img${randomImg}.png" alt="pie-graph" />
+                            <img class="feedModal__content__img sidebar-card-illustration mb-2" src="public/images/sns_img${randomImg}.png" alt="pie-graph" />
                         </div>
 
                         <div class="mt-4 text-center small">
@@ -155,11 +155,14 @@ const getAllBoards = () => {
                 </li>`;
             $('#sns-card-body').append(tagString);
         }
-
+        // 안우주 사랑해 ❤️
         // Get category form and Set Form Action Event, 만든 feedcard에 모두 이벤트 추가해주기 
         const feedCards = document.querySelectorAll(".feedCard");
         feedCards.forEach((feedCard) => { feedCard.addEventListener('click', feedCardEvent); });
 
+        // 좋아요 액션 추가 
+        const likeBtns = document.querySelectorAll(".like__image");
+        likeBtns.forEach((likeBtn) => { likeBtn.addEventListener('click', likeBtnEvent); });
     }).catch((error) => { // 실패하면 여기온다
         console.warn(error);
         alert(error);
@@ -174,7 +177,7 @@ function feedCardEvent() {
 
     // setUp madal's content data (text)
     document.getElementById('feedModal__header').innerText = globalFeedData[boardID - 1].title;
-    document.getElementById('feedModal__content').innerHTML = `<img class="sidebar-card-illustration mb-2" src="public/images/sns_img${randomImg}.png" alt="pie-graph" /><br/>${globalFeedData[boardID - 1].content}`;
+    document.getElementById('feedModal__content').innerHTML = `<img class="feedModal__content__img sidebar-card-illustration mb-2" src="public/images/sns_img${randomImg}.png" alt="pie-graph" /><br/>${globalFeedData[boardID - 1].content}`;
     document.getElementById('comment__boardId_value').value = boardID;
     document.getElementById('comment__td').innerHTML = "";
 
@@ -184,7 +187,20 @@ function feedCardEvent() {
 
     // 만든 feedCard안에 있는 comment 불러오기 
     getComments(boardID);
+}
 
+// likeBtnEvent
+const likeBtnEvent = (event) => {
+    // console.log(event.target);
+    // const nowLike = event.target;
+    event.preventDefault();
+
+    event.target.style.color = '#4e73df';
+    event.target.style.background = '#4e73df';
+    event.target.style['border-radius'] = "30px";
+    
+    const targetLikeNumber = event.target.parentNode.lastChild.textContent.trim();
+    event.target.parentNode.lastChild.textContent = " " + String(Number(targetLikeNumber) + Number(1));
 }
 
 // 만든 feedCard안에 있는 comment 불러오기 
